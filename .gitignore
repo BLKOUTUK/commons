@@ -1,0 +1,31 @@
+# OS
+.DS_Store
+Thumbs.db
+*:Zone.Identifier
+
+# Editor
+*.swp
+*.bak
+.vscode/
+.idea/
+
+# Python (generators)
+__pycache__/
+*.pyc
+.python-version
+.venv/
+
+# Build / preview intermediates
+*.log
+preview-*.png
+highres-*.png
+p2-p5*.png
+01-body.pdf
+02-body.pdf
+01-cover.html
+02-cover.html
+
+# Secrets — never commit
+.env
+.env.local
+*.key

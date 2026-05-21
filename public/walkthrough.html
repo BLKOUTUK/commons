@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dreamcatcher — a walkthrough — BLKOUT UK</title>
+<meta name="description" content="How BLKOUT uses Dreamcatcher to make AI-tool decisions against our values. The pattern, the limits, what it costs to maintain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@1,72,400&family=Inter:wght@400;500;600;700&family=Courier+Prime:wght@400;700&family=Work+Sans:wght@900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          obsidian: '#0a0a0a',
+          abyss: '#161616',
+          cream: '#f5e9d3',
+          'cream-muted': 'rgba(245,233,211,0.7)',
+          gold: '#d4af37',
+          'gold-light': '#e8c860',
+          baldwin: '#7ec8e3',
+          murray:  '#a78bfa',
+          rustin:  '#4ade80',
+          rivera:  '#e85d9e',
+          newton:  '#ffb84d',
+        }
+      }
+    }
+  };
+</script>
+<style>
+  body { background:#0a0a0a; color:#f5e9d3; font-family:'Inter',sans-serif; line-height:1.6; margin:0; }
+  .display-xl { font-family:'Work Sans',sans-serif; font-weight:900; letter-spacing:-0.02em; line-height:1.05; text-transform:uppercase; }
+  .serif-soft { font-family:'Fraunces',serif; font-style:italic; font-weight:400; }
+  .font-mono { font-family:'Courier Prime',monospace; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="border-b-2 border-gold/40 py-6">
+  <div class="max-w-5xl mx-auto px-6 flex items-center justify-between">
+    <a href="/" class="font-mono text-xs uppercase tracking-widest text-cream-muted hover:text-gold">← back to commons</a>
+    <span class="font-mono text-[11px] uppercase tracking-widest text-gold">// the walkthrough</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="relative py-20 md:py-28 border-b-4 border-gold/40">
+  <div class="max-w-4xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-6">Dreamcatcher</p>
+    <h1 class="display-xl text-[clamp(40px,7vw,84px)]">
+      How we use it.<br><span class="text-gold">What it costs.</span><br>What it can't do.
+    </h1>
+    <p class="mt-10 text-lg leading-relaxed max-w-2xl">
+      Dreamcatcher is the AI-tool evaluation engine we built so we'd stop saying yes to platforms that don't serve our community. It works because it's tuned to BLKOUT's tech stack and our core values. Here's how it actually runs — and what's transferable as a pattern, even though the software isn't.
+    </p>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="py-20 border-b-4 border-gold/40 bg-abyss/40">
+  <div class="max-w-4xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// the problem</p>
+    <h2 class="display-xl text-[clamp(32px,5vw,56px)] mb-8">Shiny-distraction syndrome.</h2>
+    <p class="text-lg leading-relaxed mb-6">
+      There are dozens of AI tools, platforms, and services pitching themselves to community organisations every week. All of them come with a sales deck. Most of them won't survive contact with the questions we actually need to ask.
+    </p>
+    <p class="text-lg leading-relaxed mb-6">
+      We were tired of the cycle — saying yes to something because the demo looked good, then realising six months later the data sovereignty was wrong, or it didn't deploy in our stack, or it served people who weren't our community. Tired of wasting time and money on decisions we'd reverse.
+    </p>
+    <p class="text-lg leading-relaxed">
+      Dreamcatcher is the council we wished we had: a small set of named voices that read whatever's on offer against the same value base every time. <em class="serif-soft text-gold">The point isn't to make the decision for us — it's to keep us on course.</em>
+    </p>
+  </div>
+</section>
+
+<!-- THE JUDGES -->
+<section class="py-20 border-b-4 border-gold/40">
+  <div class="max-w-5xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// the council</p>
+    <h2 class="display-xl text-[clamp(32px,5vw,56px)] mb-8">Five named judges.</h2>
+    <p class="text-lg max-w-2xl mb-12 leading-relaxed">
+      Every decision goes through a council of named voices — Baldwin, Murray, Rustin, Rivera, Newton. Each asks one specific question. The names aren't decorative. Naming the question after a person who held a particular line in real life makes the question harder to wave through.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-abyss border-2 border-baldwin/60 p-6">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-baldwin mb-2">Baldwin · the critic</p>
+        <p class="text-cream-muted text-[15px] leading-relaxed">"What's the price we don't see?" Lock-in, dependency, the cost when this tool changes its mind.</p>
+      </div>
+      <div class="bg-abyss border-2 border-murray/60 p-6">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-murray mb-2">Murray · the ethicist</p>
+        <p class="text-cream-muted text-[15px] leading-relaxed">"Where does our data live, and who reads it?" Data sovereignty, training, surveillance.</p>
+      </div>
+      <div class="bg-abyss border-2 border-rustin/60 p-6">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-rustin mb-2">Rustin · the builder</p>
+        <p class="text-cream-muted text-[15px] leading-relaxed">"Will this actually deploy in our stack?" Technical fit, maintenance load, what'll break.</p>
+      </div>
+      <div class="bg-abyss border-2 border-rivera/60 p-6">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-rivera mb-2">Rivera · inclusion</p>
+        <p class="text-cream-muted text-[15px] leading-relaxed">"Who is this tool not for?" Accessibility, register, geographic reach, cost-to-attend.</p>
+      </div>
+      <div class="bg-abyss border-2 border-newton/60 p-6 md:col-span-2">
+        <p class="font-mono text-[10px] uppercase tracking-widest text-newton mb-2">Newton · the collaborator</p>
+        <p class="text-cream-muted text-[15px] leading-relaxed">"Where's the cooperation we're missing?" Reads across decisions — surfaces when other orgs are asking the same question and shared work is possible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- A WORKED EXAMPLE -->
+<section class="py-20 border-b-4 border-gold/40">
+  <div class="max-w-4xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// example</p>
+    <h2 class="display-xl text-[clamp(32px,5vw,56px)] mb-8">A tool walked through.</h2>
+
+    <p class="text-lg leading-relaxed mb-6">
+      The judges work from a URL — you submit the thing being pitched at you, and each one reads it in turn.
+    </p>
+
+    <p class="text-lg leading-relaxed mb-8">
+      <span class="font-mono text-[11px] uppercase tracking-widest text-gold">Input —</span> <code class="bg-abyss px-2 py-1 border border-gold/40 text-cream">Tool X</code> · a commercial event-ticketing SaaS pitched at LGBTQ+ organisers in the UK. <em class="serif-soft text-gold">Should BLKOUT use it for community events?</em>
+    </p>
+
+    <p class="serif-soft text-cream-muted text-sm mb-6">
+      each judge returns several hundred words of analysis. these are the summary verdicts — the full outputs live in the dreamcatcher app.
+    </p>
+
+    <div class="space-y-4 mb-8">
+      <div class="bg-abyss border-l-4 border-baldwin p-6 text-[15px] leading-relaxed">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-baldwin mb-3">Baldwin · the critic</p>
+        <p>Third-party SaaS where BLKOUT becomes a customer, not infrastructure owner. Attendee data and payment processing live in their system. Duplicates the RSVP capability we've already built. Solves a problem we don't have while creating problems we're trying to avoid.</p>
+        <p class="mt-3"><span class="serif-soft text-gold">Verdict —</span> Pass.</p>
+      </div>
+      <div class="bg-abyss border-l-4 border-murray p-6 text-[15px] leading-relaxed">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-murray mb-3">Murray · the ethicist</p>
+        <p>Commercial platform whose business model depends on data aggregation. Marketing copy emphasises charitable support to the community, but there's no evidence members can audit what's held about them, or that they control how it's used.</p>
+        <p class="mt-3"><span class="serif-soft text-gold">Verdict —</span> Pass.</p>
+      </div>
+      <div class="bg-abyss border-l-4 border-rustin p-6 text-[15px] leading-relaxed">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-rustin mb-3">Rustin · the builder</p>
+        <p>Not self-hosted — nothing to deploy. Walled garden: no integration with our CRM, member pages, or AIvor. Member data collected through the platform stays in the platform. The actual constraint we have is programming and promotion, not ticketing mechanics.</p>
+        <p class="mt-3"><span class="serif-soft text-gold">Verdict —</span> Pass.</p>
+      </div>
+      <div class="bg-abyss border-l-4 border-rivera p-6 text-[15px] leading-relaxed">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-rivera mb-3">Rivera · inclusion</p>
+        <p>App-first, smartphone-required, image-heavy — barriers for people in temporary housing, rural areas, or with data-cost constraints. Heavily city-centric. For closeted people or those in unsafe households, identity-flagged event titles in a browsing history are a real risk. Serves people already out, already networked, already in major cities.</p>
+        <p class="mt-3"><span class="serif-soft text-gold">Verdict —</span> Pass.</p>
+      </div>
+    </div>
+
+    <p class="text-lg leading-relaxed">
+      <span class="serif-soft text-gold">What we decided —</span> four-way pass. We didn't adopt it. The judges named what we were already half-thinking but hadn't articulated, and gave us the language to say why — to ourselves and to the partners asking.
+    </p>
+  </div>
+</section>
+
+<!-- WHAT'S TRANSFERABLE -->
+<section class="py-20 border-b-4 border-gold/40 bg-abyss/40">
+  <div class="max-w-4xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// the pattern</p>
+    <h2 class="display-xl text-[clamp(32px,5vw,56px)] mb-8">What travels.</h2>
+
+    <p class="text-lg leading-relaxed mb-8">
+      The software doesn't travel — your stack and values aren't ours, and shouldn't be. The shape does:
+    </p>
+
+    <ol class="space-y-5 text-[17px] leading-relaxed">
+      <li><span class="font-mono text-[11px] uppercase tracking-widest text-gold mr-2">01</span> Name your values, <em class="serif-soft text-gold">specifically</em>. Not "ethical" or "community-first" — what specifically do you mean? Which lines won't you cross?</li>
+      <li><span class="font-mono text-[11px] uppercase tracking-widest text-gold mr-2">02</span> Name a small council of judges. Three to five. Each one asks one question. Real names — people whose actual positions you're invoking, so the question carries weight.</li>
+      <li><span class="font-mono text-[11px] uppercase tracking-widest text-gold mr-2">03</span> Write a prompt for each judge that asks their question with your context. Run it against AI tools you trust.</li>
+      <li><span class="font-mono text-[11px] uppercase tracking-widest text-gold mr-2">04</span> Read the verdicts together. Disagreement is the point — it surfaces the trade-off.</li>
+      <li><span class="font-mono text-[11px] uppercase tracking-widest text-gold mr-2">05</span> Decide and record the caveats. The judges don't decide; you do. Their job is to make the trade-off visible.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- THE LIMITS -->
+<section class="py-20 border-b-4 border-gold/40">
+  <div class="max-w-4xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// what it doesn't do</p>
+    <h2 class="display-xl text-[clamp(32px,5vw,56px)] mb-8">The limits — honestly.</h2>
+
+    <ul class="space-y-5 text-[17px] leading-relaxed">
+      <li class="border-l-2 border-gold/40 pl-5">Dreamcatcher is decision <em class="serif-soft text-gold">support</em>. It doesn't decide. We do.</li>
+      <li class="border-l-2 border-gold/40 pl-5">The judges are tuned to BLKOUT's values and tech stack. They'd give your org wrong answers — fast.</li>
+      <li class="border-l-2 border-gold/40 pl-5">It's slow on purpose. Five judges, multiple rounds, ten-to-thirty minutes per tool. Speed isn't the point; legibility of the trade-off is.</li>
+      <li class="border-l-2 border-gold/40 pl-5">It doesn't catch surprise. A tool can pass every judge and still fail in deployment. The judges only see what you brief them on.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- COST TO MAINTAIN -->
+<section class="py-20 border-b-4 border-gold/40 bg-abyss/40">
+  <div class="max-w-4xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// the cost</p>
+    <h2 class="display-xl text-[clamp(32px,5vw,56px)] mb-8">What it actually takes.</h2>
+
+    <ul class="space-y-5 text-[17px] leading-relaxed">
+      <li class="border-l-2 border-gold/40 pl-5">Initial build: ~<span class="text-gold">3 days</span> once the tech stack and codebase are legible and the wishlist is compiled. Judge prompts, scoring shape, output format.</li>
+      <li class="border-l-2 border-gold/40 pl-5">Ongoing curation: designed for low maintenance — review prompts when values shift, watch for drift, add context occasionally.</li>
+      <li class="border-l-2 border-gold/40 pl-5">API spend: <span class="text-gold">£2-5/month</span> depending on usage.</li>
+      <li class="border-l-2 border-gold/40 pl-5">The unmeasured cost: discipline to actually run decisions through it, not skip when we're in a hurry.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INVITATION -->
+<section class="py-24 border-b-4 border-gold/40">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-6">// invitation</p>
+    <h2 class="display-xl text-[clamp(32px,5vw,56px)] mb-8">If the pattern's useful,<br>let's talk.</h2>
+    <p class="text-lg leading-relaxed max-w-2xl mx-auto mb-10">
+      We're not productising Dreamcatcher. What we offer is conversation — about what AI-assisted ethical decision-making could look like inside <em class="serif-soft text-gold">your</em> stack, against <em class="serif-soft text-gold">your</em> values. Bring a decision you're stuck on; we'll bring what we've learned.
+    </p>
+    <a href="/#survey" class="font-mono text-sm uppercase tracking-widest px-8 py-4 bg-gold text-obsidian border-4 border-gold hover:bg-gold-light hover:border-gold-light transition-colors inline-block">
+      Say yes to a conversation →
+    </a>
+  </div>
+</section>
+
+<footer class="py-10">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <p class="font-mono text-[11px] uppercase tracking-widest text-cream-muted">
+      <a href="https://dreamcatcher.blkoutuk.cloud" class="text-gold hover:text-gold-light">dreamcatcher.blkoutuk.cloud</a> ·
+      <a href="/" class="text-gold hover:text-gold-light">/commons</a> ·
+      BLKOUT UK
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

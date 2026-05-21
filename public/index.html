@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Commons — BLKOUT UK</title>
+<meta name="description" content="An invitation to other Black queer–led organisations: shared infrastructure for the people our own organisations miss. Three examples, three tiers, no signature today.">
+
+<link rel="icon" type="image/png" href="/blkout-sigil-gold.png">
+<link rel="apple-touch-icon" href="/blkout-sigil-gold.png">
+
+<meta property="og:title" content="The Commons — BLKOUT UK">
+<meta property="og:description" content="Shared infrastructure for the people our own organisations miss. An invitation, not a pitch.">
+<meta property="og:image" content="/blkout-sigil-gold.png">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          obsidian:      '#0a0a14',
+          abyss:         '#14141f',
+          'purple-shadow': '#2d1b3e',
+          'purple-deep': '#4a1942',
+          gold:          '#d4af37',
+          'gold-light':  '#ffd700',
+          cream:         '#f5f1e8',
+          'cream-muted': '#a8a195',
+          baldwin:       '#c94f4f',
+          murray:        '#b88dff',
+          rustin:        '#4fc9a6',
+          rivera:        '#e85d9e',
+          newton:        '#ffb84d',
+        },
+        fontFamily: {
+          display: ['"Work Sans"', 'sans-serif'],
+          body:    ['"Work Sans"', 'sans-serif'],
+          serif:   ['"Fraunces"', 'serif'],
+          mono:    ['"IBM Plex Mono"', 'monospace'],
+        }
+      }
+    }
+  }
+</script>
+<style type="text/tailwindcss">
+  @layer base {
+    html, body { background: #0a0a14; color: #f5f1e8; font-family: 'Work Sans', sans-serif; }
+    ::selection { background: #d4af37; color: #0a0a14; }
+  }
+  @layer components {
+    .display-xl  { @apply font-display font-black uppercase tracking-tight leading-[0.85]; }
+    .serif-soft  { @apply font-serif italic text-cream-muted; }
+    .gold-rule   { @apply h-[4px] w-full bg-gold; }
+    .gold-frame  { @apply border-4 border-gold; }
+    .em-dash::before { content: "—"; @apply text-gold font-black pr-3; }
+    .tag {
+      @apply inline-block font-mono text-[11px] uppercase tracking-widest
+             border border-gold/50 text-gold px-3 py-[3px];
+    }
+    .glow-gold {
+      box-shadow: 0 0 0 1px #d4af37, 0 0 40px -8px rgba(212,175,55,0.4);
+    }
+    .noise::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(74,25,66,0.6), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(212,175,55,0.08), transparent 55%);
+      pointer-events: none;
+    }
+    .card-hover {
+      @apply transition-all duration-200;
+    }
+    .card-hover:hover {
+      @apply -translate-x-1 -translate-y-1;
+    }
+  }
+</style>
+</head>
+<body class="min-h-screen antialiased">
+
+<!-- NAV ------------------------------------------------------- -->
+<header class="relative z-20 border-b-4 border-gold/80 bg-obsidian/95 backdrop-blur">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-4 group">
+      <img src="/blkout-sigil-gold.png" alt="BLKOUT" class="h-12 w-12 group-hover:scale-105 transition-transform duration-300">
+      <div class="flex flex-col leading-none">
+        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">blkout</span>
+        <span class="display-xl text-xl text-cream group-hover:text-gold transition-colors mt-1">The Commons</span>
+      </div>
+    </a>
+    <nav class="flex items-center gap-6 md:gap-8 font-display font-black uppercase tracking-widest text-xs">
+      <a href="#examples" class="text-cream hover:text-gold transition-colors">Examples</a>
+      <a href="#dreamcatcher" class="text-cream hover:text-gold transition-colors">Dreamcatcher</a>
+      <a href="#resources" class="text-cream hover:text-gold transition-colors">Resources</a>
+      <a href="#survey" class="text-cream hover:text-gold transition-colors hidden md:inline">Reply</a>
+    </nav>
+  </div>
+</header>
+
+<main class="relative">
+
+<!-- HERO ------------------------------------------------------ -->
+<section class="relative noise overflow-hidden border-b-4 border-gold/40">
+  <div class="relative max-w-7xl mx-auto px-6 py-24 md:py-32">
+    <span class="tag">BLKOUT · The Commons · v0.2</span>
+    <h1 class="display-xl text-cream text-[clamp(56px,10vw,148px)] mt-8">
+      Building the<br>
+      <span class="text-gold">commons.</span><br>
+      <span class="serif-soft text-cream-muted text-[clamp(22px,3vw,38px)] normal-case tracking-normal leading-snug block mt-6 max-w-3xl">
+        liberation technology for us, by us.
+      </span>
+    </h1>
+    <div class="gold-rule mt-12 max-w-md"></div>
+    <p class="mt-10 max-w-2xl text-lg md:text-xl text-cream/90 leading-relaxed">
+      Most of our organisations can tell you who we reach. The harder question is who we're <span class="font-serif italic text-gold-light">not</span> reaching. BLKOUT's response is three concrete things — built around the people our own organisations miss. None of this is a bid. It's an honest scan of what shared infrastructure for us could look like.
+    </p>
+    <div class="flex flex-wrap gap-4 mt-12">
+      <a href="#examples" class="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-widest px-6 py-4 bg-gold text-obsidian border-4 border-gold hover:bg-gold-light hover:border-gold-light transition-colors">
+        Read the case
+      </a>
+      <a href="#survey" class="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-widest px-6 py-4 border-4 border-gold text-gold hover:bg-gold hover:text-obsidian transition-colors">
+        Five questions →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- THREE EXAMPLES -------------------------------------------- -->
+<section id="examples" class="relative py-24 md:py-32 border-b-4 border-gold/40">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// why now</p>
+    <h2 class="display-xl text-cream text-[clamp(40px,6vw,84px)]">
+      Users,<br><span class="text-gold">not organisations.</span>
+    </h2>
+    <p class="mt-10 max-w-3xl text-lg text-cream/85 leading-relaxed">
+      Three things BLKOUT built around the same question — <span class="font-serif italic text-gold-light">who are we not reaching</span> — and all three costing less than one consultant's scoping document. They're the proof that a shared infrastructure for us is possible, not the thing itself. The thing itself is what we'd build together.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-6 mt-16">
+
+      <!-- Compass -->
+      <article class="card-hover bg-abyss border-4 border-gold/60 p-8 hover:border-gold">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-rustin border border-rustin px-2 py-[2px] inline-block">01 · Heritage</p>
+        <h3 class="display-xl text-cream text-3xl mt-5">Ivor's Compass</h3>
+        <p class="serif-soft text-gold-light text-lg mt-3">a life's legacy in a different light.</p>
+        <p class="mt-5 text-cream-muted text-[15px] leading-relaxed">
+          100 Black queer men in their 40s–70s — most of whom don't come to our events. Seven directions of a compass, built around commissioned essays from four Black queer writers. AI made a one-day workshop feel like six.
+        </p>
+        <a href="https://compass.blkoutuk.com" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-widest text-gold mt-6 inline-block hover:text-gold-light">
+          compass.blkoutuk.com →
+        </a>
+      </article>
+
+      <!-- Critical Frequency -->
+      <article class="card-hover bg-abyss border-4 border-gold/60 p-8 hover:border-gold">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-baldwin border border-baldwin px-2 py-[2px] inline-block">02 · Frame</p>
+        <h3 class="display-xl text-cream text-3xl mt-5">Critical Frequency</h3>
+        <p class="serif-soft text-gold-light text-lg mt-3">feather boas and spreadsheets.</p>
+        <p class="mt-5 text-cream-muted text-[15px] leading-relaxed">
+          Pride-season visibility is not the same as the visibility that moves commissioners. Phase 1: name the gap. Phase 2 (Pride in London): a two-track campaign — boas at the front, numbers at the back — arriving on the same day.
+        </p>
+        <a href="https://critical.blkoutuk.com" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-widest text-gold mt-6 inline-block hover:text-gold-light">
+          critical.blkoutuk.com →
+        </a>
+      </article>
+
+      <!-- AIvor -->
+      <article class="card-hover bg-abyss border-4 border-gold/60 p-8 hover:border-gold">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-murray border border-murray px-2 py-[2px] inline-block">03 · Platform</p>
+        <h3 class="display-xl text-cream text-3xl mt-5">AIvor</h3>
+        <p class="serif-soft text-gold-light text-lg mt-3">an ancestor-guide, and platform anchor.</p>
+        <p class="mt-5 text-cream-muted text-[15px] leading-relaxed">
+          Named after Ivor Cummings. Not a crisis service, not therapy. A careful, present companion at 2am that holds the space until a human arrives.
+        </p>
+        <a href="https://blkoutuk.com" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-widest text-gold mt-6 inline-block hover:text-gold-light">
+          blkoutuk.com →
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- RENTED → COMMON ------------------------------------------- -->
+<section class="relative py-24 md:py-32 border-b-4 border-gold/40 bg-abyss/40">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// the picture</p>
+    <h2 class="display-xl text-cream text-[clamp(40px,6vw,84px)]">
+      From <span class="text-gold">rented ground</span><br>to common ground.
+    </h2>
+    <p class="mt-10 max-w-3xl text-lg text-cream/85 leading-relaxed">
+      One page. The problem on the left — community life built on infrastructure we don't own. The model in the middle — a <span class="font-serif italic text-gold-light">data co-operative</span> running on Ubuntu and Umoja. The path on the right — moving from extractive to relational stewardship.
+    </p>
+    <figure class="mt-12 gold-frame bg-obsidian">
+      <img src="/rental-to-common-ground.jpg"
+           alt="From Rented Ground to Common Ground: Building a Black Queer Digital Commons. Three-column infographic comparing platform dependency, the digital commons solution built on Ubuntu and Umoja principles, and the path to community ownership."
+           class="block w-full h-auto">
+      <figcaption class="font-mono text-[11px] uppercase tracking-widest text-gold border-t-4 border-gold px-6 py-3 bg-obsidian">
+        Infographic · A Black Queer Digital Commons
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- DREAMCATCHER TIERED OFFER --------------------------------- -->
+<section id="dreamcatcher" class="relative py-24 md:py-32 border-b-4 border-gold/40">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// the offer</p>
+    <h2 class="display-xl text-cream text-[clamp(40px,6vw,84px)]">
+      Dreamcatcher —<br>and what it <span class="text-gold">actually offers you.</span>
+    </h2>
+    <p class="mt-10 max-w-3xl text-lg text-cream/85 leading-relaxed">
+      Dreamcatcher is BLKOUT's AI-tool evaluation engine. It works for us because it knows our tech stack and our core values — and that's also why it can't usefully be opened up as software to other organisations. Your stack and your values aren't ours; they shouldn't be.
+    </p>
+    <p class="serif-soft text-cream-muted mt-4 max-w-2xl text-lg">
+      what travels isn't the tool, it's the pattern.
+    </p>
+    <p class="mt-4 max-w-3xl text-lg text-cream/85 leading-relaxed">
+      What we want to share with peer orgs is how an organisation might use AI tools to strengthen its own ethical decision-making — slowly, in its own context, against its own values. Three ways to engage.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-6 mt-16">
+
+      <!-- TIER 1 -->
+      <article class="card-hover bg-abyss border-4 border-gold p-8 relative">
+        <div class="absolute -top-4 left-6 bg-obsidian px-3 py-[2px]">
+          <span class="font-mono text-[11px] uppercase tracking-widest text-gold-light">Tier 1 · Read it</span>
+        </div>
+        <p class="font-mono text-[10px] uppercase tracking-widest text-rivera mt-2">The walkthrough</p>
+        <h3 class="display-xl text-cream text-3xl mt-3">See how it works.</h3>
+        <p class="serif-soft text-rivera text-lg mt-3">pattern, limits, costs.</p>
+        <p class="mt-5 text-cream-muted text-[15px] leading-relaxed">
+          A walk-through of how we use Dreamcatcher inside BLKOUT — the five named judges, a real decision worked through, what the tool can't do, and what it costs us to maintain. Honest about the limits.
+        </p>
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cream-muted mt-6 leading-relaxed">
+          You can also open the live tool,<br>but it judges against <em class="font-serif italic text-cream">our</em> values,<br>not yours.
+        </p>
+        <a href="/walkthrough.html" class="font-mono text-xs uppercase tracking-widest text-obsidian bg-gold hover:bg-gold-light px-5 py-3 mt-7 inline-block">
+          Read the walkthrough →
+        </a>
+      </article>
+
+      <!-- TIER 2 -->
+      <article class="card-hover bg-abyss border-4 border-gold/60 p-8 relative hover:border-gold">
+        <div class="absolute -top-4 left-6 bg-obsidian px-3 py-[2px]">
+          <span class="font-mono text-[11px] uppercase tracking-widest text-cream-muted">Tier 2 · One conversation</span>
+        </div>
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cream-muted mt-2">
+          <span class="text-baldwin">Baldwin</span> · <span class="text-murray">Murray</span> · <span class="text-rustin">Rustin</span> · <span class="text-rivera">Rivera</span>
+        </p>
+        <h3 class="display-xl text-cream text-3xl mt-3">Apply the pattern.</h3>
+        <p class="serif-soft text-gold-light text-lg mt-3">your context, your values.</p>
+        <p class="mt-5 text-cream-muted text-[15px] leading-relaxed">
+          A 45-minute call about what AI-assisted ethical decision-making could look like in <em class="font-serif italic text-cream">your</em> stack, against <em class="font-serif italic text-cream">your</em> values. You bring the decision you're stuck on; we bring what we've learned. No follow-up commitment.
+        </p>
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cream-muted mt-6 leading-relaxed">
+          We're not productising<br>Dreamcatcher. We're offering<br>what we know.
+        </p>
+        <span class="font-mono text-xs uppercase tracking-widest text-gold/60 mt-7 inline-block">
+          Tick Tier 2 below
+        </span>
+      </article>
+
+      <!-- TIER 3 -->
+      <article class="card-hover bg-abyss border-4 border-gold/60 p-8 relative hover:border-gold">
+        <div class="absolute -top-4 left-6 bg-obsidian px-3 py-[2px]">
+          <span class="font-mono text-[11px] uppercase tracking-widest text-cream-muted">Tier 3 · Cohort</span>
+        </div>
+        <p class="font-mono text-[10px] uppercase tracking-widest text-newton mt-2">Build-your-own</p>
+        <h3 class="display-xl text-cream text-3xl mt-3">Build your own.</h3>
+        <p class="serif-soft text-newton text-lg mt-3">shared learning, not shared software.</p>
+        <p class="mt-5 text-cream-muted text-[15px] leading-relaxed">
+          A small group of orgs each building their own version — in their own stack, against their own values. Monthly call. We host the first three. The collective layer is the pattern-sharing, not a common platform.
+        </p>
+        <p class="font-mono text-[10px] uppercase tracking-widest text-cream-muted mt-6 leading-relaxed">
+          Named for the practice,<br>not the tool:<br><em class="font-serif italic text-cream">building survival programmes<br>as political education.</em>
+        </p>
+        <span class="font-mono text-xs uppercase tracking-widest text-gold/60 mt-7 inline-block">
+          Tick Tier 3 below
+        </span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES (NEW) ------------------------------------------- -->
+<section id="resources" class="relative py-24 md:py-32 border-b-4 border-gold/40 bg-abyss/40">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// background</p>
+    <h2 class="display-xl text-cream text-[clamp(40px,6vw,84px)]">
+      Read,<br><span class="text-gold">listen,</span> decide.
+    </h2>
+    <p class="mt-10 max-w-3xl text-lg text-cream/85 leading-relaxed">
+      Two short reports, a podcast, and a companion deck. The case for a Black queer digital commons, in long form, in audio, and in slides. Make your own informed choice before the five questions below.
+    </p>
+
+    <!-- Podcast — prominent player (Google Drive embed) -->
+    <div class="mt-16 gold-frame bg-obsidian p-8 md:p-10 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 opacity-[0.04] pointer-events-none">
+        <img src="/blkout-sigil-gold.png" alt="" class="w-full h-full">
+      </div>
+      <div class="relative grid md:grid-cols-[auto_1fr] gap-8 items-start">
+        <div class="w-32 h-32 md:w-40 md:h-40 bg-purple-deep border-4 border-gold flex items-center justify-center shrink-0">
+          <img src="/blkout-sigil-gold.png" alt="" class="w-3/4 h-3/4">
+        </div>
+        <div class="min-w-0">
+          <p class="font-mono text-[11px] uppercase tracking-widest text-gold-light">Podcast · NotebookLM Deep Dive · 22 MB</p>
+          <h3 class="display-xl text-cream text-2xl md:text-3xl mt-2">Digital sovereignty for UK Black queer groups.</h3>
+          <p class="serif-soft text-cream-muted text-base mt-3">a conversation generated from the two reports below — listen first if you prefer hearing to reading.</p>
+          <div class="mt-5 border-2 border-gold/60">
+            <iframe
+              src="https://drive.google.com/file/d/1dn3-pI2NxrhO_zRp74xzYtGQZEDCkgKM/preview"
+              width="100%" height="80" frameborder="0" allow="autoplay"
+              title="Digital sovereignty for UK Black queer groups — podcast"></iframe>
+          </div>
+          <p class="font-mono text-[10px] uppercase tracking-widest text-cream-muted mt-3">
+            Hosted on Drive ·
+            <a href="https://drive.google.com/file/d/1dn3-pI2NxrhO_zRp74xzYtGQZEDCkgKM/view" target="_blank" rel="noopener" class="text-gold hover:text-gold-light">open in new tab →</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports + Slide deck — three cards -->
+    <div class="grid md:grid-cols-3 gap-6 mt-10">
+
+      <a href="/reports/01-data-capitalism-algorithmic-racism.pdf" class="card-hover bg-abyss border-4 border-gold/60 p-7 hover:border-gold block">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-gold">PDF · Report 01 — the diagnosis</p>
+        <h3 class="display-xl text-cream text-2xl mt-3">Data Capitalism &amp; Algorithmic Racism</h3>
+        <p class="serif-soft text-cream-muted text-sm mt-3">from the plantation to the platform — and the visibility missing in between.</p>
+        <p class="mt-5 text-cream-muted text-[14px] leading-relaxed">
+          Names the twin harms — extraction <em>and</em> erasure — at work in the same digital infrastructure. Black queer communities are surveilled by it and uncounted by it at the same time. Why the absence of data is a political problem, not a comms problem.
+        </p>
+        <span class="font-mono text-xs uppercase tracking-widest text-gold mt-6 inline-block">Download PDF →</span>
+      </a>
+
+      <a href="/reports/02-strategic-roadmap.pdf" class="card-hover bg-abyss border-4 border-gold/60 p-7 hover:border-gold block">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-gold">PDF · Report 02 — the response</p>
+        <h3 class="display-xl text-cream text-2xl mt-3">Strategic Roadmap</h3>
+        <p class="serif-soft text-cream-muted text-sm mt-3">what we're building, and what travels.</p>
+        <p class="mt-5 text-cream-muted text-[14px] leading-relaxed">
+          Three case studies in our own context — <em>Ivor's Compass</em>, <em>Critical Frequency</em>, <em>AIvor</em> — and the broader pattern: the Dreamcatcher council, the governance frameworks we inherit, the sustainability politics, and the three-tier invitation to peer organisations.
+        </p>
+        <span class="font-mono text-xs uppercase tracking-widest text-gold mt-6 inline-block">Download PDF →</span>
+      </a>
+
+      <div class="card-hover bg-abyss border-4 border-gold/60 p-7 hover:border-gold flex flex-col">
+        <p class="font-mono text-[11px] uppercase tracking-widest text-gold">Slides · Companion deck</p>
+        <h3 class="display-xl text-cream text-2xl mt-3">Sovereign Digital Commons</h3>
+        <p class="serif-soft text-cream-muted text-sm mt-3">the case in slides — one screen at a time.</p>
+        <p class="mt-5 text-cream-muted text-[14px] leading-relaxed">
+          The headline argument and three-tier offer in deck form. Use it as a leave-behind, screen-share at a peer-org meeting, or the talking-points version of the two reports above.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3 items-center">
+          <a href="https://drive.google.com/file/d/1a8rMTQOKz4U2C1rXNm1nhGSvwLFBuBRS/view" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-widest text-obsidian bg-gold hover:bg-gold-light px-4 py-2.5">
+            Open deck →
+          </a>
+          <button type="button" data-share-trigger
+                  class="font-mono text-xs uppercase tracking-widest text-gold border-2 border-gold/60 hover:border-gold hover:bg-gold/10 px-4 py-2 inline-flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            Share
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SURVEY ---------------------------------------------------- -->
+<section id="survey" class="relative py-24 md:py-32 border-b-4 border-gold/40">
+  <div class="max-w-4xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// the five questions</p>
+    <h2 class="display-xl text-cream text-[clamp(40px,6vw,84px)]">
+      Five questions.<br>Then <span class="text-gold">the ask.</span>
+    </h2>
+    <p class="mt-10 text-lg text-cream/85 leading-relaxed">
+      None of this is a bid. It's an honest scan of where peer orgs are starting from. Short answers are perfect. If a question doesn't fit your work, skip it. We'll reply within a week. We won't add you to any list without asking.
+    </p>
+
+    <form action="mailto:rob@blkoutuk.com" method="post" enctype="text/plain" id="commons-form" class="mt-12 bg-abyss border-4 border-gold/60 p-8 md:p-10">
+
+      <div class="grid md:grid-cols-3 gap-5 mb-8">
+        <div>
+          <label for="org" class="font-mono text-[11px] uppercase tracking-widest text-gold block mb-2">Your organisation</label>
+          <input type="text" id="org" name="organisation" placeholder="org name (or 'solo')" required
+                 class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+        </div>
+        <div>
+          <label for="name" class="font-mono text-[11px] uppercase tracking-widest text-gold block mb-2">Your name</label>
+          <input type="text" id="name" name="name" required
+                 class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+        </div>
+        <div>
+          <label for="email" class="font-mono text-[11px] uppercase tracking-widest text-gold block mb-2">Email</label>
+          <input type="email" id="email" name="email" required
+                 class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+        </div>
+      </div>
+
+      <div class="gold-rule mb-8 opacity-40"></div>
+
+      <div class="space-y-7">
+        <div>
+          <p class="font-display font-black text-cream text-lg mb-2"><span class="text-gold">1.</span> Who are your people?</p>
+          <input type="text" name="q1_reach" placeholder="describe in one sentence who your work actually reaches today."
+                 class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+        </div>
+        <div>
+          <p class="font-display font-black text-cream text-lg mb-2"><span class="text-gold">2.</span> Who gets missed?</p>
+          <textarea name="q2_missed" rows="3" placeholder="who is outside your current channels that you think should be inside them? what's the pattern?"
+                    class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60"></textarea>
+        </div>
+        <div>
+          <p class="font-display font-black text-cream text-lg mb-3"><span class="text-gold">3.</span> What AI tools are you already using?</p>
+          <div class="flex flex-wrap gap-2">
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q3_tools" value="ChatGPT" class="hidden"> ChatGPT
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q3_tools" value="Claude" class="hidden"> Claude
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q3_tools" value="Gemini" class="hidden"> Gemini
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q3_tools" value="Canva AI" class="hidden"> Canva AI
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q3_tools" value="Midjourney" class="hidden"> Midjourney
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q3_tools" value="Notion AI" class="hidden"> Notion AI
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q3_tools" value="Perplexity" class="hidden"> Perplexity
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q3_tools" value="None" class="hidden"> None yet
+            </label>
+          </div>
+          <input type="text" name="q3_other" placeholder="other — and the one thing it's genuinely saved you"
+                 class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 mt-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+        </div>
+        <div>
+          <p class="font-display font-black text-cream text-lg mb-2"><span class="text-gold">4.</span> What data invisibility hurts your work most?</p>
+          <textarea name="q4_invisibility" rows="3" placeholder="what's uncounted, under-funded, or un-asked in your area that you wish commissioners had to answer for?"
+                    class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60"></textarea>
+        </div>
+        <div>
+          <p class="font-display font-black text-cream text-lg mb-2"><span class="text-gold">5.</span> If we shared one tool across our orgs next quarter, what would be most useful?</p>
+          <textarea name="q5_shared_tool" rows="3" placeholder="events registry? safeguarding-triage assistant? shared CRM? something else entirely?"
+                    class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60"></textarea>
+        </div>
+        <div>
+          <p class="font-display font-black text-cream text-lg mb-3"><span class="text-gold">6.</span> A specific question on ticketing.</p>
+          <p class="serif-soft text-cream-muted text-sm mb-5">we're researching how Black queer organisers handle event ticketing, with a view to building shared infrastructure that fits how events actually run. aggregate findings shared back with respondents.</p>
+
+          <p class="font-mono text-[11px] uppercase tracking-widest text-gold block mb-2">6a. which platform(s) do you currently use?</p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q6a_platforms" value="Eventbrite" class="hidden"> Eventbrite
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q6a_platforms" value="Outsavvy" class="hidden"> Outsavvy
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q6a_platforms" value="Humanitix" class="hidden"> Humanitix
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q6a_platforms" value="Zeffy" class="hidden"> Zeffy
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q6a_platforms" value="TicketTailor" class="hidden"> TicketTailor
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q6a_platforms" value="Own site" class="hidden"> our own site
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q6a_platforms" value="Google Forms" class="hidden"> google forms
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest border-2 border-gold/40 text-cream px-3 py-2 cursor-pointer hover:border-gold has-[:checked]:bg-gold has-[:checked]:text-obsidian has-[:checked]:border-gold">
+              <input type="checkbox" name="q6a_platforms" value="None" class="hidden"> instagram + word of mouth
+            </label>
+          </div>
+
+          <p class="font-mono text-[11px] uppercase tracking-widest text-gold block mb-2">6b. roughly what proportion of your events are free, subsidised (£1-£5), or full-price?</p>
+          <input type="text" name="q6b_mix" placeholder="e.g. 70% free / 20% subsidised / 10% full-price"
+                 class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 mb-6 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+
+          <p class="font-mono text-[11px] uppercase tracking-widest text-gold block mb-2">6c. how many events did you run in the last year, by size? (rough counts)</p>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
+            <div>
+              <p class="font-mono text-[11px] text-cream-muted mb-1">under 20</p>
+              <input type="number" min="0" name="q6c_under20" placeholder="0"
+                     class="w-full bg-obsidian border-2 border-gold/40 text-cream px-3 py-2 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+            </div>
+            <div>
+              <p class="font-mono text-[11px] text-cream-muted mb-1">20-50</p>
+              <input type="number" min="0" name="q6c_20to50" placeholder="0"
+                     class="w-full bg-obsidian border-2 border-gold/40 text-cream px-3 py-2 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+            </div>
+            <div>
+              <p class="font-mono text-[11px] text-cream-muted mb-1">50-100</p>
+              <input type="number" min="0" name="q6c_50to100" placeholder="0"
+                     class="w-full bg-obsidian border-2 border-gold/40 text-cream px-3 py-2 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+            </div>
+            <div>
+              <p class="font-mono text-[11px] text-cream-muted mb-1">100-150</p>
+              <input type="number" min="0" name="q6c_100to150" placeholder="0"
+                     class="w-full bg-obsidian border-2 border-gold/40 text-cream px-3 py-2 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+            </div>
+            <div>
+              <p class="font-mono text-[11px] text-cream-muted mb-1">150+</p>
+              <input type="number" min="0" name="q6c_150plus" placeholder="0"
+                     class="w-full bg-obsidian border-2 border-gold/40 text-cream px-3 py-2 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+            </div>
+          </div>
+
+          <p class="font-mono text-[11px] uppercase tracking-widest text-gold block mb-2">6d. rank your top 3 reasons for using your current ticketing platform from this list</p>
+          <div class="space-y-2">
+            <select name="q6d_rank1" class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none">
+              <option value="">— 1st (most important) —</option>
+              <option value="Legitimacy signal">legitimacy / "this is real" signal to attendees</option>
+              <option value="RSVP and capacity">RSVP capture and capacity management</option>
+              <option value="Discovery">reaching new audiences via platform discovery</option>
+              <option value="Reminder emails">confirmation and reminder emails reducing no-shows</option>
+              <option value="Payments">payment processing</option>
+              <option value="Mailing list">building your mailing list</option>
+              <option value="Funder reporting">attendee data for funder reporting</option>
+              <option value="Other">other (note in box below)</option>
+            </select>
+            <select name="q6d_rank2" class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none">
+              <option value="">— 2nd —</option>
+              <option value="Legitimacy signal">legitimacy / "this is real" signal to attendees</option>
+              <option value="RSVP and capacity">RSVP capture and capacity management</option>
+              <option value="Discovery">reaching new audiences via platform discovery</option>
+              <option value="Reminder emails">confirmation and reminder emails reducing no-shows</option>
+              <option value="Payments">payment processing</option>
+              <option value="Mailing list">building your mailing list</option>
+              <option value="Funder reporting">attendee data for funder reporting</option>
+              <option value="Other">other (note in box below)</option>
+            </select>
+            <select name="q6d_rank3" class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none">
+              <option value="">— 3rd —</option>
+              <option value="Legitimacy signal">legitimacy / "this is real" signal to attendees</option>
+              <option value="RSVP and capacity">RSVP capture and capacity management</option>
+              <option value="Discovery">reaching new audiences via platform discovery</option>
+              <option value="Reminder emails">confirmation and reminder emails reducing no-shows</option>
+              <option value="Payments">payment processing</option>
+              <option value="Mailing list">building your mailing list</option>
+              <option value="Funder reporting">attendee data for funder reporting</option>
+              <option value="Other">other (note in box below)</option>
+            </select>
+            <input type="text" name="q6d_other" placeholder="if 'other' selected above, describe in one sentence"
+                   class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60">
+          </div>
+        </div>
+      </div>
+
+      <div class="gold-rule my-8 opacity-40"></div>
+
+      <p class="font-display font-black uppercase tracking-tight text-cream text-xl mb-4">Pick the tier(s) you'd want in on</p>
+      <div class="space-y-3">
+        <label class="card-hover flex items-start gap-4 p-5 border-2 border-gold/40 hover:border-gold cursor-pointer has-[:checked]:bg-gold/10 has-[:checked]:border-gold">
+          <input type="checkbox" name="reg" value="tier-1-case-study" class="mt-1 accent-gold">
+          <div>
+            <p class="font-display font-black uppercase text-cream text-lg">Tier 1 — Send me the walkthrough</p>
+            <p class="text-cream-muted text-sm mt-1">How we use Dreamcatcher inside BLKOUT — the pattern, the limits, and what it costs to maintain. <span class="serif-soft">read it, decide if the pattern's useful.</span></p>
+          </div>
+        </label>
+        <label class="card-hover flex items-start gap-4 p-5 border-2 border-gold/40 hover:border-gold cursor-pointer has-[:checked]:bg-gold/10 has-[:checked]:border-gold">
+          <input type="checkbox" name="reg" value="tier-2-conversation" class="mt-1 accent-gold">
+          <div>
+            <p class="font-display font-black uppercase text-cream text-lg">Tier 2 — I'd like a conversation</p>
+            <p class="text-cream-muted text-sm mt-1">A 45-min call about applying AI-assisted ethical decision-making in our context. We bring the pattern, you bring the decision.</p>
+          </div>
+        </label>
+        <label class="card-hover flex items-start gap-4 p-5 border-2 border-gold/40 hover:border-gold cursor-pointer has-[:checked]:bg-gold/10 has-[:checked]:border-gold">
+          <input type="checkbox" name="reg" value="tier-3-cohort" class="mt-1 accent-gold">
+          <div>
+            <p class="font-display font-black uppercase text-cream text-lg">Tier 3 — Build-your-own cohort</p>
+            <p class="text-cream-muted text-sm mt-1">A small group of orgs each building their own version. Shared learning, not shared software. Monthly call.</p>
+          </div>
+        </label>
+      </div>
+
+      <div class="mt-8">
+        <label for="notes" class="font-mono text-[11px] uppercase tracking-widest text-gold block mb-2">Anything else we should know?</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="optional. concerns, existing partnerships, red lines, ideas."
+                  class="w-full bg-obsidian border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none placeholder:text-cream-muted/60"></textarea>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-6 mt-10">
+        <button type="submit" class="font-mono text-sm uppercase tracking-widest px-8 py-4 bg-gold text-obsidian border-4 border-gold hover:bg-gold-light hover:border-gold-light transition-colors">
+          Send it over
+        </button>
+        <p class="serif-soft text-sm max-w-md">
+          we'll reply within a week. data held by blkout uk only, for this conversation.
+        </p>
+      </div>
+
+      <div id="form-status" aria-live="polite" class="mt-5 text-cream-muted text-sm"></div>
+    </form>
+
+    <div id="form-thanks" class="hidden mt-8 gold-frame bg-abyss p-8">
+      <h3 class="display-xl text-cream text-3xl">Thank you.</h3>
+      <p class="mt-3 text-cream/85">We've got your answers. Someone from BLKOUT will reply within a week. In the meantime, read <a href="/walkthrough.html" class="text-gold hover:text-gold-light">the Dreamcatcher walkthrough</a> or head back to <a href="/" class="text-gold hover:text-gold-light">blkoutuk.com</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSE ----------------------------------------------------- -->
+<section class="relative py-24 md:py-32 border-b-4 border-gold/40 bg-abyss">
+  <div class="max-w-5xl mx-auto px-6 text-center">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-8">// the close</p>
+    <p class="font-serif italic text-cream text-3xl md:text-5xl leading-tight max-w-4xl mx-auto">
+      "Small isn't the problem to fix. The connections between us are the point."
+    </p>
+    <p class="font-mono text-[11px] uppercase tracking-widest text-cream-muted mt-8">
+      — Rob Berkeley · BLKOUT UK
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER ---------------------------------------------------- -->
+<footer class="relative border-t-4 border-gold/60 bg-obsidian overflow-hidden">
+  <img src="/blkout-sigil-gold.png" alt="" aria-hidden="true" class="absolute -right-20 -bottom-20 w-[28rem] opacity-[0.06] pointer-events-none select-none">
+  <div class="relative max-w-7xl mx-auto px-6 py-14 grid gap-10 md:grid-cols-3">
+    <div class="flex items-start gap-4">
+      <img src="/blkout-sigil-gold.png" alt="BLKOUT" class="h-16 w-16 shrink-0">
+      <div>
+        <p class="display-xl text-3xl text-cream">BLKOUT</p>
+        <p class="serif-soft text-sm mt-2">a community benefit society for and by Black queer men in the uk.</p>
+      </div>
+    </div>
+    <div class="font-mono text-xs uppercase tracking-widest text-cream-muted leading-relaxed">
+      <p class="text-gold">The Commons</p>
+      <p class="mt-1">an invitation to peer organisations</p>
+      <p class="mt-1">users, not orgs &nbsp;·&nbsp; v0.2</p>
+    </div>
+    <div class="md:text-right space-y-1 font-mono text-xs uppercase tracking-widest text-cream-muted">
+      <p><a href="https://blkoutuk.com" class="text-gold hover:text-gold-light">blkoutuk.com</a></p>
+      <p><a href="https://dreamcatcher.blkoutuk.cloud" class="text-gold hover:text-gold-light">dreamcatcher.blkoutuk.cloud</a></p>
+      <p><a href="https://critical.blkoutuk.com" class="text-gold hover:text-gold-light">critical.blkoutuk.com</a></p>
+      <p><a href="https://compass.blkoutuk.com" class="text-gold hover:text-gold-light">compass.blkoutuk.com</a></p>
+      <p class="mt-3"><a href="mailto:rob@blkoutuk.com" class="text-gold hover:text-gold-light">rob@blkoutuk.com</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- SHARE MODAL ----------------------------------------------- -->
+<div id="share-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-obsidian/85 backdrop-blur"
+     role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+  <div class="relative bg-obsidian gold-frame max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 md:p-8">
+    <button type="button" id="share-modal-close" aria-label="Close share dialog"
+            class="absolute top-3 right-3 w-9 h-9 flex items-center justify-center text-cream-muted hover:text-gold border-2 border-transparent hover:border-gold/60">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">// share</p>
+    <h3 id="share-modal-title" class="display-xl text-cream text-3xl mt-2">Share the slides.</h3>
+    <p class="serif-soft text-cream-muted mt-2">spread the deck — and the case for shared infrastructure.</p>
+
+    <label for="share-message" class="font-mono text-[11px] uppercase tracking-widest text-gold block mt-6 mb-2">Suggested message — edit freely</label>
+    <textarea id="share-message" rows="4"
+              class="w-full bg-abyss border-2 border-gold/40 text-cream px-4 py-3 focus:border-gold focus:outline-none text-sm leading-relaxed">BLKOUT just published their case for a Black queer digital commons — slides, two reports, and a podcast on shared infrastructure for and by us. Worth a look:</textarea>
+
+    <label for="share-link" class="font-mono text-[11px] uppercase tracking-widest text-gold block mt-5 mb-2">Link being shared</label>
+    <div class="flex gap-2">
+      <input type="text" id="share-link" readonly
+             value="https://drive.google.com/file/d/1a8rMTQOKz4U2C1rXNm1nhGSvwLFBuBRS/view"
+             class="flex-1 bg-abyss border-2 border-gold/40 text-cream px-3 py-2.5 text-xs font-mono focus:border-gold focus:outline-none">
+      <button type="button" id="share-copy"
+              class="font-mono text-xs uppercase tracking-widest text-obsidian bg-gold hover:bg-gold-light px-4 py-2.5 whitespace-nowrap">
+        Copy
+      </button>
+    </div>
+    <p id="share-copy-status" class="font-mono text-[10px] uppercase tracking-widest text-rustin mt-2 h-3" aria-live="polite"></p>
+
+    <div class="flex flex-wrap gap-2 mt-5">
+      <a id="share-x" href="#" target="_blank" rel="noopener"
+         class="font-mono text-xs uppercase tracking-widest text-cream border-2 border-gold/40 hover:border-gold hover:bg-gold/10 px-4 py-2.5 inline-flex items-center gap-2">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X
+      </a>
+      <a id="share-linkedin" href="#" target="_blank" rel="noopener"
+         class="font-mono text-xs uppercase tracking-widest text-cream border-2 border-gold/40 hover:border-gold hover:bg-gold/10 px-4 py-2.5 inline-flex items-center gap-2">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        LinkedIn
+      </a>
+      <a id="share-whatsapp" href="#" target="_blank" rel="noopener"
+         class="font-mono text-xs uppercase tracking-widest text-cream border-2 border-gold/40 hover:border-gold hover:bg-gold/10 px-4 py-2.5 inline-flex items-center gap-2">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        WhatsApp
+      </a>
+      <a id="share-email" href="#"
+         class="font-mono text-xs uppercase tracking-widest text-cream border-2 border-gold/40 hover:border-gold hover:bg-gold/10 px-4 py-2.5 inline-flex items-center gap-2">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+    </div>
+
+    <div class="mt-7 pt-6 border-t border-gold/30 flex items-center gap-5">
+      <div class="shrink-0 bg-cream p-2 border-2 border-gold/60">
+        <img id="share-qr" src="" alt="QR code linking to the slide deck" width="120" height="120" class="block">
+      </div>
+      <div>
+        <p class="font-mono text-[11px] uppercase tracking-widest text-gold">For in-person sharing</p>
+        <p class="serif-soft text-cream-muted text-sm mt-1">show this on your screen — the recipient can scan it straight from your laptop or phone.</p>
+      </div>
+    </div>
+
+    <div class="mt-6 flex items-center justify-between gap-4 flex-wrap">
+      <button type="button" id="share-toggle-target"
+              class="font-mono text-[11px] uppercase tracking-widest text-cream-muted hover:text-gold underline underline-offset-4 decoration-gold/40 hover:decoration-gold">
+        Or share the full commons page instead →
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var form = document.getElementById('commons-form');
+  if (!form) return;
+  var status = document.getElementById('form-status');
+  var thanks = document.getElementById('form-thanks');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (status) status.textContent = 'Sending…';
+
+    var fd = new FormData(form);
+    var payload = {
+      organisation: fd.get('organisation') || '',
+      name: fd.get('name') || '',
+      email: fd.get('email') || '',
+      q1_reach: fd.get('q1_reach') || '',
+      q2_missed: fd.get('q2_missed') || '',
+      q3_tools: fd.getAll('q3_tools'),
+      q3_other: fd.get('q3_other') || '',
+      q4_invisibility: fd.get('q4_invisibility') || '',
+      q5_shared_tool: fd.get('q5_shared_tool') || '',
+      q6a_platforms: fd.getAll('q6a_platforms'),
+      q6b_mix: fd.get('q6b_mix') || '',
+      q6c_under20: fd.get('q6c_under20') || '',
+      q6c_20to50: fd.get('q6c_20to50') || '',
+      q6c_50to100: fd.get('q6c_50to100') || '',
+      q6c_100to150: fd.get('q6c_100to150') || '',
+      q6c_150plus: fd.get('q6c_150plus') || '',
+      q6d_rank1: fd.get('q6d_rank1') || '',
+      q6d_rank2: fd.get('q6d_rank2') || '',
+      q6d_rank3: fd.get('q6d_rank3') || '',
+      q6d_other: fd.get('q6d_other') || '',
+      reg_interests: fd.getAll('reg'),
+      notes: fd.get('notes') || '',
+      source: 'commons-landing-v0.3'
+    };
+
+    fetch('https://blkoutuk.com/api/commons-interest', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){
+      if (!r.ok) throw new Error('bad_status_' + r.status);
+      return r.json();
+    })
+    .then(function(){
+      form.style.display = 'none';
+      if (thanks) { thanks.classList.remove('hidden'); }
+      if (status) status.textContent = '';
+    })
+    .catch(function(err){
+      console.error('commons-interest POST failed:', err);
+      if (status) status.innerHTML = 'Something went wrong sending this. Opening your mail client as a backup — press <strong>Send</strong> there.';
+      try { form.submit(); } catch(e){}
+    });
+  });
+})();
+
+// SHARE MODAL --------------------------------------------------
+(function(){
+  var modal       = document.getElementById('share-modal');
+  if (!modal) return;
+  var closeBtn    = document.getElementById('share-modal-close');
+  var msgEl       = document.getElementById('share-message');
+  var linkEl      = document.getElementById('share-link');
+  var copyBtn     = document.getElementById('share-copy');
+  var copyStatus  = document.getElementById('share-copy-status');
+  var qrImg       = document.getElementById('share-qr');
+  var toggleBtn   = document.getElementById('share-toggle-target');
+  var xLink       = document.getElementById('share-x');
+  var liLink      = document.getElementById('share-linkedin');
+  var waLink      = document.getElementById('share-whatsapp');
+  var emLink      = document.getElementById('share-email');
+
+  var SLIDES_URL  = 'https://drive.google.com/file/d/1a8rMTQOKz4U2C1rXNm1nhGSvwLFBuBRS/view';
+  var COMMONS_URL = 'https://commons.blkoutuk.com/';
+  var currentTarget = 'slides'; // 'slides' | 'commons'
+
+  function setTarget(target){
+    currentTarget = target;
+    var url = target === 'slides' ? SLIDES_URL : COMMONS_URL;
+    linkEl.value = url;
+    qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=0&data=' + encodeURIComponent(url);
+    qrImg.alt = target === 'slides' ? 'QR code linking to the slide deck' : 'QR code linking to the commons page';
+    toggleBtn.textContent = target === 'slides'
+      ? 'Or share the full commons page instead →'
+      : '← Or share just the slide deck';
+    refreshShareLinks();
+  }
+
+  function refreshShareLinks(){
+    var msg = (msgEl.value || '').trim();
+    var url = linkEl.value;
+    var withUrl = msg ? (msg + ' ' + url) : url;
+    xLink.href  = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(withUrl);
+    liLink.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
+    waLink.href = 'https://wa.me/?text=' + encodeURIComponent(withUrl);
+    emLink.href = 'mailto:?subject=' + encodeURIComponent('From BLKOUT — the case for a digital commons')
+                + '&body=' + encodeURIComponent(msg + '\n\n' + url);
+  }
+
+  function openModal(){
+    // Native share on mobile / supported devices
+    if (navigator.share && /Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+      var msg = (msgEl.value || '').trim();
+      navigator.share({
+        title: 'Sovereign Digital Commons — BLKOUT',
+        text: msg,
+        url: SLIDES_URL
+      }).catch(function(){ showModal(); });
+      return;
+    }
+    showModal();
+  }
+
+  function showModal(){
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    // Focus the close button for keyboard users
+    setTimeout(function(){ closeBtn.focus(); }, 0);
+  }
+
+  function closeModal(){
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+    if (copyStatus) copyStatus.textContent = '';
+  }
+
+  // Wire up triggers
+  document.querySelectorAll('[data-share-trigger]').forEach(function(btn){
+    btn.addEventListener('click', openModal);
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+  });
+
+  msgEl.addEventListener('input', refreshShareLinks);
+
+  toggleBtn.addEventListener('click', function(){
+    setTarget(currentTarget === 'slides' ? 'commons' : 'slides');
+  });
+
+  copyBtn.addEventListener('click', function(){
+    linkEl.select();
+    var ok = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(linkEl.value);
+        ok = true;
+      } else {
+        ok = document.execCommand('copy');
+      }
+    } catch(e) { ok = false; }
+    copyStatus.textContent = ok ? 'Link copied to clipboard.' : 'Couldn\'t copy — select the link manually.';
+    setTimeout(function(){ if (copyStatus) copyStatus.textContent = ''; }, 3000);
+  });
+
+  // Initialise
+  setTarget('slides');
+})();
+
+// Q6D — RANK UNIQUENESS (disable already-picked options in other dropdowns)
+(function(){
+  var ranks = ['q6d_rank1','q6d_rank2','q6d_rank3']
+    .map(function(name){ return document.querySelector('select[name="' + name + '"]'); })
+    .filter(Boolean);
+  if (ranks.length !== 3) return;
+
+  function refresh(){
+    var picked = ranks.map(function(r){ return r.value; });
+    ranks.forEach(function(sel, idx){
+      Array.from(sel.options).forEach(function(opt){
+        if (!opt.value) return; // never disable the placeholder
+        var takenElsewhere = picked.some(function(v, i){ return i !== idx && v && v === opt.value; });
+        opt.disabled = takenElsewhere;
+      });
+    });
+  }
+
+  ranks.forEach(function(r){ r.addEventListener('change', refresh); });
+  refresh();
+})();
+</script>
+
+</body>
+</html>
