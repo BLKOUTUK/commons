@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+<meta name="robots" content="noindex,nofollow">
+<title>A new BLKOUT — teleprompter</title>
+<style>
+  :root {
+    --bg: #000;
+    --text: #f5e9d3;
+    --gold: #d4af37;
+    --gold-light: #e8c860;
+    --muted: rgba(245,233,211,0.5);
+    --heavy: #fff;
+    --base-size: 32px;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: contain;
+  }
+  body {
+    font-size: var(--base-size);
+    line-height: 1.55;
+    padding: 5rem 1.25rem 50vh;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  /* Sticky controls */
+  .controls {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    padding: 0.75rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    font-size: 14px;
+  }
+  .controls button {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.5rem 0.85rem;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    touch-action: manipulation;
+    min-width: 44px;
+  }
+  .controls button:active {
+    background: var(--gold);
+    color: #000;
+  }
+  .controls .play {
+    background: var(--gold);
+    color: #000;
+    border-color: var(--gold);
+    min-width: 90px;
+  }
+  .controls .play.scrolling {
+    background: #c00;
+    border-color: #c00;
+    color: #fff;
+  }
+  .controls .speed {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    min-width: 50px;
+    text-align: center;
+    font-size: 13px;
+  }
+  /* Script content */
+  .line {
+    margin: 0;
+    padding: 0.35em 0;
+  }
+  .line.breath {
+    height: 0.6em;
+  }
+  .beat {
+    margin: 3rem 0 1.5rem;
+    padding: 0.75rem 0;
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    color: var(--gold);
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-weight: 700;
+    text-align: center;
+  }
+  .pause {
+    margin: 2rem 0;
+    text-align: center;
+    color: var(--gold);
+    letter-spacing: 1em;
+    font-size: 0.75em;
+  }
+  .heavy {
+    color: var(--heavy);
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .lorde {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+  .quote {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+  .close-thanks {
+    color: var(--heavy);
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-top: 1.5em;
+  }
+  /* Tap to pause overlay (entire screen below controls) */
+  .tap-zone {
+    position: fixed;
+    top: 60px; bottom: 0; left: 0; right: 0;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .tap-zone.armed { pointer-events: auto; }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button class="play" id="play">▶ Start</button>
+  <button id="slower">−</button>
+  <span class="speed" id="speed">1.0×</span>
+  <button id="faster">+</button>
+  <button id="bigger">A+</button>
+  <button id="smaller">A−</button>
+  <button id="top">⤴</button>
+</div>
+
+<div class="tap-zone" id="tapZone"></div>
+
+<main id="script">
+
+<div class="beat">Open · 30 sec</div>
+
+<p class="line">I want to start</p>
+<p class="line">by naming the room.</p>
+<p class="line breath"></p>
+<p class="line">Most of us in this conversation</p>
+<p class="line">share a lineage.</p>
+<p class="line breath"></p>
+<p class="line">We are not strangers to each other's work,</p>
+<p class="line">even when we have not met.</p>
+<p class="line breath"></p>
+<p class="line">The names we hold in common —</p>
+<p class="line">Lorde, Beam, Hemphill, Marsha,</p>
+<p class="line">Cummings, Alcock —</p>
+<p class="line">they are not slogans.</p>
+<p class="line breath"></p>
+<p class="line">They are how we know who we are</p>
+<p class="line">when the institutions around us forget.</p>
+<p class="line breath"></p>
+<p class="line">So before I tell you about a new BLKOUT,</p>
+<p class="line">I want to acknowledge</p>
+<p class="line">that whatever is new</p>
+<p class="line">is built from what we already share.</p>
+
+<div class="pause">● ● ●</div>
+
+<div class="beat">Beat 1 · What's structurally new · 90 sec</div>
+
+<p class="line">BLKOUT is now a Community Benefit Society</p>
+<p class="line">with an asset lock.</p>
+<p class="line breath"></p>
+<p class="line">That's a legal form.</p>
+<p class="line breath"></p>
+<p class="line">What it means in plain English</p>
+<p class="line">is that the things this organisation owns —</p>
+<p class="line">the platform, the relationships,</p>
+<p class="line">the data, the infrastructure —</p>
+<p class="line breath"></p>
+<p class="line">cannot be sold off,</p>
+<p class="line">can't be turned into private equity,</p>
+<p class="line">can't be extracted from the community.</p>
+<p class="line breath"></p>
+<p class="line">They have to stay in trust</p>
+<p class="line">for the community we exist to serve.</p>
+<p class="line breath"></p>
+<p class="line">It sounds technical.</p>
+<p class="line">It is not technical.</p>
+<p class="line breath"></p>
+<p class="line">It is a structural answer</p>
+<p class="line">to a question we keep being asked to forget:</p>
+<p class="line quote">who does this actually belong to.</p>
+<p class="line breath"></p>
+<p class="line">Take house music.</p>
+<p class="line breath"></p>
+<p class="line">It started in Black queer basements in Chicago,</p>
+<p class="line">in clubs we built</p>
+<p class="line">because no one else would have us.</p>
+<p class="line breath"></p>
+<p class="line">We made it.</p>
+<p class="line breath"></p>
+<p class="line">The mainstream took it —</p>
+<p class="line">turned it into Ibiza,</p>
+<p class="line">into a dance-music industry</p>
+<p class="line">that no longer remembers</p>
+<p class="line">whose hands first cut the records.</p>
+<p class="line breath"></p>
+<p class="line">We kept making.</p>
+<p class="line breath"></p>
+<p class="line">The lesson is in the pattern:</p>
+<p class="line heavy">don't rely on the mainstream.</p>
+<p class="line heavy">Be an owner, not a customer.</p>
+<p class="line breath"></p>
+<p class="line">Particularly when your concerns and theirs</p>
+<p class="line">do not always align.</p>
+<p class="line breath"></p>
+<p class="line">The CBS is what it looks like</p>
+<p class="line">when you take that lesson seriously</p>
+<p class="line">and write it into the deed.</p>
+<p class="line breath"></p>
+<p class="line">Audre Lorde:</p>
+<p class="line heavy lorde">the master's tools</p>
+<p class="line heavy lorde">will never dismantle the master's house.</p>
+
+<div class="pause">● ● ●</div>
+
+<div class="beat">Beat 2 · The cooperative shift · 2 min</div>
+
+<p class="line">The second thing that's new</p>
+<p class="line">is what we now think BLKOUT is <em>for</em>.</p>
+<p class="line breath"></p>
+<p class="line">For a long time,</p>
+<p class="line">BLKOUT was a platform.</p>
+<p class="line">A magazine, a content engine,</p>
+<p class="line">a broadcast voice.</p>
+<p class="line breath"></p>
+<p class="line">That work mattered.</p>
+<p class="line breath"></p>
+<p class="line">It also assumed we could speak for,</p>
+<p class="line">or at, our community</p>
+<p class="line">from a single position.</p>
+<p class="line breath"></p>
+<p class="line">The honest reading after ten years is:</p>
+<p class="line">that's not what most of you need.</p>
+<p class="line breath"></p>
+<p class="line">What most of you need</p>
+<p class="line">is each other.</p>
+<p class="line breath"></p>
+<p class="line">So the shift is from broadcast</p>
+<p class="line heavy">to cooperative infrastructure.</p>
+<p class="line breath"></p>
+<p class="line">Not BLKOUT as the loudest voice in the room —</p>
+<p class="line heavy">BLKOUT as one of the rooms.</p>
+<p class="line breath"></p>
+<p class="line">What that looks like in practice</p>
+<p class="line">is at commons.blkoutuk.com.</p>
+<p class="line breath"></p>
+<p class="line">The argument is two things.</p>
+<p class="line breath"></p>
+<p class="line heavy">Community control.</p>
+<p class="line breath"></p>
+<p class="line">Corporate platforms extract our data,</p>
+<p class="line">throttle our reach,</p>
+<p class="line">and decide quarterly</p>
+<p class="line">whether our communities are worth keeping.</p>
+<p class="line breath"></p>
+<p class="line">Owning the digital space we organise in</p>
+<p class="line">is the difference between</p>
+<p class="line">hosting a conversation</p>
+<p class="line">and renting permission to have one.</p>
+<p class="line breath"></p>
+<p class="line">When the platforms tell us who they are —</p>
+<p class="line">through what they monetise,</p>
+<p class="line">who they ban, what they de-rank —</p>
+<p class="line">we should believe them.</p>
+<p class="line breath"></p>
+<p class="line heavy">Shared resources.</p>
+<p class="line breath"></p>
+<p class="line">Each of our organisations is small.</p>
+<p class="line">The tools we need are not.</p>
+<p class="line breath"></p>
+<p class="line">Building them alone</p>
+<p class="line">burns the time the mission needs.</p>
+<p class="line breath"></p>
+<p class="line">Pooling what we build</p>
+<p class="line">leaves more capacity for the work —</p>
+<p class="line breath"></p>
+<p class="line">and the things we make together</p>
+<p class="line">belong to all of us.</p>
+<p class="line breath"></p>
+<p class="line">That's the proposition.</p>
+<p class="line breath"></p>
+<p class="line">The operationalisation is a kit,</p>
+<p class="line">also at the commons site.</p>
+<p class="line">Two parts.</p>
+<p class="line breath"></p>
+<p class="line">A values-surfacing exercise</p>
+<p class="line">that produces an operational values document</p>
+<p class="line">for your org —</p>
+<p class="line">not virtues, refusals.</p>
+<p class="line breath"></p>
+<p class="line">And a council of six historical judges —</p>
+<p class="line">Lorde, Beam, Marsha,</p>
+<p class="line">Cummings, Alcock, Fashanu —</p>
+<p class="line breath"></p>
+<p class="line">that you can run any platform,</p>
+<p class="line">partnership or tool against.</p>
+<p class="line breath"></p>
+<p class="line">The council does not decide.</p>
+<p class="line">You do.</p>
+<p class="line breath"></p>
+<p class="line">The kit just makes sure</p>
+<p class="line">the question gets asked</p>
+<p class="line">in the voices of people</p>
+<p class="line">who held the line in their own time.</p>
+<p class="line breath"></p>
+<p class="line">Audre Lorde's line is the floor:</p>
+<p class="line heavy lorde">without community</p>
+<p class="line heavy lorde">there is no liberation.</p>
+<p class="line breath"></p>
+<p class="line">The kit is what we have built</p>
+<p class="line">so that the line</p>
+<p class="line">is not just inspiration.</p>
+
+<div class="pause">● ● ●</div>
+
+<div class="beat">Beat 3 · The cultural reset · 90 sec</div>
+
+<p class="line">The third change</p>
+<p class="line">is in our cultural programme,</p>
+<p class="line">and it is the one I want to be</p>
+<p class="line">most honest about.</p>
+<p class="line breath"></p>
+<p class="line">For a while,</p>
+<p class="line">the curation defaulted to celebration.</p>
+<p class="line breath"></p>
+<p class="line">Flamboyance, brightness, joy —</p>
+<p class="line">the easy register.</p>
+<p class="line breath"></p>
+<p class="line">That is real,</p>
+<p class="line">and it is half the truth.</p>
+<p class="line breath"></p>
+<p class="line">The other half is grief, mourning, anger,</p>
+<p class="line">the AIDS-era losses,</p>
+<p class="line">the people we keep losing now.</p>
+<p class="line breath"></p>
+<p class="line">A programme that only speaks</p>
+<p class="line">the upbeat language</p>
+<p class="line">is a programme that is lying</p>
+<p class="line">about Black queer life.</p>
+<p class="line breath"></p>
+<p class="line">So we are deliberately</p>
+<p class="line">engaging the difficult.</p>
+<p class="line breath"></p>
+<p class="line">Tongues Untied</p>
+<p class="line">alongside Paris Is Burning.</p>
+<p class="line">Hemphill's grief</p>
+<p class="line">alongside the dancefloor.</p>
+<p class="line breath"></p>
+<p class="line">And while we are being honest:</p>
+<p class="line breath"></p>
+<p class="line">BLKOUT exists for Black queer men in the UK.</p>
+<p class="line heavy">Plural.</p>
+<p class="line breath"></p>
+<p class="line">Across generations,</p>
+<p class="line">across diasporas,</p>
+<p class="line">across the parts of our community</p>
+<p class="line">that get easily disappeared</p>
+<p class="line">inside that single phrase.</p>
+<p class="line breath"></p>
+<p class="line">We are not narrowing</p>
+<p class="line">to the comfortable subset.</p>
+<p class="line breath"></p>
+<p class="line">We are not pretending</p>
+<p class="line">the rest aren't here.</p>
+
+<div class="pause">● ● ●</div>
+
+<div class="beat">Close · 30 sec</div>
+
+<p class="line">So that is what is new.</p>
+<p class="line breath"></p>
+<p class="line">A structure that cannot sell us out.</p>
+<p class="line">A shift from broadcasting to cooperating.</p>
+<p class="line">A cultural register that holds</p>
+<p class="line">the shade alongside the light.</p>
+<p class="line breath"></p>
+<p class="line">We have been navigating this kind of moment</p>
+<p class="line">together for decades.</p>
+<p class="line">Reactively, mostly.</p>
+<p class="line breath"></p>
+<p class="line">The proposal is to do it</p>
+<p class="line heavy">on purpose this time.</p>
+<p class="line breath"></p>
+<p class="line">The kit is free,</p>
+<p class="line">the conversation is open,</p>
+<p class="line breath"></p>
+<p class="line">and the question we are sitting with</p>
+<p class="line">is whether we could be stronger together this time —</p>
+<p class="line">not as a slogan,</p>
+<p class="line">as a working practice.</p>
+<p class="line breath"></p>
+<p class="line heavy lorde">Without community</p>
+<p class="line heavy lorde">there is no liberation.</p>
+<p class="line breath"></p>
+<p class="line">Lorde insisted on what that requires:</p>
+<p class="line">we</p>
+<p class="line lorde">"nurture creative parts of each other</p>
+<p class="line lorde">without always understanding</p>
+<p class="line lorde">what will be created."</p>
+<p class="line breath"></p>
+<p class="line">We do not know what you'll build with this.</p>
+<p class="line breath"></p>
+<p class="line heavy">That's the point.</p>
+<p class="line breath"></p>
+<p class="line close-thanks">Thank you.</p>
+
+</main>
+
+<script>
+(function(){
+  let scrolling = false;
+  let speed = 1.0;
+  let lastTs = 0;
+  let rafId = null;
+  // px per second at speed 1.0 — calibrated for ~150 wpm at base font
+  const BASE_PX_PER_SEC = 45;
+
+  const playBtn = document.getElementById('play');
+  const speedLabel = document.getElementById('speed');
+  const tapZone = document.getElementById('tapZone');
+
+  function step(ts) {
+    if (!scrolling) return;
+    if (lastTs) {
+      const dt = (ts - lastTs) / 1000;
+      window.scrollBy(0, BASE_PX_PER_SEC * speed * dt);
+    }
+    lastTs = ts;
+    rafId = requestAnimationFrame(step);
+  }
+
+  function start() {
+    if (scrolling) return;
+    scrolling = true;
+    lastTs = 0;
+    playBtn.textContent = '⏸ Pause';
+    playBtn.classList.add('scrolling');
+    tapZone.classList.add('armed');
+    rafId = requestAnimationFrame(step);
+  }
+  function stop() {
+    scrolling = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+    playBtn.textContent = '▶ Start';
+    playBtn.classList.remove('scrolling');
+    tapZone.classList.remove('armed');
+  }
+  function toggle() { scrolling ? stop() : start(); }
+
+  function updateSpeed(delta) {
+    speed = Math.max(0.3, Math.min(3.0, speed + delta));
+    speedLabel.textContent = speed.toFixed(1) + '×';
+  }
+  function updateSize(delta) {
+    const root = document.documentElement;
+    const cur = parseInt(getComputedStyle(root).getPropertyValue('--base-size'));
+    const next = Math.max(18, Math.min(56, cur + delta));
+    root.style.setProperty('--base-size', next + 'px');
+  }
+
+  playBtn.addEventListener('click', toggle);
+  document.getElementById('slower').addEventListener('click', () => updateSpeed(-0.1));
+  document.getElementById('faster').addEventListener('click', () => updateSpeed(0.1));
+  document.getElementById('bigger').addEventListener('click', () => updateSize(2));
+  document.getElementById('smaller').addEventListener('click', () => updateSize(-2));
+  document.getElementById('top').addEventListener('click', () => {
+    stop();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  tapZone.addEventListener('click', toggle);
+
+  // Spacebar = toggle (for desktop preview)
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') { e.preventDefault(); toggle(); }
+    if (e.key === 'ArrowUp') updateSpeed(0.1);
+    if (e.key === 'ArrowDown') updateSpeed(-0.1);
+  });
+})();
+</script>
+
+</body>
+</html>
