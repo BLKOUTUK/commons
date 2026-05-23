@@ -35,10 +35,16 @@
 <body>
 
 <!-- HEADER -->
-<header class="border-b-2 border-gold/40 py-6">
-  <div class="max-w-5xl mx-auto px-6 flex items-center justify-between">
+<header class="relative z-20 border-b-4 border-gold/80 bg-obsidian/95 backdrop-blur">
+  <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-4 group">
+      <img src="/blkout-sigil-gold.png" alt="BLKOUT" class="h-12 w-12 group-hover:scale-105 transition-transform duration-300">
+      <div class="flex flex-col leading-none">
+        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">blkout · the commons</span>
+        <span class="display-xl text-xl text-cream group-hover:text-gold transition-colors mt-1">The Kit</span>
+      </div>
+    </a>
     <a href="/" class="font-mono text-xs uppercase tracking-widest text-cream-muted hover:text-gold">← back to commons</a>
-    <span class="font-mono text-[11px] uppercase tracking-widest text-gold">// the kit</span>
   </div>
 </header>
 
@@ -253,13 +259,21 @@
   </div>
 </section>
 
-<footer class="py-10">
-  <div class="max-w-5xl mx-auto px-6 text-center">
-    <p class="font-mono text-[11px] uppercase tracking-widest text-cream-muted">
-      <a href="/" class="text-gold hover:text-gold-light">commons.blkoutuk.com</a> ·
-      <a href="/walkthrough.html" class="text-gold hover:text-gold-light">walkthrough</a> ·
-      BLKOUT UK
-    </p>
+<footer class="relative border-t-4 border-gold/60 bg-obsidian overflow-hidden">
+  <img src="/blkout-sigil-gold.png" alt="" aria-hidden="true" class="absolute -right-20 -bottom-20 w-[28rem] opacity-[0.06] pointer-events-none select-none">
+  <div class="relative max-w-5xl mx-auto px-6 py-12 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10">
+    <div class="flex items-start gap-4">
+      <img src="/blkout-sigil-gold.png" alt="BLKOUT" class="h-14 w-14 shrink-0">
+      <div>
+        <p class="display-xl text-2xl text-cream">BLKOUT</p>
+        <p class="serif-soft text-sm mt-1 text-cream/80">a community benefit society for and by Black queer men in the UK.</p>
+      </div>
+    </div>
+    <div class="font-mono text-[11px] uppercase tracking-widest text-cream-muted md:ml-auto md:text-right space-y-1">
+      <p><a href="/" class="text-gold hover:text-gold-light">commons.blkoutuk.com</a></p>
+      <p><a href="/walkthrough.html" class="text-gold hover:text-gold-light">walkthrough</a> · <a href="mailto:commons@blkoutuk.com" class="text-gold hover:text-gold-light">commons@blkoutuk.com</a></p>
+      <p>BLKOUT UK · The Commons Kit v0.1</p>
+    </div>
   </div>
 </footer>
 
