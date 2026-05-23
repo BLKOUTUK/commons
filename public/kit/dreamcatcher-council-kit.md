@@ -98,9 +98,24 @@ First openly gay British professional footballer; came out in *The Sun* in 1990.
 
 ---
 
+## The wishlist
+
+The council needs something to chew on. Maintain a **wishlist** — a working spreadsheet log of every tool, partnership, platform or capability your organisation is considering. Each row is one item; the council evaluates one row at a time; verdicts and your decisions get logged back into the same sheet.
+
+The point is that ideas don't get lost between conversations, and the council builds an audit trail you can return to.
+
+The kit ships with two files for this:
+
+- [`wishlist-template.csv`](/kit/wishlist-template.csv) — twelve-column spreadsheet template with three sample rows (decided, pending, shelved). Open in Sheets / Excel / Numbers, make a copy, fill in your own.
+- [`wishlist-guide.md`](/kit/wishlist-guide.md) — how to use the template: what goes on the wishlist, how to prioritise, weekly/monthly/quarterly/annual cadence, and the v1 → v2 evolution path (hardwiring the wishlist into the council's context so verdicts compound over time).
+
+**The flow:** item lands on the wishlist → reaches the top of your priorities → you run it through the meta-prompt below → paste the council summary back into the spreadsheet → your team decides → record the decision. Same artefact, full history, returnable.
+
+---
+
 ## The meta-prompt
 
-Paste the block below into your LLM of choice. Fill the three bracketed sections from your own organisation's work.
+Paste the block below into your LLM of choice. Fill the three bracketed sections from your own organisation's work. The proposal to assess is typically one row from your wishlist.
 
 ```
 SYSTEM: You are convening a council of six historical judges to assess a
