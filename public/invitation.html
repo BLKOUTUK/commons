@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+<meta name="robots" content="noindex,nofollow">
+<title>Commons invitation — teleprompter</title>
+<style>
+  :root {
+    --bg: #000;
+    --text: #f5e9d3;
+    --gold: #d4af37;
+    --gold-light: #e8c860;
+    --muted: rgba(245,233,211,0.5);
+    --heavy: #fff;
+    --base-size: 32px;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: contain;
+  }
+  body {
+    font-size: var(--base-size);
+    line-height: 1.55;
+    padding: 5rem 1.25rem 50vh;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  .controls {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    padding: 0.75rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    font-size: 14px;
+  }
+  .controls button {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.5rem 0.85rem;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    touch-action: manipulation;
+    min-width: 44px;
+  }
+  .controls button:active {
+    background: var(--gold);
+    color: #000;
+  }
+  .controls .play {
+    background: var(--gold);
+    color: #000;
+    border-color: var(--gold);
+    min-width: 90px;
+  }
+  .controls .play.scrolling {
+    background: #c00;
+    border-color: #c00;
+    color: #fff;
+  }
+  .controls .speed {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    min-width: 50px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .line {
+    margin: 0;
+    padding: 0.35em 0;
+  }
+  .line.breath {
+    height: 0.6em;
+  }
+  .beat {
+    margin: 3rem 0 1.5rem;
+    padding: 0.75rem 0;
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    color: var(--gold);
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-weight: 700;
+    text-align: center;
+  }
+  .pause {
+    margin: 2rem 0;
+    text-align: center;
+    color: var(--gold);
+    letter-spacing: 1em;
+    font-size: 0.75em;
+  }
+  .heavy {
+    color: var(--heavy);
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .lorde {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+  .quote {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+  .close-thanks {
+    color: var(--heavy);
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-top: 1.5em;
+  }
+  .tap-zone {
+    position: fixed;
+    top: 60px; bottom: 0; left: 0; right: 0;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .tap-zone.armed { pointer-events: auto; }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <button class="play" id="play">▶ Start</button>
+  <button id="slower">−</button>
+  <span class="speed" id="speed">1.0×</span>
+  <button id="faster">+</button>
+  <button id="bigger">A+</button>
+  <button id="smaller">A−</button>
+  <button id="top">⤴</button>
+</div>
+
+<div class="tap-zone" id="tapZone"></div>
+
+<main id="script">
+
+<div class="beat">Open · 15 sec</div>
+
+<p class="line">Hi.</p>
+<p class="line">I'm Rob, from BLKOUT —</p>
+<p class="line">and this is an invitation,</p>
+<p class="line">peer-to-peer.</p>
+<p class="line breath"></p>
+<p class="line">Two minutes.</p>
+<p class="line">No pitch.</p>
+<p class="line breath"></p>
+<p class="line">One reason.</p>
+<p class="line">And one ask.</p>
+
+<div class="beat">Why this · 60 sec</div>
+
+<p class="line lorde">Audre Lorde said it best —</p>
+<p class="line lorde">we who were not meant to survive.</p>
+<p class="line breath"></p>
+<p class="line">Five hundred years of racial capitalism</p>
+<p class="line">have tried to split us up.</p>
+<p class="line">To deny we exist or matter.</p>
+<p class="line breath"></p>
+<p class="line">To divide and conquer —</p>
+<p class="line">Africans v Caribbeans,</p>
+<p class="line">Black men v Black women,</p>
+<p class="line">baby boomer v Gen Z —</p>
+<p class="line breath"></p>
+<p class="line">anything to keep us busy</p>
+<p class="line">fighting each other,</p>
+<p class="line">and looking past the actual enemy.</p>
+
+<div class="pause">● ● ●</div>
+
+<p class="line">In that context,</p>
+<p class="line">our relationship to each other</p>
+<p class="line">is itself revolutionary.</p>
+<p class="line breath"></p>
+<p class="line">Black men loving Black men.</p>
+<p class="line">Black people loving Black people.</p>
+<p class="line">Black people retaining</p>
+<p class="line">the capacity for love at all.</p>
+
+<div class="pause">● ● ●</div>
+
+<p class="line">But love can't only be courtly —</p>
+<p class="line">heart emojis, lol.</p>
+<p class="line breath"></p>
+<p class="line">It has to be rooted in action.</p>
+<p class="line">It has to face today</p>
+<p class="line">and prepare for tomorrow.</p>
+<p class="line breath"></p>
+<p class="line">It has to continue</p>
+<p class="line">to confound the racist.</p>
+<p class="line breath"></p>
+<p class="line">The evidence will be our survival,</p>
+<p class="line heavy">our Blackness,</p>
+<p class="line heavy">our queerness,</p>
+<p class="line heavy">our joy —</p>
+<p class="line">on land and online.</p>
+
+<div class="beat">Invitation · 25 sec</div>
+
+<p class="line">BLKOUT exists for that work.</p>
+<p class="line breath"></p>
+<p class="line">We've built shared infrastructure</p>
+<p class="line">for the people</p>
+<p class="line">our own organisations don't reach —</p>
+<p class="line breath"></p>
+<p class="line">and for the questions</p>
+<p class="line">our sector hasn't been built to ask.</p>
+<p class="line breath"></p>
+<p class="line">So we've put the kit up.</p>
+<p class="line breath"></p>
+<p class="line heavy">Surface your values.</p>
+<p class="line heavy">Build your own Dreamcatcher —</p>
+<p class="line">our AI-tool evaluation council.</p>
+<p class="line heavy">Start your own digital wishlist.</p>
+<p class="line breath"></p>
+<p class="line quote">Free, no signature today.</p>
+<p class="line breath"></p>
+<p class="line">Take it.</p>
+<p class="line">Run it.</p>
+<p class="line">Tell us what you find.</p>
+
+<div class="beat">Close · 20 sec</div>
+
+<p class="line">Everything's at</p>
+<p class="line heavy">blkoutuk.com/commons —</p>
+<p class="line">the full letter,</p>
+<p class="line">the slides,</p>
+<p class="line">the podcast,</p>
+<p class="line">the case.</p>
+<p class="line breath"></p>
+<p class="line lorde">Audre Lorde reminded us —</p>
+<p class="line lorde">without community</p>
+<p class="line lorde">there is no liberation.</p>
+
+<div class="pause">● ● ●</div>
+
+<p class="line close-thanks">Let's get free.</p>
+
+</main>
+
+<script>
+(function(){
+  let scrolling = false;
+  let speed = 1.0;
+  let lastTs = 0;
+  let rafId = null;
+  const BASE_PX_PER_SEC = 45;
+
+  const playBtn = document.getElementById('play');
+  const speedLabel = document.getElementById('speed');
+  const tapZone = document.getElementById('tapZone');
+
+  function step(ts) {
+    if (!scrolling) return;
+    if (lastTs) {
+      const dt = (ts - lastTs) / 1000;
+      window.scrollBy(0, BASE_PX_PER_SEC * speed * dt);
+    }
+    lastTs = ts;
+    rafId = requestAnimationFrame(step);
+  }
+
+  function start() {
+    if (scrolling) return;
+    scrolling = true;
+    lastTs = 0;
+    playBtn.textContent = '⏸ Pause';
+    playBtn.classList.add('scrolling');
+    tapZone.classList.add('armed');
+    rafId = requestAnimationFrame(step);
+  }
+  function stop() {
+    scrolling = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+    playBtn.textContent = '▶ Start';
+    playBtn.classList.remove('scrolling');
+    tapZone.classList.remove('armed');
+  }
+  function toggle() { scrolling ? stop() : start(); }
+
+  function updateSpeed(delta) {
+    speed = Math.max(0.3, Math.min(3.0, speed + delta));
+    speedLabel.textContent = speed.toFixed(1) + '×';
+  }
+  function updateSize(delta) {
+    const root = document.documentElement;
+    const cur = parseInt(getComputedStyle(root).getPropertyValue('--base-size'));
+    const next = Math.max(18, Math.min(56, cur + delta));
+    root.style.setProperty('--base-size', next + 'px');
+  }
+
+  playBtn.addEventListener('click', toggle);
+  document.getElementById('slower').addEventListener('click', () => updateSpeed(-0.1));
+  document.getElementById('faster').addEventListener('click', () => updateSpeed(0.1));
+  document.getElementById('bigger').addEventListener('click', () => updateSize(2));
+  document.getElementById('smaller').addEventListener('click', () => updateSize(-2));
+  document.getElementById('top').addEventListener('click', () => {
+    stop();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  tapZone.addEventListener('click', toggle);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') { e.preventDefault(); toggle(); }
+    if (e.key === 'ArrowUp') updateSpeed(0.1);
+    if (e.key === 'ArrowDown') updateSpeed(-0.1);
+  });
+})();
+</script>
+
+</body>
+</html>
