@@ -140,6 +140,60 @@
   </div>
 </section>
 
+<!-- INVITATION VIDEO ------------------------------------------ -->
+<section id="invitation" class="relative py-20 md:py-28 border-b-4 border-gold/40 bg-abyss/40">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gold mb-4">// two minutes, peer to peer</p>
+    <h2 class="display-xl text-cream text-[clamp(40px,6vw,84px)]">
+      The invitation,<br><span class="text-gold">spoken aloud.</span>
+    </h2>
+    <div class="grid md:grid-cols-12 gap-10 mt-12 items-start">
+      <div class="md:col-span-5">
+        <div class="max-w-sm mx-auto md:mx-0">
+          <div class="relative aspect-[9/16] border-4 border-gold/60 bg-obsidian overflow-hidden" data-yt-facade data-yt-id="52vy8dmR6Jk">
+            <img src="/commons-invitation-poster.jpg" alt="Commons invitation — Audre Lorde, we who were not meant to survive" class="absolute inset-0 w-full h-full object-cover">
+            <button type="button" class="absolute inset-0 w-full h-full flex items-center justify-center group focus:outline-none" aria-label="Play invitation video — 2 minutes">
+              <span class="block w-20 h-20 rounded-full bg-gold/90 group-hover:bg-gold-light group-focus:ring-4 group-focus:ring-gold-light/50 flex items-center justify-center transition-all">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="#0a0a0a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+            </button>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-3 items-center">
+            <a href="https://www.youtube.com/watch?v=52vy8dmR6Jk" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-widest text-gold border-2 border-gold/60 hover:border-gold hover:bg-gold/10 px-4 py-2 inline-flex items-center gap-2">
+              Open on YouTube ↗
+            </a>
+            <a href="/commons-invitation.mp4" download class="font-mono text-xs uppercase tracking-widest text-gold border-2 border-gold/60 hover:border-gold hover:bg-gold/10 px-4 py-2 inline-flex items-center gap-2">
+              Download MP4 ↓
+            </a>
+          </div>
+          <p class="mt-3 font-mono text-[10px] uppercase tracking-widest text-cream-muted">
+            2:05 · 9:16 · 73 MB
+          </p>
+        </div>
+      </div>
+      <div class="md:col-span-7">
+        <p class="serif-soft text-cream text-lg md:text-xl leading-relaxed">
+          Rob Berkeley · two minutes · no pitch.
+        </p>
+        <p class="mt-6 text-base md:text-lg text-cream/85 leading-relaxed">
+          One reason and one ask, framed by Audre Lorde — <span class="font-serif italic text-gold-light">we who were not meant to survive</span>. Why the relationship is itself revolutionary; why love has to be rooted in action; what BLKOUT has put up for peer organisations to take and run.
+        </p>
+        <p class="mt-6 text-base md:text-lg text-cream/85 leading-relaxed">
+          If you prefer reading, the case is below in two reports and a slide deck. If you prefer listening, there's a NotebookLM podcast deep-dive further down. This is the shortest entry point — the kettle's-on version.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#examples" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-5 py-3 bg-gold text-obsidian border-2 border-gold hover:bg-gold-light hover:border-gold-light transition-colors">
+            Read the case
+          </a>
+          <a href="#dreamcatcher" class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest px-5 py-3 border-2 border-gold text-gold hover:bg-gold hover:text-obsidian transition-colors">
+            See the kit →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- THREE EXAMPLES -------------------------------------------- -->
 <section id="examples" class="relative py-24 md:py-32 border-b-4 border-gold/40">
   <div class="max-w-7xl mx-auto px-6">
@@ -950,6 +1004,24 @@
   ranks.forEach(function(r){ r.addEventListener('change', refresh); });
   refresh();
 })();
+</script>
+
+<script>
+// YouTube facade — swap poster + custom play button for iframe on click.
+// Keeps initial page weight at zero YouTube bytes until interaction.
+document.querySelectorAll('[data-yt-facade]').forEach(function(wrap){
+  wrap.addEventListener('click', function(){
+    var id = wrap.getAttribute('data-yt-id');
+    if (!id) return;
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
+    iframe.className = 'absolute inset-0 w-full h-full';
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('title', 'BLKOUT commons invitation — Rob Berkeley');
+    wrap.replaceChildren(iframe);
+  });
+});
 </script>
 
 </body>
