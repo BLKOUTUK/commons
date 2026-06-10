@@ -215,7 +215,8 @@
           <button class="chip" data-v="50plus">50+</button>
         </div>
       </div>
-      <input class="field" id="regionInput" style="margin-top:12px" maxlength="80" placeholder="region (optional) — e.g. South London, Leeds">
+      <input class="field" id="regionInput" style="margin-top:12px;text-transform:uppercase" maxlength="4" placeholder="postcode, first half only (optional) — SE15, B12, LS6" autocomplete="off">
+      <p class="mono" style="margin-top:6px;color:var(--cream-muted)">for the star charts. first half only — we never want the rest.</p>
       <button class="btn" style="margin-top:16px" id="cardBtn" onclick="leaveCard()">Transmit ✦ (anonymous, always)</button>
       <button class="btn btn-ghost" style="margin-top:8px" onclick="skipCard()">hold my data — fly on</button>
       <p class="mono" id="cardErr" style="display:none;color:#e85d5d;margin-top:10px">transmission lost in the shade cluster — try again in a moment</p>
@@ -327,10 +328,16 @@ function go(i) {
     const e = document.createElement('div');
     e.className = 'ephem';
     e.style.top = (6 + (i * 11.7) % 86) + '%';
-    const dur = 75 + (i * 23) % 70;
+    // depth: 0 = far field, 1 = right past the window
+    const depth = ((i * 41) % 97) / 97;
+    const scale = 0.55 + depth * 1.25;                  // 0.55x tiny … 1.8x looming
+    const dur = Math.round(150 - depth * 105);          // far drifts ~150s, close sails ~45s
     e.style.animationDuration = dur + 's';
     e.style.animationDelay = '-' + ((i * 37) % dur) + 's';
-    e.innerHTML = '<span>' + icon + '</span><b>' + label + '</b>';
+    e.style.opacity = (0.22 + depth * 0.42).toFixed(2); // far = faint, close = present
+    if (depth < 0.3) e.style.filter = 'blur(0.7px)';    // far field slightly out of focus
+    e.innerHTML = '<span style="font-size:' + Math.round(24 * scale) + 'px">' + icon +
+                  '</span><b style="font-size:' + Math.max(7, 8.5 * scale).toFixed(1) + 'px">' + label + '</b>';
     host.appendChild(e);
   });
 })();
@@ -605,7 +612,7 @@ async function leaveCard() {
       body: JSON.stringify({
         ring1: r1, ring2: r2, ring3: r3,
         life_stage: lifeStage,
-        region: (document.getElementById('regionInput').value || '').trim() || null,
+        region: (document.getElementById('regionInput').value || '').trim().toUpperCase().split(/\s+/)[0].slice(0, 4) || null,
         wish: (document.getElementById('wishInput').value || '').trim() || null,
         source: 'web-sky'
       })

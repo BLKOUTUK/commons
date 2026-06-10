@@ -167,8 +167,8 @@
       </fieldset>
 
       <label class="block">
-        <span class="ring-label text-xs">Region <span class="font-body font-normal normal-case text-cream-muted">(optional — e.g. South London, West Mids, Glasgow)</span></span>
-        <input class="field mt-2" type="text" name="region" maxlength="80" autocomplete="off">
+        <span class="ring-label text-xs">Postcode, first half only <span class="font-body font-normal normal-case text-cream-muted">(optional — SE15, B12, LS6. Never the rest.)</span></span>
+        <input class="field mt-2 uppercase" type="text" name="region" maxlength="4" autocomplete="off" placeholder="SE15">
       </label>
 
       <label class="block">
@@ -268,7 +268,7 @@
       ring2: parseInt(f.ring2.value, 10),
       ring3: parseInt(f.ring3.value, 10),
       life_stage: lifeStage,
-      region: f.region.value.trim() || null,
+      region: f.region.value.trim().toUpperCase().split(/\s+/)[0].slice(0, 4) || null,
       wish: f.wish.value.trim() || null,
       source: 'web'
     };
