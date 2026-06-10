@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>What's in your sky? — Constellations | BLKOUT UK</title>
+<meta name="description" content="Tap your people into the sky. Earn your constellation. Find out what kind of sky you keep — and who you want closer. Two minutes, no names, all yours.">
+
+<link rel="icon" type="image/png" href="/blkout-sigil-gold.png">
+<link rel="apple-touch-icon" href="/blkout-sigil-gold.png">
+
+<meta property="og:title" content="What's in your sky?">
+<meta property="og:description" content="Tap your people into the sky and find out what kind of constellation you keep. Two minutes. No names. All yours. — BLKOUT">
+<meta property="og:image" content="/blkout-sigil-gold.png">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --obsidian: #0a0a14; --abyss: #14141f; --gold: #d4af37; --gold-light: #ffd700;
+    --cream: #f5f1e8; --cream-muted: #a8a195;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--obsidian); color: var(--cream); font-family: 'Work Sans', sans-serif; min-height: 100%; overscroll-behavior: none; }
+  ::selection { background: var(--gold); color: var(--obsidian); }
+
+  .wrap { max-width: 480px; margin: 0 auto; padding: 0 18px 60px; position: relative; }
+  .display { font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.9; }
+  .serif { font-family: 'Fraunces', serif; font-style: italic; }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; }
+  .tag { display: inline-block; border: 1px solid rgba(212,175,55,.5); color: var(--gold); padding: 3px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; }
+
+  .btn {
+    display: block; width: 100%; padding: 16px; border: none; cursor: pointer;
+    background: var(--gold); color: var(--obsidian);
+    font-family: 'Work Sans', sans-serif; font-weight: 900; text-transform: uppercase;
+    font-size: 16px; letter-spacing: 0.04em; transition: background .15s;
+  }
+  .btn:hover { background: var(--gold-light); }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .btn-ghost {
+    background: transparent; color: var(--gold); border: 1px solid rgba(212,175,55,.5);
+    font-weight: 700; font-size: 13px; padding: 12px;
+  }
+  .btn-ghost:hover { background: rgba(212,175,55,.12); }
+
+  .screen { display: none; animation: fade .4s ease; }
+  .screen.on { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  #skyCanvas { display: block; width: 100%; touch-action: manipulation; cursor: crosshair; border: 1px solid rgba(245,241,232,.12); background: radial-gradient(circle at 50% 45%, #11111f 0%, #0a0a14 70%); }
+
+  .counter { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; color: var(--gold); }
+  .prompt-card { background: var(--abyss); border: 1px solid rgba(245,241,232,.12); padding: 18px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid rgba(212,175,55,.5); background: none; color: var(--gold); padding: 7px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; cursor: pointer; }
+  .chip.sel { background: var(--gold); color: var(--obsidian); }
+  .field { width: 100%; background: var(--abyss); border: 1px solid rgba(245,241,232,.2); color: var(--cream); padding: 12px 14px; font-family: 'Work Sans', sans-serif; font-size: 15px; }
+  .field:focus { border-color: var(--gold); outline: none; }
+
+  .step-dots { display: flex; gap: 6px; }
+  .step-dots span { width: 24px; height: 3px; background: rgba(245,241,232,.15); }
+  .step-dots span.on { background: var(--gold); }
+
+  .twinkle { animation: tw 2.4s ease-in-out infinite; }
+  @keyframes tw { 0%,100% { opacity:.4 } 50% { opacity:1 } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ===== SCREEN: intro ===== -->
+  <section class="screen on" id="s-intro">
+    <header style="padding-top:40px">
+      <a href="/constellations.html" class="mono" style="color:var(--cream-muted);text-decoration:none">← constellations · blkout</a>
+      <h1 class="display" style="font-size:54px;margin-top:28px">What's<br>in your<br><span style="color:var(--gold)">sky?</span></h1>
+      <p class="serif" style="font-size:20px;color:var(--cream-muted);margin-top:14px">tap your people into the stars.<br>find out what kind of sky you keep.</p>
+    </header>
+    <div style="margin:28px 0 22px" class="twinkle mono" id="introStars" aria-hidden="true" >✦ &nbsp; ✧ &nbsp;&nbsp; ✦ &nbsp;&nbsp;&nbsp; ✧ &nbsp; ✦</div>
+    <ul style="list-style:none;display:grid;gap:10px;color:var(--cream-muted);font-size:15px;line-height:1.5">
+      <li><span style="color:var(--gold);font-weight:700">two minutes.</span> one tap per person.</li>
+      <li><span style="color:var(--gold);font-weight:700">no names.</span> not theirs, not yours. stars only.</li>
+      <li><span style="color:var(--gold);font-weight:700">all yours.</span> you get your constellation as a picture at the end — share it or keep it.</li>
+    </ul>
+    <button class="btn" style="margin-top:28px" onclick="go(1)">Start mapping ✦</button>
+    <p style="margin-top:14px;font-size:13px;color:var(--cream-muted)">The slower, paper version — and why we're asking — lives <a href="/constellations.html" style="color:var(--gold)">here</a>.</p>
+  </section>
+
+  <!-- ===== SCREEN: the sky (rings 1-3 + gold) ===== -->
+  <section class="screen" id="s-sky">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 0 12px">
+      <div class="step-dots" id="dots"><span></span><span></span><span></span><span></span></div>
+      <span class="counter" id="tapCount">0 stars</span>
+    </div>
+
+    <div class="prompt-card" id="promptCard">
+      <p class="tag" id="ringTag">Ring 1 — the 3am people</p>
+      <p id="ringPrompt" style="margin-top:10px;font-size:16px;line-height:1.45"></p>
+      <p class="mono" style="margin-top:10px;color:var(--cream-muted)" id="ringHint">tap the sky once for each person</p>
+    </div>
+
+    <div style="position:relative;margin-top:14px">
+      <canvas id="skyCanvas" width="440" height="440"></canvas>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:14px">
+      <button class="btn btn-ghost" style="flex:1" onclick="undoStar()">undo ↩</button>
+      <button class="btn" style="flex:2" id="nextBtn" onclick="nextRing()">Next ring →</button>
+    </div>
+    <p class="mono" style="margin-top:12px;color:var(--cream-muted)">no good or bad sky. a map, not a mark scheme.</p>
+  </section>
+
+  <!-- ===== SCREEN: gold wish text ===== -->
+  <section class="screen" id="s-wish">
+    <div style="padding-top:30px">
+      <span class="tag" style="color:var(--gold-light);border-color:var(--gold-light)">the gold ring</span>
+      <h2 class="display" style="font-size:36px;margin-top:14px">Name what<br>you're building</h2>
+      <p style="margin-top:12px;color:var(--cream-muted);font-size:15px;line-height:1.5">One line, if you want. The connection your gold stars stand for.</p>
+      <input class="field" id="wishInput" style="margin-top:16px" maxlength="280" placeholder="e.g. someone to actually go to things with">
+      <button class="btn" style="margin-top:18px" onclick="reveal()">Reveal my sky ✦</button>
+      <button class="btn btn-ghost" style="margin-top:10px" onclick="reveal()">skip — just show me</button>
+    </div>
+  </section>
+
+  <!-- ===== SCREEN: reveal ===== -->
+  <section class="screen" id="s-reveal">
+    <div style="padding-top:26px;text-align:center">
+      <p class="mono" style="color:var(--cream-muted)">your sky is</p>
+      <h2 class="display" id="archName" style="font-size:44px;color:var(--gold);margin-top:8px">The Navigator</h2>
+      <p class="serif" id="archLine" style="font-size:18px;color:var(--cream-muted);margin-top:10px;line-height:1.45"></p>
+    </div>
+    <div style="margin-top:18px">
+      <canvas id="shareCanvas" width="1080" height="1350" style="width:100%;border:1px solid rgba(212,175,55,.4)"></canvas>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn" style="flex:1" id="shareBtn" onclick="shareSky()">Share your sky ✦</button>
+      <button class="btn btn-ghost" style="flex:1" onclick="downloadSky()">download</button>
+    </div>
+    <p style="margin-top:12px;font-size:14px;color:var(--cream-muted);text-align:center">best move: <span style="color:var(--cream)">send it to one of your stars.</span> that's the whole point.</p>
+
+    <!-- the card -->
+    <div class="prompt-card" style="margin-top:30px">
+      <p class="tag">one last thing — leave the card?</p>
+      <p style="margin-top:10px;font-size:14px;color:var(--cream-muted);line-height:1.5">Your star counts — just the numbers, nothing else — help BLKOUT learn what connection looks like for Black queer men in the UK, and what to build next. Anonymous by design: <span style="color:var(--cream)">it can't be traced to you, by us or anyone.</span></p>
+      <p class="mono" id="cardSummary" style="margin-top:12px;color:var(--gold)"></p>
+      <div style="margin-top:14px">
+        <p class="mono" style="color:var(--cream-muted);margin-bottom:8px">life stage (optional)</p>
+        <div class="chips" id="lifeChips">
+          <button class="chip" data-v="under25">under 25</button>
+          <button class="chip" data-v="25-34">25–34</button>
+          <button class="chip" data-v="35-49">35–49</button>
+          <button class="chip" data-v="50plus">50+</button>
+        </div>
+      </div>
+      <input class="field" id="regionInput" style="margin-top:12px" maxlength="80" placeholder="region (optional) — e.g. South London, Leeds">
+      <button class="btn" style="margin-top:16px" id="cardBtn" onclick="leaveCard()">Leave the card</button>
+      <button class="btn btn-ghost" style="margin-top:8px" onclick="skipCard()">no thanks</button>
+      <p class="mono" id="cardErr" style="display:none;color:#e85d5d;margin-top:10px">didn't send — try again in a moment</p>
+    </div>
+  </section>
+
+  <!-- ===== SCREEN: close ===== -->
+  <section class="screen" id="s-close">
+    <div style="padding-top:48px;text-align:center">
+      <p class="serif" style="font-size:26px;color:var(--gold)" id="closeThanks">Card received. Thank you.</p>
+      <p style="margin-top:18px;font-size:17px;line-height:1.55">Every star in your sky is someone who'd probably be glad to know they're there.</p>
+      <p style="margin-top:12px;font-size:17px;color:var(--cream)"><strong>Tell one of them this week.</strong></p>
+      <div style="display:grid;gap:10px;margin-top:30px">
+        <a class="btn" style="text-decoration:none;text-align:center" href="https://events.blkoutuk.com">find a BLKOUT gathering →</a>
+        <button class="btn btn-ghost" onclick="location.reload()">map another sky ✦</button>
+        <a class="btn btn-ghost" style="text-decoration:none;text-align:center" href="/constellations.html">run constellations with your people</a>
+      </div>
+      <p style="margin-top:26px;font-size:14px;color:var(--cream-muted);line-height:1.5">If your sky felt sparse tonight — you're not the only one, and that's exactly what we're here to change. Every constellation started with one star.</p>
+    </div>
+  </section>
+
+  <footer style="margin-top:54px;padding-top:18px;border-top:1px solid rgba(245,241,232,.12)">
+    <p class="mono" style="color:var(--gold)">BLKOUT — community-owned, member-governed</p>
+    <p style="margin-top:6px;font-size:12px;color:var(--cream-muted)">Anonymous by design. Reported only in aggregate. No tracking, no profiles, no games we wouldn't explain to your face.</p>
+  </footer>
+</div>
+
+<script>
+/* ============ state ============ */
+const RINGS = [
+  { key: 'ring1', tag: 'Ring 1 — the 3am people', prompt: 'Who could you call at 3am — and it would be okay that you called? One tap each. Initials optional, memories mandatory.', hint: 'tap the inner sky — one star per person' },
+  { key: 'ring2', tag: 'Ring 2 — the regulars',  prompt: 'Who do you actually see, or properly speak to, most months? The brunch people. The gym people. The long phone calls.', hint: 'tap the middle sky' },
+  { key: 'ring3', tag: 'Ring 3 — the nods',      prompt: 'Who knows your face and wishes you well? The barber. The neighbour. The men at the function whose names you half know. They count.', hint: 'tap the outer sky' },
+  { key: 'gold',  tag: 'The gold ring — who you want closer', prompt: 'Now what’s next, not what’s now. Someone you’d move inward — or a space you want filled. Tap where you want that star to live.', hint: 'gold stars — as many or few as is true' },
+];
+let ringIdx = 0;
+let stars = []; // {x, y, ring: 0-3}
+let lifeStage = null;
+const cvs = document.getElementById('skyCanvas');
+const ctx = cvs.getContext('2d');
+const W = cvs.width, H = cvs.height, CX = W/2, CY = H/2;
+const BANDS = [ [22, 70], [70, 125], [125, 180], [180, 214] ]; // r1, r2, r3, gold band
+
+/* backdrop dust */
+const dust = Array.from({length: 90}, () => ({ x: Math.random()*W, y: Math.random()*H, o: 0.05 + Math.random()*0.25, s: Math.random() < 0.1 ? 1.6 : 1 }));
+
+/* ============ screens ============ */
+const screens = ['s-intro','s-sky','s-wish','s-reveal','s-close'];
+function go(i) {
+  screens.forEach((id, k) => document.getElementById(id).classList.toggle('on', k === i));
+  window.scrollTo({ top: 0 });
+  if (i === 1) { setRing(0); draw(); }
+}
+
+/* ============ sky interaction ============ */
+function setRing(i) {
+  ringIdx = i;
+  const r = RINGS[i];
+  document.getElementById('ringTag').textContent = r.tag;
+  document.getElementById('ringPrompt').textContent = r.prompt;
+  document.getElementById('ringHint').textContent = r.hint;
+  document.getElementById('nextBtn').textContent = i < 3 ? 'Next ring →' : 'Done — my sky is set ✦';
+  const tag = document.getElementById('ringTag');
+  tag.style.color = i === 3 ? '#ffd700' : '';
+  tag.style.borderColor = i === 3 ? '#ffd700' : '';
+  document.querySelectorAll('#dots span').forEach((d, k) => d.classList.toggle('on', k <= i));
+  updateCount();
+}
+
+function canvasPoint(e) {
+  const rect = cvs.getBoundingClientRect();
+  const t = e.touches ? e.touches[0] : e;
+  return { x: (t.clientX - rect.left) * (W / rect.width), y: (t.clientY - rect.top) * (H / rect.height) };
+}
+
+cvs.addEventListener('pointerdown', (e) => {
+  e.preventDefault();
+  const p = canvasPoint(e);
+  // snap into current band
+  const dx = p.x - CX, dy = p.y - CY;
+  let dist = Math.hypot(dx, dy) || 1;
+  const [lo, hi] = BANDS[ringIdx];
+  const target = Math.min(Math.max(dist, lo + 6), hi - 6);
+  const f = target / dist;
+  stars.push({ x: CX + dx * f, y: CY + dy * f, ring: ringIdx, born: Date.now() });
+  updateCount(); draw();
+});
+
+function undoStar() {
+  for (let i = stars.length - 1; i >= 0; i--) {
+    if (stars[i].ring === ringIdx) { stars.splice(i, 1); break; }
+  }
+  updateCount(); draw();
+}
+
+function counts() {
+  return [0,1,2,3].map(r => stars.filter(s => s.ring === r).length);
+}
+function updateCount() {
+  const n = stars.filter(s => s.ring === ringIdx).length;
+  document.getElementById('tapCount').textContent = n + (ringIdx === 3 ? ' gold' : '') + (n === 1 ? ' star' : ' stars');
+}
+
+function nextRing() {
+  if (ringIdx < 3) { setRing(ringIdx + 1); draw(); }
+  else go(2);
+}
+
+/* ============ drawing ============ */
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  // dust
+  dust.forEach(d => { ctx.globalAlpha = d.o; ctx.fillStyle = '#f5f1e8'; ctx.fillRect(d.x, d.y, d.s, d.s); });
+  ctx.globalAlpha = 1;
+  // ring guides
+  BANDS.forEach(([lo, hi], i) => {
+    ctx.beginPath();
+    ctx.arc(CX, CY, (lo + hi) / 2, 0, Math.PI * 2);
+    ctx.strokeStyle = i === ringIdx ? 'rgba(212,175,55,0.45)' : 'rgba(245,241,232,0.08)';
+    ctx.lineWidth = i === ringIdx ? 1.4 : 1;
+    ctx.setLineDash(i === 3 ? [4, 5] : []);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+  // centre = you
+  ctx.beginPath(); ctx.arc(CX, CY, 7, 0, Math.PI * 2); ctx.fillStyle = '#d4af37'; ctx.fill();
+  ctx.font = '700 9px "IBM Plex Mono", monospace'; ctx.fillStyle = '#0a0a14'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  // constellation lines: chain nearest within same ring set
+  drawLines(ctx, stars, 1);
+  // stars
+  stars.forEach(s => drawStar(ctx, s.x, s.y, s.ring === 3, 1));
+}
+
+function drawLines(c, arr, scale) {
+  if (arr.length < 2) return;
+  c.strokeStyle = 'rgba(212,175,55,0.30)';
+  c.lineWidth = 1 * scale;
+  const used = new Set([0]);
+  let cur = 0;
+  while (used.size < arr.length) {
+    let best = -1, bd = 1e9;
+    arr.forEach((s, i) => {
+      if (used.has(i)) return;
+      const d = Math.hypot(s.x - arr[cur].x, s.y - arr[cur].y);
+      if (d < bd) { bd = d; best = i; }
+    });
+    c.beginPath();
+    c.moveTo(arr[cur].x * scale, arr[cur].y * scale);
+    c.lineTo(arr[best].x * scale, arr[best].y * scale);
+    c.stroke();
+    used.add(best); cur = best;
+  }
+}
+
+function drawStar(c, x, y, gold, scale) {
+  const r = (gold ? 5 : 3.5) * scale;
+  c.save();
+  c.translate(x * scale, y * scale);
+  c.fillStyle = gold ? '#ffd700' : '#f5f1e8';
+  c.shadowColor = gold ? '#ffd700' : '#d4af37';
+  c.shadowBlur = 8 * scale;
+  c.beginPath();
+  for (let i = 0; i < 8; i++) {
+    const a = (i * Math.PI) / 4;
+    const rad = i % 2 === 0 ? r : r * 0.45;
+    c[i === 0 ? 'moveTo' : 'lineTo'](Math.cos(a) * rad, Math.sin(a) * rad);
+  }
+  c.closePath(); c.fill();
+  c.restore();
+}
+
+/* ============ archetypes ============ */
+function archetype() {
+  const [r1, r2, r3, g] = counts();
+  const total = r1 + r2 + r3;
+  if (total <= 4 && g >= 1) return ['The Dawn', 'A sky just getting started — and already reaching. Every constellation began with one star and a wish.'];
+  if (total <= 4) return ['The Dawn', 'A sky just getting started. Every constellation that ever mattered began exactly here.'];
+  if (g >= 3 && g >= r1) return ['The Architect', 'You’re building the next sky on purpose. Gold everywhere — watch this space, literally.'];
+  if (r3 >= 10 && r3 >= 3 * Math.max(r1, 1)) return ['The Mayor', 'The scene knows your face and the street knows your name. Your outer light is doing the most — gloriously.'];
+  if (r1 >= 4 && r1 >= r3) return ['The Hearth', 'Few stars, serious heat. People sleep easier knowing you’d pick up at 3am — and so would they.'];
+  if (r2 >= r1 && r2 >= r3) return ['The Anchor', 'You keep the rhythm — the brunches, the calls, the showing up. Constancy is your love language.'];
+  return ['The Navigator', 'Balanced across every ring — close heat, steady rhythm, wide light. You read the whole sky.'];
+}
+
+/* ============ reveal + share card ============ */
+function reveal() {
+  const [name, line] = archetype();
+  document.getElementById('archName').textContent = name;
+  document.getElementById('archLine').textContent = line;
+  const [r1, r2, r3] = counts();
+  document.getElementById('cardSummary').textContent = `your card: ${r1} · ${r2} · ${r3}`;
+  renderShareCard(name, line);
+  go(3);
+}
+
+function renderShareCard(name, line) {
+  const sc = document.getElementById('shareCanvas');
+  const c = sc.getContext('2d');
+  const SW = sc.width, SH = sc.height;
+  // bg
+  c.fillStyle = '#0a0a14'; c.fillRect(0, 0, SW, SH);
+  const grad = c.createRadialGradient(SW/2, SH*0.42, 50, SW/2, SH*0.42, SW*0.7);
+  grad.addColorStop(0, 'rgba(74,25,66,0.5)'); grad.addColorStop(1, 'rgba(10,10,20,0)');
+  c.fillStyle = grad; c.fillRect(0, 0, SW, SH);
+  // dust
+  for (let i = 0; i < 220; i++) {
+    c.globalAlpha = 0.05 + Math.random() * 0.3;
+    c.fillStyle = '#f5f1e8';
+    c.fillRect(Math.random()*SW, Math.random()*SH, Math.random()<0.1?3:1.6, Math.random()<0.1?3:1.6);
+  }
+  c.globalAlpha = 1;
+  // header
+  c.fillStyle = '#d4af37'; c.font = '500 30px "IBM Plex Mono", monospace'; c.textAlign = 'center';
+  c.fillText('C O N S T E L L A T I O N S', SW/2, 110);
+  c.fillStyle = '#a8a195'; c.font = 'italic 36px "Fraunces", serif';
+  c.fillText('mapping who holds us', SW/2, 162);
+  // the user's actual sky, scaled & centred
+  const scale = (SW * 0.86) / W;
+  c.save();
+  c.translate((SW - W*scale)/2, 230);
+  // centre dot
+  c.beginPath(); c.arc(CX*scale, CY*scale, 12, 0, Math.PI*2); c.fillStyle = '#d4af37'; c.fill();
+  drawLines(c, stars, scale);
+  stars.forEach(s => drawStar(c, s.x, s.y, s.ring === 3, scale));
+  c.restore();
+  // archetype
+  c.fillStyle = '#a8a195'; c.font = '500 26px "IBM Plex Mono", monospace';
+  c.fillText('M Y   S K Y   I S', SW/2, SH - 290);
+  c.fillStyle = '#ffd700'; c.font = '900 86px "Work Sans", sans-serif';
+  c.fillText(name.toUpperCase(), SW/2, SH - 200);
+  // wrap line text
+  c.fillStyle = '#f5f1e8'; c.font = 'italic 32px "Fraunces", serif';
+  wrapText(c, line, SW/2, SH - 144, SW - 160, 40);
+  // brand
+  c.fillStyle = '#d4af37'; c.font = '900 34px "Work Sans", sans-serif';
+  c.fillText('BLKOUT', SW/2, SH - 46);
+  c.fillStyle = '#a8a195'; c.font = '500 24px "IBM Plex Mono", monospace';
+  c.fillText('blkoutuk.com  ·  whats in your sky?', SW/2, SH - 14);
+}
+
+function wrapText(c, text, x, y, maxW, lh) {
+  const words = text.split(' ');
+  let lineTxt = '', yy = y;
+  words.forEach(w => {
+    const test = lineTxt + w + ' ';
+    if (c.measureText(test).width > maxW && lineTxt) { c.fillText(lineTxt.trim(), x, yy); lineTxt = w + ' '; yy += lh; }
+    else lineTxt = test;
+  });
+  c.fillText(lineTxt.trim(), x, yy);
+}
+
+function canvasBlob() {
+  return new Promise(res => document.getElementById('shareCanvas').toBlob(res, 'image/png'));
+}
+async function shareSky() {
+  const blob = await canvasBlob();
+  const file = new File([blob], 'my-sky-blkout.png', { type: 'image/png' });
+  if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file], title: "What's in your sky?", text: "I mapped my sky — what's in yours? blkoutuk.com" }); return; } catch (e) { /* cancelled */ }
+  }
+  downloadSky();
+}
+async function downloadSky() {
+  const blob = await canvasBlob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'my-sky-blkout.png';
+  a.click();
+}
+
+/* ============ the card ============ */
+document.querySelectorAll('#lifeChips .chip').forEach(b => {
+  b.addEventListener('click', () => {
+    const was = b.classList.contains('sel');
+    document.querySelectorAll('#lifeChips .chip').forEach(x => x.classList.remove('sel'));
+    if (!was) { b.classList.add('sel'); lifeStage = b.dataset.v; } else lifeStage = null;
+  });
+});
+
+const SUPABASE_URL = 'https://bgjengudzfickgomjqmz.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnamVuZ3VkemZpY2tnb21qcW16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MTI3NjcsImV4cCI6MjA3MTE4ODc2N30.kYQ2oFuQBGmu4V_dnj_1zDMDVsd-qpDZJwNvswzO6M0';
+
+async function leaveCard() {
+  const [r1, r2, r3] = counts();
+  const btn = document.getElementById('cardBtn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  document.getElementById('cardErr').style.display = 'none';
+  try {
+    const r = await fetch(SUPABASE_URL + '/rest/v1/constellations_cards', {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        ring1: r1, ring2: r2, ring3: r3,
+        life_stage: lifeStage,
+        region: (document.getElementById('regionInput').value || '').trim() || null,
+        wish: (document.getElementById('wishInput').value || '').trim() || null,
+        source: 'web-sky'
+      })
+    });
+    if (!r.ok) throw new Error(r.status);
+    go(4);
+  } catch (e) {
+    btn.disabled = false; btn.textContent = 'Leave the card';
+    document.getElementById('cardErr').style.display = 'block';
+  }
+}
+function skipCard() {
+  document.getElementById('closeThanks').textContent = 'Your sky, your call.';
+  go(4);
+}
+</script>
+
+</body>
+</html>
