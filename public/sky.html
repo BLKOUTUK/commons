@@ -84,14 +84,36 @@
   .reveal-pop { animation: pop .7s cubic-bezier(.2,1.6,.4,1) both; }
   @keyframes pop { from { transform: scale(.6); opacity: 0 } to { transform: scale(1); opacity: 1 } }
   .epithet { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-light); }
+
+  /* mission HUD */
+  .hud { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+         background: rgba(10,10,20,.92); backdrop-filter: blur(4px); border-bottom: 1px solid rgba(212,175,55,.35);
+         padding: 9px 2px; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; }
+  .hud .l { color: var(--gold); white-space: nowrap; }
+  .hud .r { color: var(--cream-muted); text-align: right; }
+  .hud .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4fc97a; margin-right: 5px; animation: blink 1.6s steps(1) infinite; }
+
+  /* comedy space ephemera */
+  .ephem { position: fixed; left: -160px; z-index: 0; pointer-events: none; opacity: .5;
+           display: flex; flex-direction: column; align-items: center; gap: 3px;
+           animation: ephemDrift linear infinite; }
+  .ephem span { font-size: 24px; filter: saturate(.8); }
+  .ephem b { font: 500 8.5px 'IBM Plex Mono', monospace; color: var(--cream-muted); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; background: rgba(10,10,20,.7); padding: 1px 6px; }
+  @keyframes ephemDrift { from { transform: translateX(0) } to { transform: translateX(calc(100vw + 320px)) } }
 </style>
 </head>
 <body>
 
 <div class="drift" aria-hidden="true" id="driftField"></div>
 <div class="comet" aria-hidden="true"></div>
+<div id="ephemera" aria-hidden="true"></div>
 
 <div class="wrap">
+
+  <div class="hud">
+    <span class="l">✦ blkout stellar cartography</span>
+    <span class="r"><span class="dot"></span><span id="hudStatus">systems: nominal</span></span>
+  </div>
 
   <!-- ===== SCREEN: intro ===== -->
   <section class="screen on" id="s-intro">
@@ -122,6 +144,7 @@
     </div>
 
     <div class="prompt-card" id="promptCard">
+      <p class="mono" id="missionNo" style="color:var(--cream-muted);margin-bottom:8px">mission 01/04</p>
       <p class="tag" id="ringTag">Ring 1 — the 3am people</p>
       <p id="ringPrompt" style="margin-top:10px;font-size:16px;line-height:1.45"></p>
       <p class="mono" style="margin-top:10px;color:var(--cream-muted)" id="ringHint">tap the sky once for each person</p>
@@ -145,8 +168,8 @@
       <h2 class="display" style="font-size:36px;margin-top:14px">Name what<br>you're building</h2>
       <p style="margin-top:12px;color:var(--cream-muted);font-size:15px;line-height:1.5">One line, if you want. The connection your gold stars stand for.</p>
       <input class="field" id="wishInput" style="margin-top:16px" maxlength="280" placeholder="e.g. someone to actually go to things with">
-      <button class="btn" style="margin-top:18px" onclick="reveal()">Reveal my sky ✦</button>
-      <button class="btn btn-ghost" style="margin-top:10px" onclick="reveal()">skip — just show me</button>
+      <button class="btn" style="margin-top:18px" onclick="reveal()">Run the deep scan ✦</button>
+      <button class="btn btn-ghost" style="margin-top:10px" onclick="reveal()">skip the log — scan me anyway</button>
     </div>
   </section>
 
@@ -179,8 +202,9 @@
 
     <!-- the card -->
     <div class="prompt-card" style="margin-top:30px">
-      <p class="tag">one last thing — leave the card?</p>
-      <p style="margin-top:10px;font-size:14px;color:var(--cream-muted);line-height:1.5">Your star counts — just the numbers, nothing else — help BLKOUT learn what connection looks like for Black queer men in the UK, and what to build next. Anonymous by design: <span style="color:var(--cream)">it can't be traced to you, by us or anyone.</span></p>
+      <p class="mono" style="color:var(--cream-muted);margin-bottom:8px">final mission · optional</p>
+      <p class="tag">transmit your readings to the mothership?</p>
+      <p style="margin-top:10px;font-size:14px;color:var(--cream-muted);line-height:1.5">Just your star counts — numbers, nothing else — beamed home to help BLKOUT learn what connection looks like for Black queer men in the UK, and what to build next. Anonymous by design: <span style="color:var(--cream)">it can't be traced to you, by us or anyone. The Mothership runs on consent.</span></p>
       <p class="mono" id="cardSummary" style="margin-top:12px;color:var(--gold)"></p>
       <div style="margin-top:14px">
         <p class="mono" style="color:var(--cream-muted);margin-bottom:8px">life stage (optional)</p>
@@ -192,22 +216,23 @@
         </div>
       </div>
       <input class="field" id="regionInput" style="margin-top:12px" maxlength="80" placeholder="region (optional) — e.g. South London, Leeds">
-      <button class="btn" style="margin-top:16px" id="cardBtn" onclick="leaveCard()">Leave the card</button>
-      <button class="btn btn-ghost" style="margin-top:8px" onclick="skipCard()">no thanks</button>
-      <p class="mono" id="cardErr" style="display:none;color:#e85d5d;margin-top:10px">didn't send — try again in a moment</p>
+      <button class="btn" style="margin-top:16px" id="cardBtn" onclick="leaveCard()">Transmit ✦ (anonymous, always)</button>
+      <button class="btn btn-ghost" style="margin-top:8px" onclick="skipCard()">hold my data — fly on</button>
+      <p class="mono" id="cardErr" style="display:none;color:#e85d5d;margin-top:10px">transmission lost in the shade cluster — try again in a moment</p>
     </div>
   </section>
 
   <!-- ===== SCREEN: close ===== -->
   <section class="screen" id="s-close">
     <div style="padding-top:48px;text-align:center">
-      <p class="serif" style="font-size:26px;color:var(--gold)" id="closeThanks">Card received. Thank you, navigator.</p>
+      <p class="mono" style="display:inline-block;border:1.5px solid var(--gold);color:var(--gold);padding:6px 16px;transform:rotate(-3deg)">✦ mission complete ✦</p>
+      <p class="serif" style="font-size:26px;color:var(--gold);margin-top:20px" id="closeThanks">Readings received. Thank you, navigator.</p>
       <p class="mono" style="margin-top:20px;color:var(--cream-muted)">mission debrief</p>
       <p style="margin-top:10px;font-size:17px;line-height:1.55">Every star in your sky is someone who'd probably be glad to know they're there.</p>
       <p style="margin-top:12px;font-size:17px;color:var(--cream)"><strong>Tell one of them this week. That's the mission.</strong></p>
       <div style="display:grid;gap:10px;margin-top:30px">
         <a class="btn" style="text-decoration:none;text-align:center" href="https://events.blkoutuk.com">find a BLKOUT gathering →</a>
-        <button class="btn btn-ghost" onclick="location.reload()">map another sky ✦</button>
+        <button class="btn btn-ghost" onclick="location.reload()">chart another sky ✦</button>
         <a class="btn btn-ghost" style="text-decoration:none;text-align:center" href="/constellations.html">run constellations with your people</a>
       </div>
       <p style="margin-top:26px;font-size:14px;color:var(--cream-muted);line-height:1.5">If your sky felt sparse tonight — you're not the only one, and that's exactly what we're here to change. Every constellation started with one star.</p>
@@ -272,14 +297,53 @@ function go(i) {
   })();
 })();
 
+/* HUD status rotation */
+(function () {
+  const states = [
+    'systems: nominal', 'vibes: immaculate', 'shade shields: up',
+    'snacks: secured', 'warp drive: tired, actually', 'playlist: correct',
+    'edges: laid', 'consent protocols: active', 'rhythm: located',
+    'mothership: proud of you'
+  ];
+  const el = document.getElementById('hudStatus');
+  let i = 0;
+  setInterval(() => { i = (i + 1) % states.length; el.textContent = states[i]; }, 4200);
+})();
+
+/* comedy space ephemera */
+(function () {
+  const FLEET = [
+    ['🪩', 'the mothership · p-funk class'],
+    ['🥂', 'brunch nebula · bottomless'],
+    ['💈', 'barbershop station · judgement-free orbit'],
+    ['🌑', 'ex asteroid belt · do not re-enter'],
+    ['📵', 'planet “u up?” · signal blocked'],
+    ['🛋️', 'auntie’s front room galaxy · plastic on sofa'],
+    ['🎧', 'club classics quadrant · est. 1991'],
+    ['🫖', 'the shade cluster · approach with care'],
+  ];
+  const host = document.getElementById('ephemera');
+  FLEET.forEach(([icon, label], i) => {
+    const e = document.createElement('div');
+    e.className = 'ephem';
+    e.style.top = (6 + (i * 11.7) % 86) + '%';
+    const dur = 75 + (i * 23) % 70;
+    e.style.animationDuration = dur + 's';
+    e.style.animationDelay = '-' + ((i * 37) % dur) + 's';
+    e.innerHTML = '<span>' + icon + '</span><b>' + label + '</b>';
+    host.appendChild(e);
+  });
+})();
+
 /* ============ sky interaction ============ */
 function setRing(i) {
   ringIdx = i;
   const r = RINGS[i];
+  document.getElementById('missionNo').textContent = 'mission 0' + (i + 1) + '/04 · ' + ['inner system','home belt','wide field','uncharted space'][i];
   document.getElementById('ringTag').textContent = r.tag;
   document.getElementById('ringPrompt').textContent = r.prompt;
   document.getElementById('ringHint').textContent = r.hint;
-  document.getElementById('nextBtn').textContent = i < 3 ? 'Next ring →' : 'Done — my sky is set ✦';
+  document.getElementById('nextBtn').textContent = i < 3 ? 'Advance to mission 0' + (i + 2) + ' →' : 'All sectors charted ✦';
   const tag = document.getElementById('ringTag');
   tag.style.color = i === 3 ? '#ffd700' : '';
   tag.style.borderColor = i === 3 ? '#ffd700' : '';
@@ -409,6 +473,8 @@ const SCAN_LINES = [
   'measuring warmth at the inner suns …',
   'tracing orbits in the home belt …',
   'listening for the nods across the wide field …',
+  'routing around the ex asteroid belt … (you’re welcome)',
+  'checking planet “u up?” … signal blocked, as requested',
   'charting the gold — where you’re headed …',
   '✦ constellation confirmed.'
 ];
