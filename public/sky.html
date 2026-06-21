@@ -1,634 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>What's in your sky? — Constellations | BLKOUT UK</title>
-<meta name="description" content="Tap your people into the sky. Earn your constellation. Find out what kind of sky you keep — and who you want closer. Two minutes, no names, all yours.">
-
-<link rel="icon" type="image/png" href="/blkout-sigil-gold.png">
-<link rel="apple-touch-icon" href="/blkout-sigil-gold.png">
-
-<meta property="og:title" content="What's in your sky?">
-<meta property="og:description" content="Tap your people into the sky and find out what kind of constellation you keep. Two minutes. No names. All yours. — BLKOUT">
-<meta property="og:image" content="/blkout-sigil-gold.png">
-<meta property="og:type" content="website">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>What's in your sky? — BLKOUT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --obsidian: #0a0a14; --abyss: #14141f; --gold: #d4af37; --gold-light: #ffd700;
-    --cream: #f5f1e8; --cream-muted: #a8a195;
+  :root{
+    --bg:#06030f; --bg2:#0d0620;
+    --gold:#FFD700; --gold-deep:#D4AF37; --amber:#E8923A;
+    --ink:#F4ECD8; --muted:rgba(244,236,216,.58); --faint:rgba(244,236,216,.34);
+    --line:rgba(212,175,55,.20);
+    --ease:cubic-bezier(.2,.8,.2,1);
+    --display:"Space Grotesk",system-ui,sans-serif;
+    --body:"Inter",system-ui,sans-serif;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body { background: var(--obsidian); color: var(--cream); font-family: 'Work Sans', sans-serif; min-height: 100%; overscroll-behavior: none; }
-  ::selection { background: var(--gold); color: var(--obsidian); }
-
-  .wrap { max-width: 480px; margin: 0 auto; padding: 0 18px 60px; position: relative; }
-  .display { font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.9; }
-  .serif { font-family: 'Fraunces', serif; font-style: italic; }
-  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; }
-  .tag { display: inline-block; border: 1px solid rgba(212,175,55,.5); color: var(--gold); padding: 3px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; }
-
-  .btn {
-    display: block; width: 100%; padding: 16px; border: none; cursor: pointer;
-    background: var(--gold); color: var(--obsidian);
-    font-family: 'Work Sans', sans-serif; font-weight: 900; text-transform: uppercase;
-    font-size: 16px; letter-spacing: 0.04em; transition: background .15s;
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg);color:var(--ink);font-family:var(--body);
+    overflow:hidden;position:fixed;inset:0;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   }
-  .btn:hover { background: var(--gold-light); }
-  .btn:disabled { opacity: .4; cursor: default; }
-  .btn-ghost {
-    background: transparent; color: var(--gold); border: 1px solid rgba(212,175,55,.5);
-    font-weight: 700; font-size: 13px; padding: 12px;
+
+  /* ---------- living sky ---------- */
+  #stage{position:fixed;inset:0;z-index:0;
+    background:
+      radial-gradient(120% 90% at 28% 18%, rgba(74,30,124,.55), transparent 58%),
+      radial-gradient(95% 80% at 82% 72%, rgba(150,62,30,.30), transparent 52%),
+      radial-gradient(150% 130% at 50% 50%, #0d0620 0%, #06030f 72%);
   }
-  .btn-ghost:hover { background: rgba(212,175,55,.12); }
+  #sky-gl{position:absolute;inset:0;display:block;}
+  #starfield{position:absolute;inset:0;pointer-events:none;will-change:transform;}
+  .star{
+    position:absolute;width:6px;height:6px;border-radius:50%;
+    transform:translate(-50%,-50%) scale(0);
+    background:radial-gradient(circle,#fff7d6 0%,var(--gold) 38%,rgba(255,215,0,0) 72%);
+    box-shadow:0 0 10px 2px rgba(255,215,0,.6);
+    animation:pop .6s var(--ease) forwards, twinkle 3.5s ease-in-out infinite;
+  }
+  .star.gold{width:9px;height:9px;background:radial-gradient(circle,#fff3c4 0%,#ffe486 42%,rgba(255,215,0,0) 74%);box-shadow:0 0 16px 4px rgba(255,222,120,.75);}
+  @keyframes pop{0%{transform:translate(-50%,-50%) scale(0);}60%{transform:translate(-50%,-50%) scale(1.5);}100%{transform:translate(-50%,-50%) scale(1);}}
+  @keyframes twinkle{0%,100%{opacity:.85;}50%{opacity:.45;}}
 
-  .screen { display: none; animation: fade .4s ease; }
-  .screen.on { display: block; }
-  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  /* ---------- HUD ---------- */
+  #hud{
+    position:fixed;top:0;left:0;right:0;z-index:30;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 28px;font-family:var(--display);
+    pointer-events:none;mix-blend-mode:screen;
+  }
+  .wordmark{font-size:15px;font-weight:600;letter-spacing:.42em;color:var(--gold);text-indent:.42em;}
+  #status{font-size:12px;font-weight:500;letter-spacing:.22em;color:var(--gold-deep);text-transform:uppercase;font-feature-settings:"tnum";}
+  #status .n{color:var(--ink);}
 
-  #skyCanvas { display: block; width: 100%; touch-action: manipulation; cursor: crosshair; border: 1px solid rgba(245,241,232,.12); background: radial-gradient(circle at 50% 45%, #11111f 0%, #0a0a14 70%); }
+  /* ---------- screens ---------- */
+  main{position:fixed;inset:0;z-index:20;}
+  .screen{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-start;text-align:center;
+    padding:96px 28px 120px;gap:22px;overflow-y:auto;overflow-x:hidden;
+    opacity:0;transform:translateY(20px);visibility:hidden;pointer-events:none;
+    transition:opacity .7s var(--ease),transform .7s var(--ease);
+  }
+  .screen::-webkit-scrollbar{width:0;height:0;}
+  .screen{scrollbar-width:none;}
+  .screen.active{opacity:1;transform:none;visibility:visible;pointer-events:auto;}
+  .screen.active.pass{pointer-events:none;}
+  .screen.scrim::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(72% 56% at 50% 47%, rgba(6,3,15,.64), rgba(6,3,15,0) 74%);}
+  .wrap{max-width:600px;display:flex;flex-direction:column;align-items:center;gap:22px;margin-block:auto;}
 
-  .counter { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; color: var(--gold); }
-  .prompt-card { background: var(--abyss); border: 1px solid rgba(245,241,232,.12); padding: 18px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { border: 1px solid rgba(212,175,55,.5); background: none; color: var(--gold); padding: 7px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; cursor: pointer; }
-  .chip.sel { background: var(--gold); color: var(--obsidian); }
-  .field { width: 100%; background: var(--abyss); border: 1px solid rgba(245,241,232,.2); color: var(--cream); padding: 12px 14px; font-family: 'Work Sans', sans-serif; font-size: 15px; }
-  .field:focus { border-color: var(--gold); outline: none; }
+  .eyebrow{font-family:var(--display);font-size:12px;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:var(--gold-deep);}
+  h1{font-family:var(--display);font-weight:600;line-height:.98;letter-spacing:-.02em;
+     font-size:clamp(52px,11vw,104px);color:var(--ink);text-wrap:balance;}
+  h1 .glow{color:var(--gold);text-shadow:0 0 40px rgba(255,215,0,.35);}
+  .lede{font-size:clamp(17px,2.4vw,21px);line-height:1.5;color:var(--muted);max-width:38ch;text-wrap:pretty;}
+  .micro{font-family:var(--display);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);}
 
-  .step-dots { display: flex; gap: 6px; }
-  .step-dots span { width: 24px; height: 3px; background: rgba(245,241,232,.15); }
-  .step-dots span.on { background: var(--gold); }
+  /* ---------- buttons ---------- */
+  .btn{
+    font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.02em;
+    padding:15px 30px;border-radius:100px;border:1px solid var(--gold);
+    background:linear-gradient(180deg,#ffe480,var(--gold));color:#1a1003;cursor:pointer;
+    transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s;
+    box-shadow:0 0 0 0 rgba(255,215,0,.0);
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 40px -6px rgba(255,215,0,.5);}
+  .btn:active{transform:translateY(0);}
+  .ghost{background:none;border:1px solid var(--line);color:var(--gold);box-shadow:none;}
+  .ghost:hover{border-color:var(--gold);background:rgba(255,215,0,.06);box-shadow:none;}
+  .link{font-family:var(--display);background:none;border:none;color:var(--muted);cursor:pointer;
+        font-size:13.5px;letter-spacing:.04em;text-decoration:underline;text-underline-offset:4px;
+        text-decoration-color:var(--line);transition:color .2s;}
+  .link:hover{color:var(--gold);}
+  a{color:var(--gold);text-decoration:none;}
 
-  .twinkle { animation: tw 2.4s ease-in-out infinite; }
-  @keyframes tw { 0%,100% { opacity:.4 } 50% { opacity:1 } }
+  /* ---------- play panel ---------- */
+  #s-play{justify-content:flex-end;padding-bottom:38px;}
+  .panel{
+    width:min(560px,92vw);background:rgba(8,4,20,.5);backdrop-filter:blur(18px);
+    border:1px solid var(--line);border-radius:22px;padding:26px 30px 24px;
+    display:flex;flex-direction:column;gap:16px;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,215,0,.07);
+  }
+  .ring-no{font-family:var(--display);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-deep);}
+  .ring-title{font-family:var(--display);font-size:clamp(26px,5vw,34px);font-weight:600;color:var(--ink);line-height:1.05;letter-spacing:-.01em;}
+  .ring-instr{font-size:15px;color:var(--muted);line-height:1.45;text-wrap:pretty;}
+  .counter{display:flex;align-items:baseline;gap:10px;font-family:var(--display);}
+  .counter .big{font-size:40px;font-weight:600;color:var(--gold);font-feature-settings:"tnum";line-height:1;}
+  .counter .lbl{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);}
+  .panel-actions{display:flex;align-items:center;gap:12px;margin-top:4px;}
+  .panel-actions .grow{flex:1;}
+  .goldname{display:none;flex-direction:column;gap:8px;text-align:left;}
+  .goldname.show{display:flex;}
+  .goldname input{
+    width:100%;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:12px;
+    padding:13px 15px;color:var(--ink);font-family:var(--body);font-size:15px;outline:none;
+    transition:border-color .2s;
+  }
+  .goldname input:focus{border-color:var(--gold);}
+  .goldname input::placeholder{color:var(--faint);}
 
-  /* ===== space opera ===== */
-  .drift { position: fixed; inset: -10%; pointer-events: none; z-index: 0; }
-  .drift i { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #f5f1e8; animation: driftUp linear infinite; }
-  @keyframes driftUp { from { transform: translateY(0) } to { transform: translateY(-12vh) } }
-  .comet { position: fixed; top: 18%; left: -12%; width: 130px; height: 1.5px; z-index: 0; pointer-events: none;
-           background: linear-gradient(90deg, transparent, #ffd700); border-radius: 2px;
-           animation: cometFly 13s ease-in 4s infinite; opacity: 0; transform: rotate(-14deg); }
-  @keyframes cometFly { 0%,92% { opacity:0; left:-12% } 93% { opacity:.9 } 100% { opacity:0; left:112% } }
-  .wrap { z-index: 1; }
-  .transmission { border-left: 3px solid var(--gold); padding: 10px 14px; background: rgba(20,20,31,.8); }
-  .typed::after { content: "▌"; color: var(--gold); animation: blink 0.9s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0 } }
-  .scanline { opacity: 0; animation: scanIn .5s ease forwards; }
-  @keyframes scanIn { to { opacity: 1 } }
-  .reveal-pop { animation: pop .7s cubic-bezier(.2,1.6,.4,1) both; }
-  @keyframes pop { from { transform: scale(.6); opacity: 0 } to { transform: scale(1); opacity: 1 } }
-  .epithet { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-light); }
+  .progress{display:flex;gap:7px;justify-content:center;margin-bottom:2px;}
+  .pip{width:34px;height:3px;border-radius:2px;background:var(--line);transition:background .4s var(--ease);}
+  .pip.on{background:var(--gold);}
+  .pip.done{background:var(--gold-deep);}
 
-  /* mission HUD */
-  .hud { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center; gap: 10px;
-         background: rgba(10,10,20,.92); backdrop-filter: blur(4px); border-bottom: 1px solid rgba(212,175,55,.35);
-         padding: 9px 2px; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; }
-  .hud .l { color: var(--gold); white-space: nowrap; }
-  .hud .r { color: var(--cream-muted); text-align: right; }
-  .hud .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4fc97a; margin-right: 5px; animation: blink 1.6s steps(1) infinite; }
+  .tap-hint{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:21;
+    font-family:var(--display);font-size:13px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--faint);pointer-events:none;text-align:center;
+    transition:opacity .6s var(--ease);}
 
-  /* comedy space ephemera */
-  .ephem { position: fixed; left: -160px; z-index: 0; pointer-events: none; opacity: .5;
-           display: flex; flex-direction: column; align-items: center; gap: 3px;
-           animation: ephemDrift linear infinite; }
-  .ephem span { font-size: 24px; filter: saturate(.8); }
-  .ephem b { font: 500 8.5px 'IBM Plex Mono', monospace; color: var(--cream-muted); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; background: rgba(10,10,20,.7); padding: 1px 6px; }
-  @keyframes ephemDrift { from { transform: translateX(0) } to { transform: translateX(calc(100vw + 320px)) } }
+  /* ---------- scan ---------- */
+  .scan-ring{width:120px;height:120px;border-radius:50%;border:1px solid var(--line);
+    border-top-color:var(--gold);animation:spin 1.1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* ---------- navigator / card ---------- */
+  #s-nav{padding-top:74px;}
+  .arch{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .arch-over{font-family:var(--body);font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold-deep);}
+  .arch-name{font-family:var(--display);font-weight:600;font-size:clamp(40px,8vw,64px);line-height:1;
+    color:var(--gold);text-shadow:0 0 44px rgba(255,215,0,.35);letter-spacing:-.01em;}
+  .arch-epithet{font-family:var(--display);font-style:italic;font-size:15px;color:var(--muted);letter-spacing:.04em;}
+  .arch-line{font-size:15.5px;line-height:1.5;color:var(--muted);max-width:34ch;text-wrap:pretty;margin-top:2px;}
+  @media (prefers-reduced-motion:no-preference){
+    .screen.active .arch-name{animation:namepop .8s cubic-bezier(.2,1.5,.4,1) both;}
+  }
+  @keyframes namepop{from{transform:scale(.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .card-frame{
+    border-radius:18px;overflow:hidden;line-height:0;
+    box-shadow:0 40px 100px -30px rgba(0,0,0,.9),0 0 0 1px var(--line),0 0 60px -20px rgba(255,215,0,.3);
+    transform:perspective(1400px) rotateX(2deg);
+  }
+  #card-preview{width:auto;height:min(62vh,520px);display:block;}
+  .nav-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+
+  /* ---------- transmit ---------- */
+  .chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+  .chip{font-family:var(--display);font-size:14px;padding:11px 20px;border-radius:100px;
+    border:1px solid var(--line);background:rgba(255,215,0,.03);color:var(--muted);cursor:pointer;transition:all .2s;}
+  .chip:hover{border-color:var(--gold-deep);color:var(--ink);}
+  .chip.sel{background:linear-gradient(180deg,#ffe480,var(--gold));color:#1a1003;border-color:var(--gold);}
+  .region{width:min(360px,80vw);background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:12px;
+    padding:12px 15px;color:var(--ink);font-family:var(--body);font-size:15px;outline:none;text-align:center;
+    text-transform:uppercase;letter-spacing:.08em;transition:border-color .2s;}
+  .region:focus{border-color:var(--gold);}
+  .region::placeholder{color:var(--faint);text-transform:none;letter-spacing:0;}
+
+  .stack{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center;}
+
+  @media (max-width:520px){
+    .screen{padding:84px 20px 110px;}
+    .panel{padding:22px 22px 20px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .star{animation:pop .3s ease forwards;}
+    .screen{transition:opacity .3s;}
+  }
 </style>
 </head>
 <body>
-
-<div class="drift" aria-hidden="true" id="driftField"></div>
-<div class="comet" aria-hidden="true"></div>
-<div id="ephemera" aria-hidden="true"></div>
-
-<div class="wrap">
-
-  <div class="hud">
-    <span class="l">✦ blkout stellar cartography</span>
-    <span class="r"><span class="dot"></span><span id="hudStatus">systems: nominal</span></span>
+  <div id="stage">
+    <canvas id="sky-gl"></canvas>
+    <div id="starfield"></div>
   </div>
 
-  <!-- ===== SCREEN: intro ===== -->
-  <section class="screen on" id="s-intro">
-    <header style="padding-top:40px">
-      <a href="/constellations.html" class="mono" style="color:var(--cream-muted);text-decoration:none">← constellations · blkout</a>
-      <div class="transmission" style="margin-top:24px">
-        <p class="mono" style="color:var(--gold)">✦ incoming transmission · blkout stellar cartography</p>
-        <p class="mono typed" id="typedLine" style="color:var(--cream);margin-top:6px;min-height:16px"></p>
+  <header id="hud">
+    <div class="wordmark">BLKOUT</div>
+    <div id="status">STELLAR CARTOGRAPHY</div>
+  </header>
+
+  <div class="tap-hint" id="tap-hint" style="opacity:0">tap the sky</div>
+
+  <main>
+    <!-- INTRO -->
+    <section class="screen active" id="s-intro" data-screen-label="Intro">
+      <div class="wrap">
+        <div class="eyebrow">Incoming transmission</div>
+        <h1>What's in<br>your <span class="glow">sky?</span></h1>
+        <p class="lede">A map of who holds you. Tap them in, one star at a time.</p>
+        <p class="micro">No names — not theirs, not yours. Stars only.</p>
+        <button class="btn" id="begin">Begin the voyage ✦</button>
       </div>
-      <h1 class="display" style="font-size:54px;margin-top:24px">What's<br>in your<br><span style="color:var(--gold)">sky?</span></h1>
-      <p class="serif" style="font-size:20px;color:var(--cream-muted);margin-top:14px">a tiny space opera<br>about who holds you.</p>
-    </header>
-    <div style="margin:28px 0 22px" class="twinkle mono" id="introStars" aria-hidden="true" >✦ &nbsp; ✧ &nbsp;&nbsp; ✦ &nbsp;&nbsp;&nbsp; ✧ &nbsp; ✦</div>
-    <ul style="list-style:none;display:grid;gap:10px;color:var(--cream-muted);font-size:15px;line-height:1.5">
-      <li><span style="color:var(--gold);font-weight:700">two minutes.</span> one tap per person in your system.</li>
-      <li><span style="color:var(--gold);font-weight:700">no names.</span> not theirs, not yours. stars only.</li>
-      <li><span style="color:var(--gold);font-weight:700">all yours.</span> your constellation, rendered and ready to transmit — share it or keep it.</li>
-    </ul>
-    <button class="btn" style="margin-top:28px" onclick="go(1)">Begin the voyage ✦</button>
-    <p style="margin-top:14px;font-size:13px;color:var(--cream-muted)">The slower, paper version — and why we're asking — lives <a href="/constellations.html" style="color:var(--gold)">here</a>.</p>
-  </section>
+    </section>
 
-  <!-- ===== SCREEN: the sky (rings 1-3 + gold) ===== -->
-  <section class="screen" id="s-sky">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 0 12px">
-      <div class="step-dots" id="dots"><span></span><span></span><span></span><span></span></div>
-      <span class="counter" id="tapCount">0 stars</span>
-    </div>
-
-    <div class="prompt-card" id="promptCard">
-      <p class="mono" id="missionNo" style="color:var(--cream-muted);margin-bottom:8px">mission 01/04</p>
-      <p class="tag" id="ringTag">Ring 1 — the 3am people</p>
-      <p id="ringPrompt" style="margin-top:10px;font-size:16px;line-height:1.45"></p>
-      <p class="mono" style="margin-top:10px;color:var(--cream-muted)" id="ringHint">tap the sky once for each person</p>
-    </div>
-
-    <div style="position:relative;margin-top:14px">
-      <canvas id="skyCanvas" width="440" height="440"></canvas>
-    </div>
-
-    <div style="display:flex;gap:10px;margin-top:14px">
-      <button class="btn btn-ghost" style="flex:1" onclick="undoStar()">undo ↩</button>
-      <button class="btn" style="flex:2" id="nextBtn" onclick="nextRing()">Next ring →</button>
-    </div>
-    <p class="mono" style="margin-top:12px;color:var(--cream-muted)">no good or bad sky. a map, not a mark scheme.</p>
-  </section>
-
-  <!-- ===== SCREEN: gold wish text ===== -->
-  <section class="screen" id="s-wish">
-    <div style="padding-top:30px">
-      <span class="tag" style="color:var(--gold-light);border-color:var(--gold-light)">the gold ring</span>
-      <h2 class="display" style="font-size:36px;margin-top:14px">Name what<br>you're building</h2>
-      <p style="margin-top:12px;color:var(--cream-muted);font-size:15px;line-height:1.5">One line, if you want. The connection your gold stars stand for.</p>
-      <input class="field" id="wishInput" style="margin-top:16px" maxlength="280" placeholder="e.g. someone to actually go to things with">
-      <button class="btn" style="margin-top:18px" onclick="reveal()">Run the deep scan ✦</button>
-      <button class="btn btn-ghost" style="margin-top:10px" onclick="reveal()">skip the log — scan me anyway</button>
-    </div>
-  </section>
-
-  <!-- ===== SCREEN: scanning ===== -->
-  <section class="screen" id="s-scan">
-    <div style="padding-top:90px;min-height:60vh">
-      <div class="transmission">
-        <p class="mono" style="color:var(--gold)">✦ blkout stellar cartography · deep scan</p>
-        <div id="scanLines" style="margin-top:14px;display:grid;gap:10px"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== SCREEN: reveal ===== -->
-  <section class="screen" id="s-reveal">
-    <div style="padding-top:26px;text-align:center">
-      <p class="mono" style="color:var(--gold)">✦ transmission · for the navigator ✦</p>
-      <p class="epithet" id="archEpithet" style="margin-top:16px"></p>
-      <h2 class="display reveal-pop" id="archName" style="font-size:44px;color:var(--gold);margin-top:6px">The Navigator</h2>
-      <p class="serif" id="archLine" style="font-size:18px;color:var(--cream-muted);margin-top:10px;line-height:1.45"></p>
-    </div>
-    <div style="margin-top:18px">
-      <canvas id="shareCanvas" width="1080" height="1350" style="width:100%;border:1px solid rgba(212,175,55,.4)"></canvas>
-    </div>
-    <div style="display:flex;gap:10px;margin-top:16px">
-      <button class="btn" style="flex:1" id="shareBtn" onclick="shareSky()">Share your sky ✦</button>
-      <button class="btn btn-ghost" style="flex:1" onclick="downloadSky()">download</button>
-    </div>
-    <p style="margin-top:12px;font-size:14px;color:var(--cream-muted);text-align:center">best move: <span style="color:var(--cream)">send it to one of your stars.</span> that's the whole point.</p>
-
-    <!-- the card -->
-    <div class="prompt-card" style="margin-top:30px">
-      <p class="mono" style="color:var(--cream-muted);margin-bottom:8px">final mission · optional</p>
-      <p class="tag">transmit your readings to the mothership?</p>
-      <p style="margin-top:10px;font-size:14px;color:var(--cream-muted);line-height:1.5">Just your star counts — numbers, nothing else — beamed home to help BLKOUT learn what connection looks like for Black queer men in the UK, and what to build next. Anonymous by design: <span style="color:var(--cream)">it can't be traced to you, by us or anyone. The Mothership runs on consent.</span></p>
-      <p class="mono" id="cardSummary" style="margin-top:12px;color:var(--gold)"></p>
-      <div style="margin-top:14px">
-        <p class="mono" style="color:var(--cream-muted);margin-bottom:8px">life stage (optional)</p>
-        <div class="chips" id="lifeChips">
-          <button class="chip" data-v="under25">under 25</button>
-          <button class="chip" data-v="25-34">25–34</button>
-          <button class="chip" data-v="35-49">35–49</button>
-          <button class="chip" data-v="50plus">50+</button>
+    <!-- PLAY (4 rings) -->
+    <section class="screen" id="s-play" data-screen-label="Rings">
+      <div class="panel no-tap">
+        <div class="progress" id="pips"></div>
+        <div>
+          <div class="ring-no" id="ring-no">Ring 01 / 04</div>
+          <div class="ring-title" id="ring-title">The 3am people</div>
+        </div>
+        <p class="ring-instr" id="ring-instr">Tap the sky once for everyone who'd pick up at 3am. No questions.</p>
+        <div class="goldname" id="goldname">
+          <label class="ring-instr" for="gold-input">Name what these gold stars stand for — one line, if you want.</label>
+          <input id="gold-input" type="text" maxlength="54" placeholder="the connection you're building toward" autocomplete="off" />
+        </div>
+        <div class="counter"><span class="big" id="ring-count">0</span><span class="lbl" id="ring-count-lbl">stars this ring</span></div>
+        <div class="panel-actions">
+          <button class="link" id="undo">undo ↩</button>
+          <span class="grow"></span>
+          <button class="btn" id="next">Next ring →</button>
         </div>
       </div>
-      <input class="field" id="regionInput" style="margin-top:12px;text-transform:uppercase" maxlength="4" placeholder="postcode, first half only (optional) — SE15, B12, LS6" autocomplete="off">
-      <p class="mono" style="margin-top:6px;color:var(--cream-muted)">for the star charts. first half only — we never want the rest.</p>
-      <button class="btn" style="margin-top:16px" id="cardBtn" onclick="leaveCard()">Transmit ✦ (anonymous, always)</button>
-      <button class="btn btn-ghost" style="margin-top:8px" onclick="skipCard()">hold my data — fly on</button>
-      <p class="mono" id="cardErr" style="display:none;color:#e85d5d;margin-top:10px">transmission lost in the shade cluster — try again in a moment</p>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== SCREEN: close ===== -->
-  <section class="screen" id="s-close">
-    <div style="padding-top:48px;text-align:center">
-      <p class="mono" style="display:inline-block;border:1.5px solid var(--gold);color:var(--gold);padding:6px 16px;transform:rotate(-3deg)">✦ mission complete ✦</p>
-      <p class="serif" style="font-size:26px;color:var(--gold);margin-top:20px" id="closeThanks">Readings received. Thank you, navigator.</p>
-      <p class="mono" style="margin-top:20px;color:var(--cream-muted)">mission debrief</p>
-      <p style="margin-top:10px;font-size:17px;line-height:1.55">Every star in your sky is someone who'd probably be glad to know they're there.</p>
-      <p style="margin-top:12px;font-size:17px;color:var(--cream)"><strong>Tell one of them this week. That's the mission.</strong></p>
-      <div style="display:grid;gap:10px;margin-top:30px">
-        <a class="btn" style="text-decoration:none;text-align:center" href="https://events.blkoutuk.com">find a BLKOUT gathering →</a>
-        <button class="btn btn-ghost" onclick="location.reload()">chart another sky ✦</button>
-        <a class="btn btn-ghost" style="text-decoration:none;text-align:center" href="/constellations.html">run constellations with your people</a>
+    <!-- SCAN -->
+    <section class="screen" id="s-scan" data-screen-label="Scan">
+      <div class="wrap">
+        <div class="scan-ring"></div>
+        <div class="eyebrow" style="margin-top:8px">Deep scan</div>
+        <p class="lede" id="scan-text">Charting your sky…</p>
       </div>
-      <p style="margin-top:26px;font-size:14px;color:var(--cream-muted);line-height:1.5">A quieter sky tonight is still a sky worth charting. Every constellation starts with one star — and naming the ones you have is how the next ones find their way in. That's the work, and we're in it with you.</p>
-    </div>
-  </section>
+    </section>
 
-  <footer style="margin-top:54px;padding-top:18px;border-top:1px solid rgba(245,241,232,.12)">
-    <p class="mono" style="color:var(--gold)">BLKOUT — community-owned, member-governed</p>
-    <p style="margin-top:6px;font-size:12px;color:var(--cream-muted)">Anonymous by design. Reported only in aggregate. No tracking, no profiles, no games we wouldn't explain to your face.</p>
-    <p class="serif" style="margin-top:10px;font-size:13px;color:var(--cream-muted)">after Sun Ra, who told us space is the place.</p>
-  </footer>
-</div>
+    <!-- NAVIGATOR / SHARE -->
+    <section class="screen" id="s-nav" data-screen-label="Navigator">
+      <div class="wrap" style="gap:18px">
+        <div class="eyebrow">Transmission · for the navigator</div>
+        <div class="arch">
+          <div class="arch-over">The sky you keep</div>
+          <h1 class="arch-name" id="arch-name">The Navigator</h1>
+          <div class="arch-epithet" id="arch-epithet">· reader of the whole sky ·</div>
+          <p class="arch-line" id="arch-line"></p>
+        </div>
+        <div class="card-frame"><canvas id="card-preview"></canvas></div>
+        <div class="nav-actions">
+          <button class="btn" id="share">Share your sky ✦</button>
+          <button class="ghost btn" id="download">Download</button>
+        </div>
+        <p class="micro">Best move: send it to one of your stars.</p>
+        <button class="link" id="to-transmit">continue ✦</button>
+      </div>
+    </section>
 
-<script>
-/* ============ state ============ */
-const RINGS = [
-  { key: 'ring1', tag: 'Ring 1 — the 3am people', prompt: 'Who could you call at 3am — and it would be okay that you called?', hint: 'Tap inside the glowing ring, once for each person — each tap is a star. No names.' },
-  { key: 'ring2', tag: 'Ring 2 — the regulars',  prompt: 'Who do you actually see, or properly speak to, most months? The brunch people. The gym people. The long phone calls.', hint: 'One tap for each, inside the glowing ring.' },
-  { key: 'ring3', tag: 'Ring 3 — the nods',      prompt: 'Who knows your face and wishes you well? The barber. The neighbour. The men at the function whose names you half know. They count.', hint: 'Tap each one inside the glowing ring — every nod counts.' },
-  { key: 'gold',  tag: 'The gold ring — who you want closer', prompt: 'Now what’s next, not what’s now — someone you’d move inward, or a space you want filled.', hint: 'Tap the glowing ring for each connection you’re reaching for — what’s not here yet.' },
-];
-let ringIdx = 0;
-let stars = []; // {x, y, ring: 0-3}
-let lifeStage = null;
-const cvs = document.getElementById('skyCanvas');
-const ctx = cvs.getContext('2d');
-const W = cvs.width, H = cvs.height, CX = W/2, CY = H/2;
-const BANDS = [ [22, 70], [70, 125], [125, 180], [180, 214] ]; // r1, r2, r3, gold band
+    <!-- TRANSMIT -->
+    <section class="screen scrim" id="s-transmit" data-screen-label="Transmit">
+      <div class="wrap" style="gap:24px">
+        <div class="eyebrow">Final mission · optional</div>
+        <h1 style="font-size:clamp(34px,6.5vw,56px)">Beam it home?</h1>
+        <p class="lede">Just your star counts — numbers, nothing else — sent to help BLKOUT learn what connection looks like for Black queer men in the UK. Anonymous by design: it can't be traced to you.</p>
+        <div class="stack">
+          <p class="micro">Life stage — optional, first half only</p>
+          <div class="chips" id="chips">
+            <button class="chip" data-v="under 25">under 25</button>
+            <button class="chip" data-v="25–34">25–34</button>
+            <button class="chip" data-v="35–49">35–49</button>
+            <button class="chip" data-v="50+">50+</button>
+          </div>
+          <input id="region-input" class="region" type="text" maxlength="4" autocomplete="off"
+                 placeholder="postcode — first half only (SE15, B12, LS6)" />
+        </div>
+        <div class="row">
+          <button class="btn" id="transmit">Transmit ✦</button>
+          <button class="link" id="skip-transmit">hold my data — fly on</button>
+        </div>
+        <p class="micro err" id="transmit-err" style="display:none;color:#e8746a">transmission lost in the shade cluster — try again in a moment</p>
+      </div>
+    </section>
 
-/* backdrop dust */
-const dust = Array.from({length: 90}, () => ({ x: Math.random()*W, y: Math.random()*H, o: 0.05 + Math.random()*0.25, s: Math.random() < 0.1 ? 1.6 : 1 }));
+    <!-- DEBRIEF -->
+    <section class="screen scrim" id="s-debrief" data-screen-label="Debrief">
+      <div class="wrap" style="gap:22px">
+        <div class="eyebrow">✦ Mission complete ✦</div>
+        <h1 style="font-size:clamp(38px,7vw,68px)">Readings<br>received.</h1>
+        <p class="lede">Every star in your sky is someone who'd be glad to know they're there. Tell one of them this week. That's the mission.</p>
+        <p class="lede" style="color:var(--faint);font-size:16px;max-width:42ch">A quieter sky tonight is still a sky worth charting. Naming the stars you have is how the next ones find their way in — and we're in it with you.</p>
+        <div class="row" style="margin-top:6px">
+          <a class="btn" href="https://events.blkoutuk.com">Find a BLKOUT gathering →</a>
+          <button class="link" id="restart">chart another sky ✦</button>
+        </div>
+        <p class="micro" style="margin-top:18px">after Sun Ra, who told us space is the place.</p>
+      </div>
+    </section>
+  </main>
 
-/* ============ screens ============ */
-const screens = ['s-intro','s-sky','s-wish','s-scan','s-reveal','s-close'];
-function go(i) {
-  screens.forEach((id, k) => document.getElementById(id).classList.toggle('on', k === i));
-  window.scrollTo({ top: 0 });
-  if (i === 1) { setRing(0); draw(); }
-}
-
-/* drifting backdrop stars */
-(function () {
-  const f = document.getElementById('driftField');
-  for (let i = 0; i < 50; i++) {
-    const s = document.createElement('i');
-    s.style.left = Math.random() * 100 + '%';
-    s.style.top = Math.random() * 110 + '%';
-    s.style.opacity = 0.08 + Math.random() * 0.4;
-    s.style.animationDuration = (40 + Math.random() * 80) + 's';
-    if (Math.random() < 0.12) { s.style.width = s.style.height = '3px'; s.style.background = '#d4af37'; }
-    f.appendChild(s);
-  }
-})();
-
-/* typed transmission on intro */
-(function () {
-  const msg = 'navigator — you are cleared to chart your home system.';
-  const el = document.getElementById('typedLine');
-  let i = 0;
-  (function tick() {
-    if (i <= msg.length) { el.textContent = msg.slice(0, i); i++; setTimeout(tick, 34); }
-  })();
-})();
-
-/* HUD status rotation */
-(function () {
-  const states = [
-    'systems: nominal', 'vibes: immaculate', 'shade shields: up',
-    'snacks: secured', 'warp drive: tired, actually', 'playlist: correct',
-    'edges: laid', 'consent protocols: active', 'rhythm: located',
-    'mothership: proud of you'
-  ];
-  const el = document.getElementById('hudStatus');
-  let i = 0;
-  setInterval(() => { i = (i + 1) % states.length; el.textContent = states[i]; }, 4200);
-})();
-
-/* comedy space ephemera */
-(function () {
-  const FLEET = [
-    ['🪩', 'the mothership · p-funk class'],
-    ['🥂', 'brunch nebula · bottomless'],
-    ['💈', 'barbershop station · judgement-free orbit'],
-    ['🌑', 'ex asteroid belt · do not re-enter'],
-    ['📵', 'planet “u up?” · signal blocked'],
-    ['🛋️', 'auntie’s front room galaxy · plastic on sofa'],
-    ['🎧', 'club classics quadrant · est. 1991'],
-    ['🫖', 'the shade cluster · approach with care'],
-  ];
-  const host = document.getElementById('ephemera');
-  FLEET.forEach(([icon, label], i) => {
-    const e = document.createElement('div');
-    e.className = 'ephem';
-    e.style.top = (6 + (i * 11.7) % 86) + '%';
-    // depth: 0 = far field, 1 = right past the window
-    const depth = ((i * 41) % 97) / 97;
-    const scale = 0.55 + depth * 1.25;                  // 0.55x tiny … 1.8x looming
-    const dur = Math.round(150 - depth * 105);          // far drifts ~150s, close sails ~45s
-    e.style.animationDuration = dur + 's';
-    e.style.animationDelay = '-' + ((i * 37) % dur) + 's';
-    e.style.opacity = (0.22 + depth * 0.42).toFixed(2); // far = faint, close = present
-    if (depth < 0.3) e.style.filter = 'blur(0.7px)';    // far field slightly out of focus
-    e.innerHTML = '<span style="font-size:' + Math.round(24 * scale) + 'px">' + icon +
-                  '</span><b style="font-size:' + Math.max(7, 8.5 * scale).toFixed(1) + 'px">' + label + '</b>';
-    host.appendChild(e);
-  });
-})();
-
-/* ============ sky interaction ============ */
-function setRing(i) {
-  ringIdx = i;
-  const r = RINGS[i];
-  document.getElementById('missionNo').textContent = 'mission 0' + (i + 1) + '/04 · ' + ['inner system','home belt','wide field','uncharted space'][i];
-  document.getElementById('ringTag').textContent = r.tag;
-  document.getElementById('ringPrompt').textContent = r.prompt;
-  document.getElementById('ringHint').textContent = r.hint;
-  document.getElementById('nextBtn').textContent = i < 3 ? 'Advance to mission 0' + (i + 2) + ' →' : 'All sectors charted ✦';
-  const tag = document.getElementById('ringTag');
-  tag.style.color = i === 3 ? '#ffd700' : '';
-  tag.style.borderColor = i === 3 ? '#ffd700' : '';
-  document.querySelectorAll('#dots span').forEach((d, k) => d.classList.toggle('on', k <= i));
-  updateCount();
-}
-
-function canvasPoint(e) {
-  const rect = cvs.getBoundingClientRect();
-  const t = e.touches ? e.touches[0] : e;
-  return { x: (t.clientX - rect.left) * (W / rect.width), y: (t.clientY - rect.top) * (H / rect.height) };
-}
-
-cvs.addEventListener('pointerdown', (e) => {
-  e.preventDefault();
-  const p = canvasPoint(e);
-  // snap into current band
-  const dx = p.x - CX, dy = p.y - CY;
-  let dist = Math.hypot(dx, dy) || 1;
-  const [lo, hi] = BANDS[ringIdx];
-  const target = Math.min(Math.max(dist, lo + 6), hi - 6);
-  const f = target / dist;
-  stars.push({ x: CX + dx * f, y: CY + dy * f, ring: ringIdx, born: Date.now() });
-  updateCount(); draw();
-});
-
-function undoStar() {
-  for (let i = stars.length - 1; i >= 0; i--) {
-    if (stars[i].ring === ringIdx) { stars.splice(i, 1); break; }
-  }
-  updateCount(); draw();
-}
-
-function counts() {
-  return [0,1,2,3].map(r => stars.filter(s => s.ring === r).length);
-}
-function updateCount() {
-  const n = stars.filter(s => s.ring === ringIdx).length;
-  document.getElementById('tapCount').textContent = n + (ringIdx === 3 ? ' gold' : '') + (n === 1 ? ' star' : ' stars');
-}
-
-function nextRing() {
-  if (ringIdx < 3) { setRing(ringIdx + 1); draw(); }
-  else go(2);
-}
-
-/* ============ drawing ============ */
-function draw() {
-  ctx.clearRect(0, 0, W, H);
-  // dust
-  dust.forEach(d => { ctx.globalAlpha = d.o; ctx.fillStyle = '#f5f1e8'; ctx.fillRect(d.x, d.y, d.s, d.s); });
-  ctx.globalAlpha = 1;
-  // ring guides
-  BANDS.forEach(([lo, hi], i) => {
-    ctx.beginPath();
-    ctx.arc(CX, CY, (lo + hi) / 2, 0, Math.PI * 2);
-    ctx.strokeStyle = i === ringIdx ? 'rgba(212,175,55,0.45)' : 'rgba(245,241,232,0.08)';
-    ctx.lineWidth = i === ringIdx ? 1.4 : 1;
-    ctx.setLineDash(i === 3 ? [4, 5] : []);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  });
-  // centre = you
-  ctx.beginPath(); ctx.arc(CX, CY, 7, 0, Math.PI * 2); ctx.fillStyle = '#d4af37'; ctx.fill();
-  ctx.font = '700 9px "IBM Plex Mono", monospace'; ctx.fillStyle = '#0a0a14'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  // constellation lines: chain nearest within same ring set
-  drawLines(ctx, stars, 1);
-  // stars
-  stars.forEach(s => drawStar(ctx, s.x, s.y, s.ring === 3, 1));
-}
-
-function drawLines(c, arr, scale) {
-  if (arr.length < 2) return;
-  c.strokeStyle = 'rgba(212,175,55,0.30)';
-  c.lineWidth = 1 * scale;
-  const used = new Set([0]);
-  let cur = 0;
-  while (used.size < arr.length) {
-    let best = -1, bd = 1e9;
-    arr.forEach((s, i) => {
-      if (used.has(i)) return;
-      const d = Math.hypot(s.x - arr[cur].x, s.y - arr[cur].y);
-      if (d < bd) { bd = d; best = i; }
-    });
-    c.beginPath();
-    c.moveTo(arr[cur].x * scale, arr[cur].y * scale);
-    c.lineTo(arr[best].x * scale, arr[best].y * scale);
-    c.stroke();
-    used.add(best); cur = best;
-  }
-}
-
-function drawStar(c, x, y, gold, scale) {
-  const r = (gold ? 5 : 3.5) * scale;
-  c.save();
-  c.translate(x * scale, y * scale);
-  c.fillStyle = gold ? '#ffd700' : '#f5f1e8';
-  c.shadowColor = gold ? '#ffd700' : '#d4af37';
-  c.shadowBlur = 8 * scale;
-  c.beginPath();
-  for (let i = 0; i < 8; i++) {
-    const a = (i * Math.PI) / 4;
-    const rad = i % 2 === 0 ? r : r * 0.45;
-    c[i === 0 ? 'moveTo' : 'lineTo'](Math.cos(a) * rad, Math.sin(a) * rad);
-  }
-  c.closePath(); c.fill();
-  c.restore();
-}
-
-/* ============ archetypes ============ */
-function archetype() {
-  const [r1, r2, r3, g] = counts();
-  const total = r1 + r2 + r3;
-  if (total <= 4 && g >= 1) return ['The Dawn', 'first light of a new system', 'A sky just getting started — and already reaching. The Mothership logs every new star, and yours is on the chart now.'];
-  if (total <= 4) return ['The Dawn', 'first light of a new system', 'A sky just getting started. Every constellation that ever mattered began exactly here.'];
-  if (g >= 3 && g >= r1) return ['The Architect', 'commander of uncharted space', 'You’re building the next sky on purpose. Gold everywhere — watch this space, literally.'];
-  if (r3 >= 10 && r3 >= 3 * Math.max(r1, 1)) return ['The Mayor', 'voice of the wide field', 'The scene knows your face and the street knows your name. Your outer light is doing the most — gloriously.'];
-  if (r1 >= 4 && r1 >= r3) return ['The Hearth', 'keeper of the inner suns', 'Few stars, serious heat. People sleep easier knowing you’d pick up at 3am — and so would they.'];
-  if (r2 >= r1 && r2 >= r3) return ['The Anchor', 'steady orbit of the home belt', 'You keep the rhythm — the brunches, the calls, the showing up. Constancy is your love language.'];
-  return ['The Navigator', 'reader of the whole sky', 'Balanced across every ring — close heat, steady rhythm, wide light. You read the whole sky.'];
-}
-
-/* ============ scan + reveal + share card ============ */
-const SCAN_LINES = [
-  'locking onto your coordinates …',
-  'counting the light …',
-  'measuring warmth at the inner suns …',
-  'tracing orbits in the home belt …',
-  'listening for the nods across the wide field …',
-  'routing around the ex asteroid belt … (you’re welcome)',
-  'checking planet “u up?” … signal blocked, as requested',
-  'charting the gold — where you’re headed …',
-  '✦ constellation confirmed.'
-];
-function reveal() {
-  go(3);
-  const box = document.getElementById('scanLines');
-  box.innerHTML = '';
-  SCAN_LINES.forEach((t, i) => {
-    setTimeout(() => {
-      const p = document.createElement('p');
-      p.className = 'mono scanline';
-      p.style.color = i === SCAN_LINES.length - 1 ? '#ffd700' : '#a8a195';
-      p.textContent = t;
-      box.appendChild(p);
-    }, 420 * i);
-  });
-  setTimeout(showReveal, 420 * SCAN_LINES.length + 500);
-}
-function showReveal() {
-  const [name, epithet, line] = archetype();
-  document.getElementById('archName').textContent = name;
-  document.getElementById('archEpithet').textContent = '· ' + epithet + ' ·';
-  document.getElementById('archLine').textContent = line;
-  const [r1, r2, r3] = counts();
-  document.getElementById('cardSummary').textContent = `your card: ${r1} · ${r2} · ${r3}`;
-  renderShareCard(name, epithet, line);
-  go(4);
-}
-
-function renderShareCard(name, epithet, line) {
-  const sc = document.getElementById('shareCanvas');
-  const c = sc.getContext('2d');
-  const SW = sc.width, SH = sc.height;
-  // bg
-  c.fillStyle = '#0a0a14'; c.fillRect(0, 0, SW, SH);
-  const grad = c.createRadialGradient(SW/2, SH*0.42, 50, SW/2, SH*0.42, SW*0.7);
-  grad.addColorStop(0, 'rgba(74,25,66,0.5)'); grad.addColorStop(1, 'rgba(10,10,20,0)');
-  c.fillStyle = grad; c.fillRect(0, 0, SW, SH);
-  // dust
-  for (let i = 0; i < 220; i++) {
-    c.globalAlpha = 0.05 + Math.random() * 0.3;
-    c.fillStyle = '#f5f1e8';
-    c.fillRect(Math.random()*SW, Math.random()*SH, Math.random()<0.1?3:1.6, Math.random()<0.1?3:1.6);
-  }
-  c.globalAlpha = 1;
-  // header
-  c.fillStyle = '#d4af37'; c.font = '500 30px "IBM Plex Mono", monospace'; c.textAlign = 'center';
-  c.fillText('C O N S T E L L A T I O N S', SW/2, 110);
-  c.fillStyle = '#a8a195'; c.font = 'italic 36px "Fraunces", serif';
-  c.fillText('mapping who holds us', SW/2, 162);
-  // the user's actual sky, scaled & centred
-  const scale = (SW * 0.86) / W;
-  c.save();
-  c.translate((SW - W*scale)/2, 230);
-  // centre dot
-  c.beginPath(); c.arc(CX*scale, CY*scale, 12, 0, Math.PI*2); c.fillStyle = '#d4af37'; c.fill();
-  drawLines(c, stars, scale);
-  stars.forEach(s => drawStar(c, s.x, s.y, s.ring === 3, scale));
-  c.restore();
-  // archetype
-  c.fillStyle = '#a8a195'; c.font = '500 26px "IBM Plex Mono", monospace';
-  c.fillText('M Y   S K Y   I S', SW/2, SH - 320);
-  c.fillStyle = '#ffd700'; c.font = '900 86px "Work Sans", sans-serif';
-  c.fillText(name.toUpperCase(), SW/2, SH - 230);
-  c.fillStyle = '#d4af37'; c.font = '500 26px "IBM Plex Mono", monospace';
-  c.fillText('· ' + epithet.toUpperCase() + ' ·', SW/2, SH - 186);
-  // wrap line text
-  c.fillStyle = '#f5f1e8'; c.font = 'italic 32px "Fraunces", serif';
-  wrapText(c, line, SW/2, SH - 134, SW - 160, 40);
-  // brand
-  c.fillStyle = '#d4af37'; c.font = '900 34px "Work Sans", sans-serif';
-  c.fillText('BLKOUT', SW/2, SH - 46);
-  c.fillStyle = '#a8a195'; c.font = '500 24px "IBM Plex Mono", monospace';
-  c.fillText('blkoutuk.com  ·  whats in your sky?', SW/2, SH - 14);
-}
-
-function wrapText(c, text, x, y, maxW, lh) {
-  const words = text.split(' ');
-  let lineTxt = '', yy = y;
-  words.forEach(w => {
-    const test = lineTxt + w + ' ';
-    if (c.measureText(test).width > maxW && lineTxt) { c.fillText(lineTxt.trim(), x, yy); lineTxt = w + ' '; yy += lh; }
-    else lineTxt = test;
-  });
-  c.fillText(lineTxt.trim(), x, yy);
-}
-
-function canvasBlob() {
-  return new Promise(res => document.getElementById('shareCanvas').toBlob(res, 'image/png'));
-}
-async function shareSky() {
-  const blob = await canvasBlob();
-  const file = new File([blob], 'my-sky-blkout.png', { type: 'image/png' });
-  if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-    try { await navigator.share({ files: [file], title: "What's in your sky?", text: "I mapped my sky — what's in yours? blkoutuk.com" }); return; } catch (e) { /* cancelled */ }
-  }
-  downloadSky();
-}
-async function downloadSky() {
-  const blob = await canvasBlob();
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'my-sky-blkout.png';
-  a.click();
-}
-
-/* ============ the card ============ */
-document.querySelectorAll('#lifeChips .chip').forEach(b => {
-  b.addEventListener('click', () => {
-    const was = b.classList.contains('sel');
-    document.querySelectorAll('#lifeChips .chip').forEach(x => x.classList.remove('sel'));
-    if (!was) { b.classList.add('sel'); lifeStage = b.dataset.v; } else lifeStage = null;
-  });
-});
-
-const SUPABASE_URL = 'https://bgjengudzfickgomjqmz.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnamVuZ3VkemZpY2tnb21qcW16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MTI3NjcsImV4cCI6MjA3MTE4ODc2N30.kYQ2oFuQBGmu4V_dnj_1zDMDVsd-qpDZJwNvswzO6M0';
-
-async function leaveCard() {
-  const [r1, r2, r3, gold] = counts();
-  const btn = document.getElementById('cardBtn');
-  btn.disabled = true; btn.textContent = 'Sending…';
-  document.getElementById('cardErr').style.display = 'none';
-  try {
-    const r = await fetch(SUPABASE_URL + '/rest/v1/constellations_cards', {
-      method: 'POST',
-      headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-      body: JSON.stringify({
-        ring1: r1, ring2: r2, ring3: r3, ring_gold: gold,
-        life_stage: lifeStage,
-        region: (document.getElementById('regionInput').value || '').trim().toUpperCase().split(/\s+/)[0].slice(0, 4) || null,
-        wish: (document.getElementById('wishInput').value || '').trim() || null,
-        source: 'web-sky'
-      })
-    });
-    if (!r.ok) throw new Error(r.status);
-    go(5);
-  } catch (e) {
-    btn.disabled = false; btn.textContent = 'Leave the card';
-    document.getElementById('cardErr').style.display = 'block';
-  }
-}
-function skipCard() {
-  document.getElementById('closeThanks').textContent = 'Your sky, your call, navigator.';
-  go(5);
-}
-</script>
-
+  <script src="sky/sky-gl.js"></script>
+  <script src="sky/sharecard.js"></script>
+  <script src="sky/app.js"></script>
 </body>
 </html>
