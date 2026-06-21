@@ -236,7 +236,7 @@
         <button class="btn btn-ghost" onclick="location.reload()">chart another sky ✦</button>
         <a class="btn btn-ghost" style="text-decoration:none;text-align:center" href="/constellations.html">run constellations with your people</a>
       </div>
-      <p style="margin-top:26px;font-size:14px;color:var(--cream-muted);line-height:1.5">If your sky felt sparse tonight — you're not the only one, and that's exactly what we're here to change. Every constellation started with one star.</p>
+      <p style="margin-top:26px;font-size:14px;color:var(--cream-muted);line-height:1.5">A quieter sky tonight is still a sky worth charting. Every constellation starts with one star — and naming the ones you have is how the next ones find their way in. That's the work, and we're in it with you.</p>
     </div>
   </section>
 
@@ -250,10 +250,10 @@
 <script>
 /* ============ state ============ */
 const RINGS = [
-  { key: 'ring1', tag: 'Ring 1 — the 3am people', prompt: 'Who could you call at 3am — and it would be okay that you called? One tap each. Initials optional, memories mandatory.', hint: 'inner system — the suns you orbit' },
-  { key: 'ring2', tag: 'Ring 2 — the regulars',  prompt: 'Who do you actually see, or properly speak to, most months? The brunch people. The gym people. The long phone calls.', hint: 'the home belt — steady orbits' },
-  { key: 'ring3', tag: 'Ring 3 — the nods',      prompt: 'Who knows your face and wishes you well? The barber. The neighbour. The men at the function whose names you half know. They count.', hint: 'the wide field — distant light, still yours' },
-  { key: 'gold',  tag: 'The gold ring — who you want closer', prompt: 'Now what’s next, not what’s now. Someone you’d move inward — or a space you want filled. Tap where you want that star to live.', hint: 'uncharted space — where you’re headed' },
+  { key: 'ring1', tag: 'Ring 1 — the 3am people', prompt: 'Who could you call at 3am — and it would be okay that you called?', hint: 'Tap inside the glowing ring, once for each person — each tap is a star. No names.' },
+  { key: 'ring2', tag: 'Ring 2 — the regulars',  prompt: 'Who do you actually see, or properly speak to, most months? The brunch people. The gym people. The long phone calls.', hint: 'One tap for each, inside the glowing ring.' },
+  { key: 'ring3', tag: 'Ring 3 — the nods',      prompt: 'Who knows your face and wishes you well? The barber. The neighbour. The men at the function whose names you half know. They count.', hint: 'Tap each one inside the glowing ring — every nod counts.' },
+  { key: 'gold',  tag: 'The gold ring — who you want closer', prompt: 'Now what’s next, not what’s now — someone you’d move inward, or a space you want filled.', hint: 'Tap the glowing ring for each connection you’re reaching for — what’s not here yet.' },
 ];
 let ringIdx = 0;
 let stars = []; // {x, y, ring: 0-3}
@@ -601,7 +601,7 @@ const SUPABASE_URL = 'https://bgjengudzfickgomjqmz.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnamVuZ3VkemZpY2tnb21qcW16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MTI3NjcsImV4cCI6MjA3MTE4ODc2N30.kYQ2oFuQBGmu4V_dnj_1zDMDVsd-qpDZJwNvswzO6M0';
 
 async function leaveCard() {
-  const [r1, r2, r3] = counts();
+  const [r1, r2, r3, gold] = counts();
   const btn = document.getElementById('cardBtn');
   btn.disabled = true; btn.textContent = 'Sending…';
   document.getElementById('cardErr').style.display = 'none';
@@ -610,7 +610,7 @@ async function leaveCard() {
       method: 'POST',
       headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
       body: JSON.stringify({
-        ring1: r1, ring2: r2, ring3: r3,
+        ring1: r1, ring2: r2, ring3: r3, ring_gold: gold,
         life_stage: lifeStage,
         region: (document.getElementById('regionInput').value || '').trim().toUpperCase().split(/\s+/)[0].slice(0, 4) || null,
         wish: (document.getElementById('wishInput').value || '').trim() || null,
