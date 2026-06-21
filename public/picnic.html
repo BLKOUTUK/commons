@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLKOUT Annual Picnic — Sun 16 August, Regent's Park</title>
+<meta name="description" content="Bring what we need. Come as you are. BLKOUT's annual picnic — one long afternoon in the sun. Sunday 16 August, Regent's Park, 1–7.30pm.">
+<link rel="icon" type="image/png" href="/blkout-sigil-gold.png">
+<meta property="og:title" content="BLKOUT Annual Picnic — Sun 16 August">
+<meta property="og:description" content="Bring what we need. Come as you are. One long afternoon in the sun — Regent's Park, 1–7.30pm.">
+<meta property="og:image" content="/picnic-assets/golden.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  :root{--bg:#F8EEDD;--skyTop:#AFCDE6;--ink:#2A1320;--inkSoft:rgba(42,19,32,.74);--inkFaint:rgba(42,19,32,.5);--eyebrow:#9A6B0E;--surface:#FFFDF7;--line:rgba(42,19,32,.10);--sunTop:68vh;--sunSize:460px;--sunCore:#FFD89A;--sunCore2:#FFE9B8;--sunOp:.8;--op0:1;--op1:0;--op2:0;--op3:0;--op4:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;transition:background-color 1s ease,color 1s ease}
+  ::selection{background:#FFD700;color:#0A0A14}
+  .grotesk{font-family:'Space Grotesk',sans-serif}
+  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--eyebrow);transition:color 1s ease}
+  @keyframes sunpulse{0%,100%{margin-top:0;opacity:1}50%{margin-top:-16px;opacity:.86}}
+  @keyframes floatup{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
+  input::placeholder{color:var(--inkFaint)}
+  .btn{font-family:'Space Grotesk',sans-serif;font-weight:600;color:#0A0A14;background:#FFD700;border:none;border-radius:999px;padding:17px 34px;cursor:pointer;font-size:17px;box-shadow:0 10px 40px rgba(214,150,20,.3);transition:transform .2s,box-shadow .2s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 50px rgba(214,150,20,.45)}
+  .field{width:100%;font-family:'Inter',sans-serif;font-size:16px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:17px 20px;outline:none;transition:border-color .25s,background-color 1s ease}
+  .field:focus{border-color:#FFD700}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:38px 32px;display:flex;flex-direction:column;gap:14px;transition:background-color 1s ease,border-color 1s ease}
+  .hide{display:none}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section style="position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 120px;overflow:hidden">
+  <div style="position:absolute;top:0;left:0;right:0;height:64%;background-color:var(--skyTop);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.55) 42%,rgba(0,0,0,0) 100%);mask-image:linear-gradient(180deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.55) 42%,rgba(0,0,0,0) 100%);pointer-events:none;transition:background-color 1s ease"></div>
+  <div style="position:absolute;top:var(--sunTop);left:50%;transform:translateX(-50%);width:var(--sunSize);height:var(--sunSize);border-radius:50%;background-color:var(--sunCore);filter:blur(72px);opacity:var(--sunOp);pointer-events:none;animation:sunpulse 8s ease-in-out infinite;transition:top 1s ease,background-color 1s ease,width 1s ease,height 1s ease,opacity 1s ease"></div>
+  <div style="position:relative;z-index:2;max-width:920px;display:flex;flex-direction:column;align-items:center;gap:26px">
+    <p class="eyebrow">BLKOUT Annual Picnic · Sunday 16 August 2026</p>
+    <h1 class="grotesk" style="font-weight:700;font-size:clamp(44px,8vw,104px);line-height:.98;letter-spacing:-.02em;color:var(--ink);text-wrap:balance;transition:color 1s ease">Bring what we need.<br>Come as you are.</h1>
+    <p style="font-size:clamp(17px,2.2vw,22px);line-height:1.55;color:var(--inkSoft);max-width:600px;transition:color 1s ease">One long afternoon in the sun — food, music, faces old and new. Regent's Park, 1–7.30pm. No stage, no line-up, no tickets. Just us.</p>
+    <button class="btn" style="margin-top:8px" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">Save my spot →</button>
+  </div>
+</section>
+
+<!-- INVITATION -->
+<section style="padding:clamp(80px,12vw,150px) 24px;display:flex;justify-content:center">
+  <div style="max-width:740px;text-align:center;display:flex;flex-direction:column;gap:28px">
+    <span class="eyebrow">The invitation</span>
+    <p class="grotesk" style="font-weight:500;font-size:clamp(24px,3.6vw,38px);line-height:1.35;letter-spacing:-.01em;color:var(--ink);transition:color 1s ease">No panels, no programme — just a blanket on the grass, a plate passed round, and the particular ease of a park full of people who get it.</p>
+    <p style="font-size:clamp(17px,2vw,20px);line-height:1.6;color:var(--inkSoft);max-width:560px;margin:0 auto;transition:color 1s ease">Whether you've been to everything or you've never come to anything, this is your invitation.</p>
+    <p class="grotesk" style="margin-top:6px;font-weight:600;font-size:clamp(20px,2.8vw,28px);line-height:1.2;color:var(--ink);transition:color 1s ease">Bring yourself. Bring a friend. Make one there.</p>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section style="padding:0 24px clamp(80px,12vw,130px);display:flex;justify-content:center">
+  <div style="width:100%;max-width:1080px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+    <div class="card">
+      <span class="eyebrow">When</span>
+      <h3 class="grotesk" style="font-weight:700;font-size:30px;line-height:1.1;color:var(--ink);transition:color 1s ease">Sunday<br>16 August</h3>
+      <p style="font-size:16px;line-height:1.55;color:var(--inkSoft);transition:color 1s ease">1–7.30pm. One long, easy afternoon — come for an hour or stay till the light goes.</p>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Where</span>
+      <h3 class="grotesk" style="font-weight:700;font-size:30px;line-height:1.1;color:var(--ink);transition:color 1s ease">Regent's Park<br>— iykyk</h3>
+      <p style="font-size:16px;line-height:1.55;color:var(--inkSoft);transition:color 1s ease">We keep the exact corner close. Leave your email and we'll send you the precise spot (what3words) closer to the day.</p>
+    </div>
+    <div class="card">
+      <span class="eyebrow">Who</span>
+      <h3 class="grotesk" style="font-weight:700;font-size:30px;line-height:1.1;color:var(--ink);transition:color 1s ease">All of us,<br>every age</h3>
+      <p style="font-size:16px;line-height:1.55;color:var(--inkSoft);transition:color 1s ease">Black queer men and the people who hold us. Free to come — always.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register" style="padding:clamp(60px,10vw,120px) 24px;display:flex;justify-content:center">
+  <div style="width:100%;max-width:560px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px">
+    <h2 class="grotesk" style="font-weight:700;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);transition:color 1s ease">Save your spot</h2>
+    <p style="font-size:18px;line-height:1.55;color:var(--inkSoft);max-width:440px;transition:color 1s ease">Drop your email and we'll send the exact location, timings — and a weather word — your way before the day.</p>
+
+    <div id="form" style="margin-top:24px;width:100%;display:flex;flex-direction:column;gap:14px">
+      <input id="name" class="field" type="text" placeholder="First name (optional)">
+      <input id="email" class="field" type="email" placeholder="you@email.com">
+      <button class="btn" style="width:100%;border-radius:14px;box-shadow:0 10px 36px rgba(214,150,20,.28)" onclick="save()">Send me the spot</button>
+      <p style="font-size:13.5px;line-height:1.5;color:var(--inkFaint);margin-top:2px;transition:color 1s ease">We'll send the location, timings and a weather word before the day. Nothing else.</p>
+      <p id="err" class="hide" style="color:#c0392b;font-size:14px">Something glitched — try again in a moment.</p>
+    </div>
+
+    <div id="thanks" class="hide" style="margin-top:24px;width:100%;background:var(--surface);border:1px solid rgba(255,215,0,.45);border-radius:20px;padding:40px 32px;display:flex;flex-direction:column;gap:10px;animation:floatup .5s ease both">
+      <span style="font-size:40px">🌞</span>
+      <h3 class="grotesk" id="thanksName" style="font-weight:700;font-size:26px;color:var(--eyebrow);transition:color 1s ease">You're on the list.</h3>
+      <p style="font-size:16px;line-height:1.55;color:var(--inkSoft);transition:color 1s ease">We'll send the exact spot, timings and a weather word before the day. See you in the sun.</p>
+    </div>
+
+    <p style="margin-top:22px;font-size:15px;line-height:1.6;color:var(--inkSoft);max-width:480px;transition:color 1s ease">Free, always. If you can, <strong>chip in</strong> on the day — it covers the food and the speaker, and everything beyond goes to <strong>LGBT+ Rights Ghana</strong> <span style="opacity:.75">(subject to their agreement)</span>.</p>
+    <p style="margin-top:6px;font-size:15px;line-height:1.6;color:var(--inkFaint);transition:color 1s ease">And when the sun goes down — a karaoke after-party nearby. Details to follow. 🎤</p>
+  </div>
+</section>
+
+<!-- CLOSING BAND (day-arc frames cycle with the stage) -->
+<div style="position:relative;margin-top:clamp(40px,7vw,80px)">
+  <div style="position:absolute;inset:0;z-index:1;overflow:hidden">
+    <img src="/picnic-assets/morning.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:var(--op0);transition:opacity 1s ease">
+    <img src="/picnic-assets/midday.jpg"  alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:var(--op1);transition:opacity 1s ease">
+    <img src="/picnic-assets/golden.jpg"  alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:var(--op2);transition:opacity 1s ease">
+    <img src="/picnic-assets/dusk.jpg"    alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:var(--op3);transition:opacity 1s ease">
+    <img src="/picnic-assets/night.jpg"   alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:var(--op4);transition:opacity 1s ease">
+  </div>
+  <div style="position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,var(--bg) 0%,transparent 30%,transparent 70%,var(--bg) 100%);transition:background-color 1s ease"></div>
+  <section style="position:relative;z-index:3;padding:clamp(120px,22vw,260px) 24px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center">
+    <span class="grotesk" style="font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.85);text-shadow:0 2px 16px rgba(0,0,0,.6)">One day · all its light</span>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
+      <a href="https://wa.me/?text=Come%20to%20the%20BLKOUT%20Annual%20Picnic%20%E2%80%94%20Sun%2016%20Aug%2C%20Regent's%20Park.%20Bring%20what%20we%20need%2C%20come%20as%20you%20are." target="_blank" style="text-decoration:none;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;color:#0A0A14;background:rgba(255,255,255,.92);border-radius:999px;padding:12px 22px">WhatsApp</a>
+      <a href="https://twitter.com/intent/tweet?text=Come%20to%20the%20BLKOUT%20Annual%20Picnic%20%E2%80%94%20Sun%2016%20Aug%2C%20Regent's%20Park." target="_blank" style="text-decoration:none;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;color:#0A0A14;background:rgba(255,255,255,.92);border-radius:999px;padding:12px 22px">Share on X</a>
+      <button onclick="copyLink(this)" style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;color:#0A0A14;background:rgba(255,255,255,.92);border:none;border-radius:999px;padding:12px 22px;cursor:pointer">Copy link</button>
+    </div>
+  </section>
+</div>
+
+<footer style="border-top:1px solid var(--line);padding:28px 24px 96px;text-align:center;transition:border-color 1s ease">
+  <p style="font-size:14px;line-height:1.6;color:var(--inkFaint);transition:color 1s ease"><span class="grotesk" style="font-weight:600;color:var(--eyebrow);letter-spacing:.04em">BLKOUT</span> — community-owned, member-governed · blkoutuk.com</p>
+  <p class="grotesk" style="margin-top:8px;font-size:13px;color:var(--inkFaint)">Bring what we need. Come as you are.</p>
+</footer>
+
+<!-- DAY NAV -->
+<div onmouseenter="pauseAuto()" onmouseleave="resumeAuto()" style="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);backdrop-filter:blur(12px);border-radius:999px;padding:10px 16px;box-shadow:0 8px 30px rgba(0,0,0,.18);transition:background-color 1s ease,border-color 1s ease">
+  <button id="playBtn" onclick="toggle()" title="Play / pause" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;background:#FFD700;color:#0A0A14;font-size:13px;flex:none">❚❚</button>
+  <div id="dots" style="display:flex;align-items:center;gap:9px"></div>
+  <span id="stageName" class="grotesk" style="min-width:88px;font-size:13px;font-weight:600;color:var(--ink);transition:color 1s ease">Morning</span>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://bgjengudzfickgomjqmz.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnamVuZ3VkemZpY2tnb21qcW16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MTI3NjcsImV4cCI6MjA3MTE4ODc2N30.kYQ2oFuQBGmu4V_dnj_1zDMDVsd-qpDZJwNvswzO6M0';
+
+const STAGES = [
+  {name:'Morning',     bg:'#F8EEDD', skyTop:'#AFCDE6', ink:'#2A1320', inkSoft:'rgba(42,19,32,.74)', inkFaint:'rgba(42,19,32,.5)',  eyebrow:'#9A6B0E', surface:'#FFFDF7', line:'rgba(42,19,32,.10)', sunTop:'68vh', sunSize:'460px', sunCore:'#FFD89A', sunCore2:'#FFE9B8', sunOp:'.8'},
+  {name:'Midday',      bg:'#EAF4FA', skyTop:'#BBDCF0', ink:'#0B1622', inkSoft:'rgba(11,22,34,.74)', inkFaint:'rgba(11,22,34,.5)',  eyebrow:'#9A6B0E', surface:'#FFFFFF', line:'rgba(11,22,34,.10)', sunTop:'18vh', sunSize:'380px', sunCore:'#FFE6A0', sunCore2:'#FFFFFF', sunOp:'.85'},
+  {name:'Golden Hour', bg:'#14101F', skyTop:'#4A2A48', ink:'#FBF3DE', inkSoft:'rgba(245,238,220,.8)', inkFaint:'rgba(245,238,220,.52)', eyebrow:'#FFD700', surface:'rgba(245,238,220,.06)', line:'rgba(245,238,220,.16)', sunTop:'58vh', sunSize:'440px', sunCore:'#EF8C36', sunCore2:'#FFC25A', sunOp:'.9'},
+  {name:'Dusk',        bg:'#0E0B1A', skyTop:'#2A2350', ink:'#FBF3DE', inkSoft:'rgba(245,238,220,.8)', inkFaint:'rgba(245,238,220,.52)', eyebrow:'#FFD700', surface:'rgba(245,238,220,.06)', line:'rgba(245,238,220,.16)', sunTop:'74vh', sunSize:'380px', sunCore:'#E8743C', sunCore2:'#FFB070', sunOp:'.92'},
+  {name:'Night',       bg:'#0A0A14', skyTop:'#15152A', ink:'#FBF3DE', inkSoft:'rgba(245,238,220,.78)', inkFaint:'rgba(245,238,220,.5)', eyebrow:'#FFD700', surface:'rgba(245,238,220,.06)', line:'rgba(245,238,220,.16)', sunTop:'16vh', sunSize:'340px', sunCore:'#C8A23C', sunCore2:'#FFE08A', sunOp:'.42'}
+];
+let cur = 0, playing = true, timer = null;
+const root = document.documentElement;
+
+(function buildDots(){
+  const d = document.getElementById('dots');
+  STAGES.forEach((s,i)=>{
+    const b = document.createElement('button');
+    b.title = s.name; b.onclick = ()=>goTo(i);
+    b.style.cssText = 'width:11px;height:11px;border-radius:50%;border:none;padding:0;cursor:pointer;transition:background-color .4s ease';
+    d.appendChild(b);
+  });
+})();
+
+function applyTheme(i){
+  const c = STAGES[i], s = root.style;
+  ['bg','skyTop','ink','inkSoft','inkFaint','eyebrow','surface','line','sunTop','sunSize','sunCore','sunCore2','sunOp']
+    .forEach(k=>s.setProperty('--'+k, c[k]));
+  for(let n=0;n<5;n++) s.setProperty('--op'+n, n===i?'1':'0');
+  document.getElementById('stageName').textContent = c.name;
+  document.querySelectorAll('#dots button').forEach((b,n)=>{ b.style.background = n===i ? '#FFD700' : c.inkFaint; });
+  document.body.style.background = c.bg;
+}
+function goTo(i){ if(i===cur) return; cur=i; applyTheme(i); try{localStorage.setItem('blkout-picnic-stage',String(i));}catch(e){} startTimer(); }
+function next(){ goTo((cur+1)%5); }
+function startTimer(){ clearInterval(timer); timer=setInterval(()=>{ if(playing) next(); },6000); }
+function toggle(){ playing=!playing; document.getElementById('playBtn').textContent = playing?'❚❚':'▶'; startTimer(); }
+function pauseAuto(){ if(playing){ playing=false; document.getElementById('playBtn').textContent='▶'; } }
+function resumeAuto(){}
+
+(function init(){
+  let start=0; try{ const s=parseInt(localStorage.getItem('blkout-picnic-stage'),10); if(s>=0&&s<5) start=s; }catch(e){}
+  cur=start; applyTheme(start); startTimer();
+})();
+
+function copyLink(btn){ try{ navigator.clipboard.writeText(location.href); btn.textContent='Copied ✓'; setTimeout(()=>btn.textContent='Copy link',2000);}catch(e){} }
+
+async function save(){
+  const email = document.getElementById('email').value.trim();
+  const name = document.getElementById('name').value.trim();
+  const err = document.getElementById('err');
+  err.classList.add('hide');
+  if(!email || !email.includes('@')){ err.textContent='Please pop in a valid email.'; err.classList.remove('hide'); return; }
+  try{
+    const r = await fetch(SUPABASE_URL + '/rest/v1/event_interest', {
+      method:'POST',
+      headers:{ 'apikey':SUPABASE_ANON, 'Authorization':'Bearer '+SUPABASE_ANON, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+      body: JSON.stringify({ event_slug:'picnic-2026', email:email, name:name||'', interest_level:'definitely', could_help_organise:false })
+    });
+    if(!r.ok) throw new Error(r.status);
+    document.getElementById('form').classList.add('hide');
+    const t = document.getElementById('thanks');
+    document.getElementById('thanksName').textContent = name ? ("You're on the list, "+name+".") : "You're on the list.";
+    t.classList.remove('hide');
+  }catch(e){ err.textContent='Something glitched — try again in a moment.'; err.classList.remove('hide'); }
+}
+</script>
+</body>
+</html>
