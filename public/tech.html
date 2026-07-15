@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liberation technology — how we do technology | BLKOUT UK</title>
+<meta name="description" content="How BLKOUT does technology: ancestral in how it's developed, collaborative in how it's delivered, reparative in what it leaves behind. Our AI policy, published in full, and the thinking behind it.">
+
+<link rel="icon" type="image/png" href="/blkout-sigil-gold.png">
+<link rel="apple-touch-icon" href="/blkout-sigil-gold.png">
+
+<meta property="og:title" content="Liberation technology — how we do technology">
+<meta property="og:description" content="Ancestral. Collaborative. Reparative. BLKOUT's AI policy in full — and the data-justice thinking behind a community-owned platform.">
+<meta property="og:image" content="/blkout-sigil-gold.png">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          obsidian:      '#0a0a14',
+          abyss:         '#14141f',
+          'purple-shadow': '#2d1b3e',
+          'purple-deep': '#4a1942',
+          gold:          '#d4af37',
+          'gold-light':  '#ffd700',
+          cream:         '#f5f1e8',
+          'cream-muted': '#a8a195',
+        },
+        fontFamily: {
+          display: ['"Work Sans"', 'sans-serif'],
+          body:    ['"Work Sans"', 'sans-serif'],
+          serif:   ['"Fraunces"', 'serif'],
+          mono:    ['"IBM Plex Mono"', 'monospace'],
+        }
+      }
+    }
+  }
+</script>
+<style type="text/tailwindcss">
+  @layer base {
+    html, body { background: #0a0a14; color: #f5f1e8; font-family: 'Work Sans', sans-serif; }
+    ::selection { background: #d4af37; color: #0a0a14; }
+    html { scroll-behavior: smooth; }
+  }
+  @layer components {
+    .display-xl  { @apply font-display font-black uppercase tracking-tight leading-[0.85]; }
+    .serif-soft  { @apply font-serif italic text-cream-muted; }
+    .gold-rule   { @apply h-[4px] w-full bg-gold; }
+    .tag {
+      @apply inline-block font-mono text-[11px] uppercase tracking-widest
+             border border-gold/50 text-gold px-3 py-[3px];
+    }
+    .field {
+      @apply w-full bg-abyss border border-cream/20 text-cream px-4 py-3
+             focus:border-gold focus:outline-none placeholder:text-cream-muted/50;
+    }
+    .prose-blk p { @apply text-cream/90 leading-relaxed mb-5; }
+    .prose-blk p:last-child { @apply mb-0; }
+  }
+</style>
+</head>
+<body class="bg-obsidian text-cream">
+
+<!-- ============ HERO ============ -->
+<header class="max-w-3xl mx-auto px-6 pt-16 pb-12">
+  <p class="tag mb-6">BLKOUT · Tech governance &amp; development</p>
+  <h1 class="display-xl text-5xl md:text-7xl mb-6">Liberation<br><span class="text-gold">technology</span></h1>
+  <p class="serif-soft text-2xl mb-8">How we do technology — and why the how is the point.</p>
+
+  <div class="prose-blk">
+    <p>BLKOUT builds digital infrastructure for Black queer liberation. Not liberation as a theme. Liberation as a build standard. Against the extractive <em>artificial</em> intelligence of the platforms — which ranks, mines and erases — we ground our work in <em>ancestral</em> intelligence: the knowledge, survival craft and cultural forms carried by Black queer ancestors and elders, and this community's right to hold, interpret and transmit them itself.</p>
+    <p>Three words describe what that means in practice.</p>
+  </div>
+</header>
+
+<!-- ============ THE TRIAD ============ -->
+<section class="max-w-3xl mx-auto px-6 pb-16">
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="bg-abyss border border-gold/30 p-6">
+      <p class="font-mono text-[11px] uppercase tracking-widest text-gold mb-2">How it's developed</p>
+      <h2 class="font-display font-black uppercase text-2xl mb-3">Ancestral</h2>
+      <p class="text-sm text-cream/80 leading-relaxed">Grounded in what our ancestors and elders carried. Values- and rights-upholding from the first line of code, not audited in afterwards.</p>
+    </div>
+    <div class="bg-abyss border border-gold/30 p-6">
+      <p class="font-mono text-[11px] uppercase tracking-widest text-gold mb-2">How it's delivered</p>
+      <h2 class="font-display font-black uppercase text-2xl mb-3">Collaborative</h2>
+      <p class="text-sm text-cream/80 leading-relaxed">Built with the community, governed cooperatively, owned through a Community Benefit Society with an asset lock. Never purely transactional.</p>
+    </div>
+    <div class="bg-abyss border border-gold/30 p-6">
+      <p class="font-mono text-[11px] uppercase tracking-widest text-gold mb-2">What it leaves behind</p>
+      <h2 class="font-display font-black uppercase text-2xl mb-3">Reparative</h2>
+      <p class="text-sm text-cream/80 leading-relaxed">The outcome repairs erasure rather than extracts from it. Cultural memory returned to the people it belongs to.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE POLICY ============ -->
+<section id="policy" class="max-w-3xl mx-auto px-6 pb-20">
+  <div class="gold-rule mb-8"></div>
+  <p class="tag mb-4">The policy</p>
+  <h2 class="display-xl text-4xl md:text-5xl mb-4">What we will and<br>won't do with AI</h2>
+  <p class="serif-soft text-lg mb-2">Version one. Adopted by the board of BLKOUT Creative Ltd, 17 June 2026 — nem con.</p>
+  <p class="text-sm text-cream-muted mb-10">Version two will be co-produced with members. The box at the foot of this page is where that starts.</p>
+
+  <h3 class="font-display font-bold uppercase tracking-wide text-gold text-lg mb-4">The policy at a glance — seven principles</h3>
+  <ol class="space-y-3 mb-12 list-none">
+    <li class="flex gap-4"><span class="font-mono text-gold shrink-0">01</span><p><strong class="text-cream">People keep the promises.</strong> <span class="text-cream/80">AI extends our capacity to meet members; it is never the meeting itself.</span></p></li>
+    <li class="flex gap-4"><span class="font-mono text-gold shrink-0">02</span><p><strong class="text-cream">Members own their stories.</strong> <span class="text-cream/80">We hold the minimum, in infrastructure we control, and member data never trains anyone's model.</span></p></li>
+    <li class="flex gap-4"><span class="font-mono text-gold shrink-0">03</span><p><strong class="text-cream">A human answers for everything.</strong> <span class="text-cream/80">Nothing publishes on autopilot, and no machine decides anything that matters about a person.</span></p></li>
+    <li class="flex gap-4"><span class="font-mono text-gold shrink-0">04</span><p><strong class="text-cream">We say what's synthetic.</strong> <span class="text-cream/80">Avatars are presented as avatars; AI contributions are disclosed; no fake voices, ever.</span></p></li>
+    <li class="flex gap-4"><span class="font-mono text-gold shrink-0">05</span><p><strong class="text-cream">We steer the defaults.</strong> <span class="text-cream/80">Left alone, these tools erase us — correcting that drift is part of the work, not an extra.</span></p></li>
+    <li class="flex gap-4"><span class="font-mono text-gold shrink-0">06</span><p><strong class="text-cream">Consent is the line between care and surveillance.</strong> <span class="text-cream/80">Members tell us what they need; we don't mine them for it.</span></p></li>
+    <li class="flex gap-4"><span class="font-mono text-gold shrink-0">07</span><p><strong class="text-cream">Different, not worse.</strong> <span class="text-cream/80">None of the engagement machinery of the platforms we exist as an alternative to.</span></p></li>
+  </ol>
+
+  <h3 class="font-display font-bold uppercase tracking-wide text-gold text-lg mb-4">Five red lines — not aspirations</h3>
+  <ul class="space-y-3 mb-12">
+    <li class="border-l-2 border-gold/60 pl-4 text-cream/85"><strong class="text-cream">Member data never trains anyone's model.</strong> Not sold, not shared, not contributed — and every processor we use is configured to the same standard.</li>
+    <li class="border-l-2 border-gold/60 pl-4 text-cream/85"><strong class="text-cream">No surveillance dressed as care.</strong> No profiling, no engagement scoring, no inferring what a member hasn't chosen to tell us.</li>
+    <li class="border-l-2 border-gold/60 pl-4 text-cream/85"><strong class="text-cream">No machine decisions about people.</strong> Joining, moderation, money, access — a human makes the actual decision and is accountable for it.</li>
+    <li class="border-l-2 border-gold/60 pl-4 text-cream/85"><strong class="text-cream">No simulated intimacy.</strong> AI does not provide counselling, crisis response or pastoral care in human disguise. Where someone needs a person, they get a person.</li>
+    <li class="border-l-2 border-gold/60 pl-4 text-cream/85"><strong class="text-cream">No engagement machinery.</strong> No attention-maximising, no manufactured urgency, no dark patterns. Not the same machine with better politics.</li>
+  </ul>
+
+  <details class="mb-12 bg-abyss border border-cream/15 group">
+    <summary class="cursor-pointer px-6 py-4 font-display font-bold uppercase tracking-wide text-cream hover:text-gold transition-colors">Read the full policy</summary>
+    <div class="px-6 pb-8 pt-2 prose-blk text-[15px]">
+      <h4 class="font-display font-bold uppercase text-gold mt-4 mb-3">Why we use AI at all</h4>
+      <p>BLKOUT is a small co-operative with a large purpose: digital infrastructure for Black queer liberation. AI lets a handful of people run a platform, a newsroom, an events calendar and a membership offer that would otherwise need a staff team we don't have and funders won't pay for. We use it the way a community kitchen uses industrial equipment — to multiply what care can reach, never to replace the cook.</p>
+      <p>We are not neutral about these tools. They are built by corporations whose values are not ours, trained on data extracted without consent, and tuned to defaults that erase people like us. We use them anyway, eyes open, because the alternative — Black queer infrastructure that can't afford to exist — serves no one. This policy is how we stay honest about that bargain.</p>
+      <h4 class="font-display font-bold uppercase text-gold mt-6 mb-3">What AI is for at BLKOUT</h4>
+      <p><strong>Extending capacity, not simulating care.</strong> AI may draft, research, summarise, illustrate, schedule, transcribe, translate and build. It may help us notice a member's signal sooner and respond better. It may never <em>be</em> the response where the promise was a person. Our membership covenant — to meet people reliably — is kept by humans. AI helps us keep it; it doesn't keep it for us.</p>
+      <p><strong>Production with human editorship.</strong> Every AI-assisted output that reaches the community — an image, a script, a newsletter, a video — passes through human editorial judgement before it ships, and a named person answers for it. Nothing publishes on autopilot.</p>
+      <p><strong>Steering the defaults.</strong> Left alone, generative tools produce a world that is whiter, straighter, sadder and more generic than ours. When we use them we actively correct: towards creation rather than loss, the full range of Black queer life and age, specificity over stock imagery, "we learn" over "we fail." This is a standing production obligation, not a preference.</p>
+      <p><strong>Honest representation.</strong> AIvor is an avatar — stylised, framed as broadcast, named in homage to Ivor Cummings — and is always presented as what he is. We do not pass synthetic people off as real ones. No fake members, no fabricated testimony, no AI-generated "community voices," no deepfakes of real people. Where AI contributed materially to a published work, we say so plainly.</p>
+      <h4 class="font-display font-bold uppercase text-gold mt-6 mb-3">Data sovereignty</h4>
+      <p>Members own their stories. We hold the minimum data needed to keep our promises, in infrastructure we control, and we are building towards members seeing, editing and deleting everything we hold about them. Any AI processing of member data happens under these same rules — minimum necessary, named purpose, never for training, never for sale.</p>
+      <h4 class="font-display font-bold uppercase text-gold mt-6 mb-3">Governance and accountability</h4>
+      <p>The board owns this policy and reviews it annually, or sooner if practice or tools change materially. The technical lead maintains the public register below, updated as the stack changes. Any member can challenge any use of AI at BLKOUT and get an answer from a human — through any channel we run, with the board as the backstop. And when we get it wrong, we say so. A lesson, published, beats a failure concealed. That is how the whole platform works; AI gets no exemption.</p>
+    </div>
+  </details>
+
+  <h3 class="font-display font-bold uppercase tracking-wide text-gold text-lg mb-4">The register — AI in active use</h3>
+  <p class="text-sm text-cream-muted mb-4">Published so you never have to wonder. Updated as the stack changes; last updated June 2026.</p>
+  <div class="overflow-x-auto mb-4">
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="border-b border-gold/40 text-left">
+          <th class="py-3 pr-4 font-mono text-[11px] uppercase tracking-widest text-gold font-medium">Use</th>
+          <th class="py-3 pr-4 font-mono text-[11px] uppercase tracking-widest text-gold font-medium">What it does</th>
+          <th class="py-3 font-mono text-[11px] uppercase tracking-widest text-gold font-medium">Member data?</th>
+        </tr>
+      </thead>
+      <tbody class="text-cream/85">
+        <tr class="border-b border-cream/10"><td class="py-3 pr-4 font-medium text-cream">AIvor — avatar presenter</td><td class="py-3 pr-4">Presents weekly news video; stylised avatar, disclosed</td><td class="py-3">No</td></tr>
+        <tr class="border-b border-cream/10"><td class="py-3 pr-4 font-medium text-cream">Content production</td><td class="py-3 pr-4">Image generation, drafting, video assembly — all human-edited, brand-overlaid</td><td class="py-3">No</td></tr>
+        <tr class="border-b border-cream/10"><td class="py-3 pr-4 font-medium text-cream">Platform development</td><td class="py-3 pr-4">AI-assisted coding and operations across our apps</td><td class="py-3">No</td></tr>
+        <tr class="border-b border-cream/10"><td class="py-3 pr-4 font-medium text-cream">Research &amp; synthesis</td><td class="py-3 pr-4">Funder research, communications tailoring from our own source material</td><td class="py-3">No</td></tr>
+        <tr class="border-b border-cream/10"><td class="py-3 pr-4 font-medium text-cream">Operations assistant</td><td class="py-3 pr-4">Internal scheduling, email triage, monitoring (director's tooling)</td><td class="py-3">Internal only</td></tr>
+        <tr class="border-b border-cream/10"><td class="py-3 pr-4 font-medium text-cream">Member-signal response</td><td class="py-3 pr-4">Flags a new member's first gesture so a human responds</td><td class="py-3">Yes — minimal, named purpose, never trained on</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ THE SERIES ============ -->
+<section id="series" class="max-w-3xl mx-auto px-6 pb-8">
+  <div class="gold-rule mb-8"></div>
+  <p class="tag mb-4">Data justice + BLKOUT</p>
+  <h2 class="display-xl text-4xl md:text-5xl mb-4">The thinking<br>behind the building</h2>
+  <p class="serif-soft text-lg mb-14">A growing series on what liberation technology asks of us. Three to start.</p>
+
+  <!-- Article 1 -->
+  <article id="ancestral-intelligence" class="mb-20">
+    <p class="font-mono text-[11px] uppercase tracking-widest text-gold mb-3">01 · The frame</p>
+    <h3 class="font-display font-black uppercase text-3xl mb-6">Ancestral intelligence</h3>
+    <div class="prose-blk">
+      <p>The platforms have an intelligence. It ranks, it mines, it erases. It decides which of our stories surface and which sink, guided by nothing more principled than what keeps a thumb moving. We are told this intelligence is artificial. It is better described as extractive — and Black queer memory is among the things it extracts.</p>
+      <p>We propose a different grounding. Ancestral intelligence: the knowledge, survival craft and cultural forms carried by Black queer ancestors and elders — and this community's right to hold, interpret and transmit them itself. Not nostalgia. Infrastructure. Ivor Cummings, the man our avatar honours, made a practice of opening doors for newly arrived Black Britons who had nobody else to call. That is a technology of care. It predates the smartphone by seventy years and outperforms most of what runs on one.</p>
+      <p>Why does the distinction matter? Because a dispersed minority faces a particular double bind. It is easier to be heard <em>through</em> non-minority interlocutors — mainstream platforms, mainstream gatekeepers — but what arrives on the other side is diluted. So we choose between dismissing the mainstreamed version of ourselves as inauthentic, or doing the unpaid work of re-applying the specificity the mainstreaming stripped away. Either way, the platform takes its cut. Meanwhile the people holding the most living memory are ageing, and their archives sit in shoeboxes, on dying hard drives, on accounts one terms-of-service change from deletion.</p>
+      <p>BLKOUT began in the lineage of Black queer publishing — Barbara Smith's Kitchen Table: Women of Color Press was making liberation infrastructure with a typesetter long before anyone said "platform." Reparative media practice is our continuation of that lineage: gather the scattered memory, return the agency of recording and interpreting to the community it documents, and hold it in infrastructure the community actually owns. A commons, cooperatively governed, with an asset lock — so it cannot quietly become somebody's exit.</p>
+      <p>This is decolonising work, and we are clear-eyed that decolonial language is itself a target for recuperation — every extractive product now arrives wearing the vocabulary of empowerment. The test is not the language. The test is who holds, who interprets, who transmits. Ancestral intelligence answers: we do.</p>
+    </div>
+  </article>
+
+  <!-- Article 2 -->
+  <article id="steer-the-defaults" class="mb-20">
+    <p class="font-mono text-[11px] uppercase tracking-widest text-gold mb-3">02 · The practice</p>
+    <h3 class="font-display font-black uppercase text-3xl mb-6">Steer the defaults</h3>
+    <div class="prose-blk">
+      <p>Ask a generative model for Black queer men at a picnic and watch what comes back. Younger than us. Sadder than us. Somewhere that is recognisably nowhere, in light borrowed from a pharmaceutical advert. Run it again and the picnic greys towards a memorial. The tools do not hate us. They have simply averaged a world that under-imagined us, and an average is a politics wearing a lab coat.</p>
+      <p>Left alone, generative tools produce a world that is whiter, straighter, sadder and more generic than ours. That sentence sits in our board-adopted AI policy — principle five — and as far as we can tell, no other organisation's AI policy names it. Most policies worry about what these tools might say. Ours also worries about what they erase by default, because erasure is the failure mode we know best.</p>
+      <p>So steering is a standing production obligation at BLKOUT. Not a preference. Not a nice-to-have when deadlines allow. When we generate images, Black figures are anchored to reference photographs so the tool cannot drift us towards ambiguity. We correct towards creation rather than loss — our community is building things, and the imagery should say so. We insist on the full range of Black queer life and age; we were not all born in 1998, and the elders who made this community possible deserve better than to be uninventable. We choose "we learn" over "we fail," specificity over stock. And every image that ships carries our mark and passes a human eye first.</p>
+      <p>Is this a lot of work? Yes. That is rather the point. The platforms sold us the fantasy of frictionless production — type a phrase, receive a world. But the friction we removed was where the judgement lived. When the default output erases you, accepting the default is not neutrality. It is agreement on a discount.</p>
+      <p>There is a wider argument here, and it belongs to everyone building with these tools, not just us. Defaults are political. Somebody chose the training data; somebody tuned what "professional" looks like; somebody decided which bodies read as "beautiful" without a modifier. Refusing the default is available to any organisation willing to name the drift and budget the correction. We publish our approach so the refusal spreads. The tools will keep offering us a world without us in it. We decline — in the settings, in the prompts, in the edit, every single time.</p>
+    </div>
+  </article>
+
+  <!-- Article 3 -->
+  <article id="consent" class="mb-8">
+    <p class="font-mono text-[11px] uppercase tracking-widest text-gold mb-3">03 · The line</p>
+    <h3 class="font-display font-black uppercase text-3xl mb-6">Consent is the line between care and surveillance</h3>
+    <div class="prose-blk">
+      <p>The nod. Two Black men pass on a street that holds no other Black faces, and one tilts his head a careful few degrees. Nothing is said. Everything is said: I see you, you're not alone here. What makes the nod care rather than intrusion is that it asks nothing and takes nothing. It offers, and it lets the offer be declined.</p>
+      <p>The platforms built the opposite. They watch everything — what you linger on, what you almost typed, who you looked at twice — infer what you never chose to share, and sell the inference to whoever bids. They call this personalisation, and its warmth is the warmth of a heat lamp: engineered, and pointed at your wallet. Surveillance dressed as care is our policy's second red line, and it earns that placing because our community knows the costume well. We have been profiled by states, by health systems, by apps that promised discretion and delivered a data breach.</p>
+      <p>So where is the line, for an organisation that genuinely wants to notice people? Consent. Care asks; surveillance assumes. Members tell us what they need — we don't mine them for it.</p>
+      <p>Here is what that looks like in our actual plumbing. When a man makes his first gesture towards BLKOUT — claims a code, saves a picnic spot, writes in the box at the foot of this page — that gesture is recorded for exactly one purpose: so a human being answers him, and answers within days, remembering what he actually did. That is the whole system. We built instrumentation not to score people but so that no one who reaches towards this community gets silence back. The technology's job is to make sure care doesn't drop things. The care itself stays human.</p>
+      <p>Now the refusals, because the refusals are the design. No profiling. No engagement scores. No inferring a man's health, desires or troubles from his click patterns. No algorithm deciding he looks lonely and serving him an advert shaped like a friend. If we want to know something, we ask, plainly, and he can decline — the way you can decline a nod by simply walking on, no penalty, no note kept.</p>
+      <p>Even this page practises the argument. The respond box below tells you exactly what we keep and the single use it's put to. No analytics script counted your scroll depth to this paragraph. Different, not worse — and on this measure, honestly? Better.</p>
+    </div>
+  </article>
+</section>
+
+<!-- ============ READING ============ -->
+<section id="reading" class="max-w-3xl mx-auto px-6 pb-16">
+  <div class="gold-rule mb-8"></div>
+  <p class="tag mb-4">External article of the month</p>
+  <h2 class="font-display font-black uppercase text-3xl mb-8">What we're reading — July 2026</h2>
+  <a href="https://weavingliberation.org/wp-content/uploads/2024/02/A-vision-for-digital-justice-organising-in-Europe.pdf" target="_blank" rel="noopener noreferrer" class="block bg-abyss border border-gold/30 p-6 md:p-8 hover:border-gold transition-colors group mb-4">
+    <h3 class="font-display font-bold text-xl text-cream group-hover:text-gold transition-colors mb-2">A vision for digital justice organising in Europe</h3>
+    <p class="font-mono text-[11px] uppercase tracking-widest text-cream-muted mb-4">Weaving Liberation / Digital Freedom Fund · PDF</p>
+    <p class="text-sm text-cream/85 leading-relaxed"><strong class="text-gold">Why we're reading it:</strong> two years of collective design by thirty organisers across racial justice, digital rights and funding, it names three pillars — imagining, organising solidarity, sustaining — that describe digital justice as something communities author rather than receive. Our commons work maps onto all three, and it sets a bar worth being measured against.</p>
+  </a>
+  <p class="text-xs text-cream-muted">A new pick each month. Previous picks will gather here as a reading list.</p>
+</section>
+
+<!-- ============ FROM VOICES ============ -->
+<section id="voices" class="max-w-3xl mx-auto px-6 pb-16">
+  <p class="tag mb-4">From BLKOUT Voices</p>
+  <h2 class="font-display font-black uppercase text-3xl mb-8">We've been saying this a while</h2>
+  <ul class="space-y-4">
+    <li><a href="https://voices.blkoutuk.com/articles/data-sovereignty-solidarity" class="group block border-l-2 border-gold/60 pl-4 hover:border-gold transition-colors">
+      <span class="font-bold text-cream group-hover:text-gold transition-colors">We Tried to Find Our Community. The Platforms Said No.</span>
+      <span class="block text-sm text-cream-muted mt-1">What happens when discovery is rented from an algorithm — and why we stopped renting.</span>
+    </a></li>
+    <li><a href="https://voices.blkoutuk.com/articles/platform-for-community-liberation-the-forward-archive" class="group block border-l-2 border-gold/60 pl-4 hover:border-gold transition-colors">
+      <span class="font-bold text-cream group-hover:text-gold transition-colors">Platform for Community = Liberation: The Forward Archive</span>
+      <span class="block text-sm text-cream-muted mt-1">Eight years of Black queer writing, kept where no terms-of-service change can reach it.</span>
+    </a></li>
+    <li><a href="https://voices.blkoutuk.com/articles/ivor-your-growing-digital-companion" class="group block border-l-2 border-gold/60 pl-4 hover:border-gold transition-colors">
+      <span class="font-bold text-cream group-hover:text-gold transition-colors">IVOR: Your Growing Digital Companion</span>
+      <span class="block text-sm text-cream-muted mt-1">An avatar named for an ancestor — what he is, what he isn't, and why we tell you the difference.</span>
+    </a></li>
+    <li><a href="https://voices.blkoutuk.com/articles/temples-for-tomorrow-black-queer-innovation" class="group block border-l-2 border-gold/60 pl-4 hover:border-gold transition-colors">
+      <span class="font-bold text-cream group-hover:text-gold transition-colors">Temples For Tomorrow: Black Queer Innovation, Routes to Radical Futures</span>
+      <span class="block text-sm text-cream-muted mt-1">From Fire!! magazine to liberation platforms — a century of building our own rooms.</span>
+    </a></li>
+  </ul>
+</section>
+
+<!-- ============ RESPOND ============ -->
+<section id="respond" class="max-w-3xl mx-auto px-6 pb-20">
+  <div class="gold-rule mb-8"></div>
+  <p class="tag mb-4">Your turn</p>
+  <h2 class="display-xl text-4xl md:text-5xl mb-4">This is version one.<br><span class="text-gold">Members write version two.</span></h2>
+  <p class="text-cream/85 leading-relaxed mb-8 max-w-xl">The board adopted this policy as an honest starting position, not a finished thought. Tell us where it's right, where it's wrong, what it's missing. What you write here shapes the community consultation towards version two.</p>
+
+  <form id="respondForm" class="max-w-xl space-y-4">
+    <div>
+      <label for="message" class="block font-mono text-[11px] uppercase tracking-widest text-gold mb-2">Your response *</label>
+      <textarea id="message" name="message" rows="5" required class="field" placeholder="Where is this policy right? Where is it wrong? What's missing?"></textarea>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <label for="name" class="block font-mono text-[11px] uppercase tracking-widest text-gold mb-2">Name <span class="text-cream-muted normal-case">(optional)</span></label>
+        <input type="text" id="name" name="name" class="field" placeholder="How to address you">
+      </div>
+      <div>
+        <label for="email" class="block font-mono text-[11px] uppercase tracking-widest text-gold mb-2">Email <span class="text-cream-muted normal-case">(optional)</span></label>
+        <input type="email" id="email" name="email" class="field" placeholder="If you'd like a reply">
+      </div>
+    </div>
+    <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+    <p class="text-xs text-cream-muted leading-relaxed">What happens to this: we keep what you write. Your name and email travel with it only if you leave them, and they're used for exactly one thing — a human answering you, and shaping version two. No list-adding, no profiling, no training. That's the policy above, practised on this box.</p>
+    <button type="submit" id="respondBtn" class="bg-gold text-obsidian font-display font-bold uppercase tracking-wide px-8 py-3 hover:bg-gold-light transition-colors">Send it</button>
+    <p id="respondError" class="hidden text-sm text-red-400">That didn't send — try once more, or email rob@blkoutuk.com and it counts just the same.</p>
+  </form>
+
+  <div id="respondThanks" class="hidden max-w-xl bg-abyss border border-gold/40 p-8">
+    <p class="font-display font-black uppercase text-2xl text-gold mb-3">Received.</p>
+    <p class="text-cream/85 leading-relaxed">Thank you. A human will read this — that's the whole point of the policy. If you left an email, expect a reply from a person, not an autoresponder.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-cream/10">
+  <div class="max-w-3xl mx-auto px-6 py-12">
+    <p class="font-mono text-[11px] uppercase tracking-widest text-gold mb-4">Keep moving</p>
+    <div class="flex flex-wrap gap-x-8 gap-y-2 text-sm mb-8">
+      <a href="/" class="text-cream/80 hover:text-gold transition-colors underline decoration-cream/30">The commons</a>
+      <a href="/constellations.html" class="text-cream/80 hover:text-gold transition-colors underline decoration-cream/30">Constellations</a>
+      <a href="https://comms.blkoutuk.com/discover" class="text-cream/80 hover:text-gold transition-colors underline decoration-cream/30">The Playground</a>
+      <a href="https://voices.blkoutuk.com" class="text-cream/80 hover:text-gold transition-colors underline decoration-cream/30">BLKOUT Voices</a>
+    </div>
+    <p class="text-xs text-cream-muted leading-relaxed">BLKOUT UK is the trading name of BLKOUT Creative Ltd, a Community Benefit Society (RS009639) with an asset lock — owned by the community it serves. AI policy version one adopted 17 June 2026; register last updated June 2026. This page carries no analytics.</p>
+  </div>
+</footer>
+
+<script>
+  // response submission — insert-only, same pattern as constellations
+  const SUPABASE_URL = 'https://bgjengudzfickgomjqmz.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_cpUwnfcJuvnjrJjmLdZpXw_jJIOa8aB';
+
+  document.getElementById('respondForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const f = e.target;
+    if (f.website.value) return; // honeypot
+    const btn = document.getElementById('respondBtn');
+    const err = document.getElementById('respondError');
+    err.classList.add('hidden');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    const payload = {
+      message: f.message.value.trim(),
+      name: f.name.value.trim() || null,
+      email: f.email.value.trim() || null,
+      source: 'web-tech'
+    };
+    try {
+      const r = await fetch(SUPABASE_URL + '/rest/v1/policy_responses', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON,
+          'Authorization': 'Bearer ' + SUPABASE_ANON,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!r.ok) throw new Error('insert failed: ' + r.status);
+      f.classList.add('hidden');
+      document.getElementById('respondThanks').classList.remove('hidden');
+      document.getElementById('respondThanks').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (ex) {
+      err.classList.remove('hidden');
+      btn.disabled = false;
+      btn.textContent = 'Send it';
+    }
+  });
+</script>
+
+</body>
+</html>
