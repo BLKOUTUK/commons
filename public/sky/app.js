@@ -1,62 +1,147 @@
-// What's in your sky? — flow + tap mechanic. Cool, dry, confident.
+// Constellations — role cards, played in pairs. Spec 02, 25 Jul 2026.
+// Two sides: who holds you, and who you hold. The balance between them is the point.
 (function () {
-  const $ = (s) => document.querySelector(s);
+  const $  = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
   const GOLDEN = Math.PI * (3 - Math.sqrt(5));
-  const KEY = 'blkout_sky_v1';
+  const KEY = 'blkout_roles_v1';
 
-  const RINGS = [
-    { no:'Ring 01', sub:'Inner system', title:'The 3am people', short:'3AM',
-      instr:"Who'd pick up at 3am, no questions. One tap each.", rf:0.30, cr:110 },
-    { no:'Ring 02', sub:'Home belt', title:'The regulars', short:'REGULARS',
-      instr:'Who you actually see or speak to most months — the calls, the brunch, the long ones. One tap each.', rf:0.50, cr:185 },
-    { no:'Ring 03', sub:'Wide field', title:'The nods', short:'NODS',
-      instr:'Who knows your face and wishes you well — the barber, the neighbour, the half-known names. They count.', rf:0.72, cr:255 },
-    { no:'Ring 04', sub:'Uncharted space', title:'The gold ring', short:'GOLD',
-      instr:'Not who’s here — who you’re reaching for. One tap for each.', rf:0.92, cr:320, gold:true },
+  // ---------------------------------------------------------------- THE DECK
+  // Wording is data. Nathan + Jean-Eric rewrite these strings and nothing else
+  // in this file changes — that is what lets the build run through sign-off.
+  // side: held | give | gold        band: 0 close · 1 steady · 2 wide · 3 gold
+  const CARDS = [
+    { q: "Who'd pick up at 3am?",                              side: 'held', band: 0 },
+    { q: "Who'd lend you £200 and not mention it again?",      side: 'held', band: 0 },
+    { q: "Who knew you before?",                               side: 'held', band: 1 },
+    { q: "Who'd come with you so you don't walk in alone?",    side: 'held', band: 1 },
+    { q: "Whose face do you know at the function?",            side: 'held', band: 2 },
+
+    { q: "Who'd you get out of bed at 3am for?",               side: 'give', band: 0 },
+    { q: "Who tells you what they don't tell other people?",   side: 'give', band: 0 },
+    { q: "Who'd you go with, so they don't walk in alone?",    side: 'give', band: 1 },
+    { q: "Who do you check in on for no reason?",              side: 'give', band: 1 },
+
+    { q: "Who do you want closer?",                            side: 'gold', band: 3,
+      noGuess: true, wish: true },
   ];
 
-  // The sky you keep — the reflection. Cool, dry, never consoling.
-  function archetype(){
-    const [r1,r2,r3,g] = state.starsByRing.map(r=>r.length);
-    const t = r1+r2+r3;
-    if(t<=4 && g>=1) return ['The Dawn','first light of a new system','A sky just lit — and already reaching. Every constellation that matters started exactly here.'];
-    if(t<=4)         return ['The Dawn','first light of a new system','A sky just lit. Every constellation that matters started exactly here.'];
-    if(g>=3 && g>=r1) return ['The Architect','commander of uncharted space','You’re drawing the next sky on purpose. The gold is doing the talking.'];
-    if(r3>=10 && r3>=3*Math.max(r1,1)) return ['The Mayor','voice of the wide field','The scene knows your face and the street knows your name. Your outer light carries furthest.'];
-    if(r1>=4 && r1>=r3) return ['The Hearth','keeper of the inner suns','Few stars, serious heat. People sleep easier knowing you’d pick up.'];
-    if(r2>=r1 && r2>=r3) return ['The Anchor','steady orbit of the home belt','You keep the rhythm — the calls, the showing up. Constancy is the whole craft.'];
-    return ['The Navigator','reader of the whole sky','Balanced across every ring — close heat, steady rhythm, far light. You read the whole sky.'];
-  }
-
-  const state = {
-    screen:'s-intro', ring:0,
-    starsByRing:[[],[],[],[]],
-    goldLine:'', lifeStage:'',
+  const SIDE_LABEL = {
+    held: 'Part one — who holds you',
+    give: 'Part two — who you hold',
+    gold: 'The gold ring',
   };
 
-  // ---------- sky + card ----------
+  const BANDS = [
+    { rf: 0.30, cr: 110, short: 'CLOSE'  },
+    { rf: 0.52, cr: 185, short: 'STEADY' },
+    { rf: 0.74, cr: 255, short: 'WIDE'   },
+    { rf: 0.92, cr: 320, short: 'GOLD'   },
+  ];
+
+  const idxOf   = (side) => CARDS.map((c, i) => c.side === side ? i : -1).filter(i => i >= 0);
+  const HELD    = idxOf('held');
+  const GIVE    = idxOf('give');
+  const atPicnic = new URLSearchParams(location.search).get('at') === 'picnic';
+
+  // --------------------------------------------------------------- STATE
+  const state = {
+    screen: 's-intro',
+    mode: null,                        // 'pairs' | 'solo'
+    i: 0,
+    guess: new Array(CARDS.length).fill(null),
+    count: new Array(CARDS.length).fill(null),
+    wish: '', lifeStage: '',
+  };
+
+  const n  = (i) => state.count[i] || 0;
+  const sum = (list) => list.reduce((a, i) => a + n(i), 0);
+
+  // ------------------------------------------------------------- THE READINGS
+  // Two archetypes, offered as readings rather than verdicts. Neither scores a
+  // man. The sparse paths read as beginning, never as deficit.
+
+  function skyArchetype() {                     // from what he receives
+    const close = n(0) + n(1), steady = n(2) + n(3), wide = n(4);
+    const t = close + steady + wide;
+    if (t <= 3)
+      return ['The Dawn', 'first light of a new system',
+        'A sky just lit. Every constellation that matters started exactly here.'];
+    if (wide >= 10 && wide >= 3 * Math.max(close, 1))
+      return ['The Mayor', 'voice of the wide field',
+        'The scene knows your face and the street knows your name. Your outer light carries furthest.'];
+    if (close >= 4 && close >= wide)
+      return ['The Hearth', 'keeper of the inner suns',
+        'Few stars, serious heat. People sleep easier knowing you would pick up.'];
+    if (steady >= close && steady >= wide)
+      return ['The Anchor', 'steady orbit of the home belt',
+        'You keep the rhythm — the calls, the showing up. Constancy is the whole craft.'];
+    return ['The Navigator', 'reader of the whole sky',
+      'Close heat, steady rhythm, far light. You read the whole sky.'];
+  }
+
+  function friendArchetype() {                  // from what he gives
+    const bed = n(5), vault = n(6), comes = n(7), checks = n(8);
+    const t = bed + vault + comes + checks;
+    const top = Math.max(bed, vault, comes, checks);
+    if (t <= 2)
+      return ['The New Moon', 'still gathering light',
+        'Not much asked of you yet. That changes the first time someone does.'];
+    if (bed === top && bed >= 2)
+      return ['The Emergency Contact', 'the number people know by heart',
+        'When it goes wrong, yours is the name they reach for. That is not a small thing to be.'];
+    if (vault === top && vault >= 2)
+      return ['The Vault', 'keeper of what is not said elsewhere',
+        'People hand you the things they hand nobody else. They have read you correctly.'];
+    if (comes === top && comes >= 2)
+      return ['The One Who Comes', 'turns up, every time',
+        'You are the reason other men do not walk into rooms alone. Showing up is the whole art.'];
+    if (checks === top && checks >= 2)
+      return ['The Regular', 'steady, and unprompted',
+        'You reach out when nothing is wrong. Almost nobody does this, and everybody remembers who did.'];
+    return ['The Open Door', 'whatever it is, whenever',
+      'You give across the board — the crisis, the confidence, the company. The door stays open.'];
+  }
+
+  // The balance. Describes, never scores — a man who receives more than he gives
+  // may be ill, grieving, new to a city, newly out. This is a season, not a verdict.
+  function balance() {
+    const held = sum(HELD), give = sum(GIVE);
+    if (held <= 3 && give <= 3)
+      return 'Both skies still filling. Early is a place everyone starts.';
+    if (give > held * 1.4)
+      return 'More people steer by you than you steer by. That is a gift you give — and worth asking who gives it to you.';
+    if (held > give * 1.4)
+      return 'Well held right now. Skies turn — the people holding you today are ones you will hold for someone later.';
+    return 'It runs both ways. You are held by the people you hold — which is the rarest shape a sky comes in.';
+  }
+
+  // ------------------------------------------------------------- SKY + CARD
   const sky = new window.SkyGL($('#sky-gl'));
   window.__sky = sky;
   const card = new window.ShareCard($('#card-preview'));
   const starfield = $('#starfield');
+  const starsByCard = CARDS.map(() => []);
 
-  function total(){ return state.starsByRing.reduce((a,r)=>a+r.length,0); }
+  const total = () => state.count.reduce((a, v) => a + (v || 0), 0);
+  const carried = () => CARDS.reduce((a, c, i) => a + (c.noGuess ? 0 : (state.guess[i] || 0)), 0);
+  const charted = () => CARDS.reduce((a, c, i) => a + (c.noGuess ? 0 : (state.count[i] || 0)), 0);
 
-  function energy(){
-    return Math.min(1, 0.12 + total()*0.028 + (state.ring*0.04));
+  function pushEnergy() {
+    if (sky.ok) sky.setEnergy(Math.min(1, 0.12 + total() * 0.028 + state.i * 0.03));
   }
-  function pushEnergy(){ if(sky.ok) sky.setEnergy(energy()); }
 
-  // ---------- star layout ----------
-  function center(){ return { x: innerWidth/2, y: innerHeight/2,
-    R: Math.min(innerWidth, innerHeight)/2 * 0.86 }; }
+  function center() {
+    return { x: innerWidth / 2, y: innerHeight / 2,
+             R: Math.min(innerWidth, innerHeight) / 2 * 0.86 };
+  }
 
-  function layout(){
+  function layout() {
     const c = center();
-    state.starsByRing.forEach((ring, ri) => {
-      const cfg = RINGS[ri];
-      ring.forEach((s) => {
-        const rad = cfg.rf * c.R + s.jit;
+    starsByCard.forEach((list, ci) => {
+      const b = BANDS[CARDS[ci].band];
+      list.forEach((s) => {
+        const rad = b.rf * c.R + s.jit;
         s.el.style.left = (c.x + Math.cos(s.ang) * rad) + 'px';
         s.el.style.top  = (c.y + Math.sin(s.ang) * rad) + 'px';
       });
@@ -64,193 +149,292 @@
   }
   window.addEventListener('resize', layout);
 
-  function placeStar(ri, animate, ang){
-    const ring = state.starsByRing[ri];
-    const cfg = RINGS[ri];
-    const i = ring.length;
-    if(ang == null) ang = i * GOLDEN + ri * 1.4;     // restore / fallback spacing
-    const jit = (Math.sin(i*12.9898 + ri*7.0)*0.5) * 26;
-    const el = document.createElement('div');
-    el.className = 'star' + (cfg.gold ? ' gold' : '');
-    el.style.animationDelay = '0s, ' + (Math.random()*3).toFixed(2) + 's';
-    if(!animate) el.style.animationName = 'twinkle';
-    starfield.appendChild(el);
-    ring.push({ ang, jit, el });
+  function renderStars(ci, animate) {
+    starsByCard[ci].forEach(s => s.el.remove());
+    starsByCard[ci] = [];
+    const gold = CARDS[ci].side === 'gold';
+    const give = CARDS[ci].side === 'give';
+    for (let i = 0; i < n(ci); i++) {
+      const ang = i * GOLDEN + ci * 1.4;
+      const jit = (Math.sin(i * 12.9898 + ci * 7.0) * 0.5) * 26;
+      const el = document.createElement('div');
+      el.className = 'star' + (gold ? ' gold' : give ? ' give' : '');
+      el.style.animationDelay = '0s, ' + (Math.random() * 3).toFixed(2) + 's';
+      if (!animate) el.style.animationName = 'twinkle';
+      starfield.appendChild(el);
+      starsByCard[ci].push({ ang, jit, el });
+    }
     layout();
     pushEnergy();
   }
 
-  function undoStar(ri){
-    const ring = state.starsByRing[ri];
-    const s = ring.pop();
-    if(s){ s.el.remove(); pushEnergy(); }
-  }
-
-  // ---------- screens ----------
-  function show(id, instant){
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  // ------------------------------------------------------------------ SCREENS
+  function show(id, instant) {
+    $$('.screen').forEach(s => s.classList.remove('active'));
     const el = document.getElementById(id);
-    if(instant){
-      const t = el.style.transition; el.style.transition='none';
-      el.classList.add('active'); el.offsetHeight; el.style.transition=t;
+    if (instant) {
+      const t = el.style.transition; el.style.transition = 'none';
+      el.classList.add('active'); el.offsetHeight; el.style.transition = t;
     } else el.classList.add('active');
     state.screen = id;
     updateHud();
     save();
   }
 
-  function updateHud(){
+  function updateHud() {
     const st = $('#status');
-    const t = total();
-    if(state.screen === 's-play')
-      st.innerHTML = '<span class="n">' + String(t).padStart(2,'0') + '</span> STARS';
-    else if(state.screen === 's-nav' || state.screen === 's-debrief')
-      st.innerHTML = '<span class="n">' + t + '</span> STARS CHARTED';
+    if (state.screen === 's-card')
+      st.innerHTML = '<span class="n">' + (state.i + 1) + '</span> / ' + CARDS.length;
+    else if (state.screen === 's-reveal' || state.screen === 's-debrief')
+      st.innerHTML = '<span class="n">' + total() + '</span> STARS CHARTED';
     else st.textContent = 'STELLAR CARTOGRAPHY';
   }
 
-  // ---------- ring panel ----------
-  function renderPips(){
-    const pips = $('#pips'); pips.innerHTML='';
-    RINGS.forEach((_, i) => {
+  // ------------------------------------------------------------ NUMBER PICKER
+  // Chips beat steppers here: one thumb, no keyboard, readable in sunlight.
+  function picker(host, value, onPick) {
+    host.innerHTML = '';
+    const chips = document.createElement('div');
+    chips.className = 'numrow';
+    const step = document.createElement('div');
+    step.className = 'stepper';
+    step.style.display = 'none';
+
+    for (let v = 0; v <= 9; v++) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'num' + (value === v ? ' sel' : '');
+      b.textContent = v;
+      b.onclick = () => {
+        chips.querySelectorAll('.num').forEach(x => x.classList.remove('sel'));
+        b.classList.add('sel');
+        onPick(v);
+      };
+      chips.appendChild(b);
+    }
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'num more' + (value != null && value > 9 ? ' sel' : '');
+    more.textContent = '10+';
+    chips.appendChild(more);
+
+    let big = (value != null && value > 9) ? value : 10;
+    const minus = document.createElement('button');
+    const val   = document.createElement('span');
+    const plus  = document.createElement('button');
+    const back  = document.createElement('button');
+    minus.type = plus.type = back.type = 'button';
+    minus.className = plus.className = 'num';
+    back.className = 'link';
+    minus.textContent = '−'; plus.textContent = '+'; back.textContent = '‹ fewer than 10';
+    val.className = 'stepval';
+    const paint = () => { val.textContent = big; };
+    minus.onclick = () => { big = Math.max(10, big - 1); paint(); onPick(big); };
+    plus.onclick  = () => { big = Math.min(200, big + 1); paint(); onPick(big); };
+    back.onclick  = () => { step.style.display = 'none'; chips.style.display = ''; };
+    step.append(minus, val, plus, back);
+    paint();
+
+    more.onclick = () => {
+      chips.style.display = 'none';
+      step.style.display = '';
+      more.classList.add('sel');
+      onPick(big);
+    };
+
+    host.append(chips, step);
+    if (value != null && value > 9) { chips.style.display = 'none'; step.style.display = ''; }
+  }
+
+  // --------------------------------------------------------------- CARD SCREEN
+  function renderCard() {
+    const c = CARDS[state.i];
+    $('#card-side').textContent = SIDE_LABEL[c.side];
+    $('#card-no').textContent = String(state.i + 1).padStart(2, '0') + ' / ' +
+                                String(CARDS.length).padStart(2, '0');
+    $('#card-q').innerHTML = c.q;
+
+    const gb = $('#guess-block');
+    if (c.noGuess) {
+      gb.style.display = 'none';
+    } else {
+      gb.style.display = '';
+      $('#guess-label').textContent = state.mode === 'pairs' ? 'His guess' : 'Your guess';
+      $('#guess-hint').textContent = state.mode === 'pairs'
+        ? 'Ask him out loud, before you answer.'
+        : 'From your head, quickly. Then count.';
+      picker($('#guess-picker'), state.guess[state.i], (v) => {
+        state.guess[state.i] = v; save();
+      });
+    }
+
+    picker($('#answer-picker'), state.count[state.i], (v) => {
+      state.count[state.i] = v;
+      renderStars(state.i, true);
+      save(); refreshNext();
+    });
+
+    $('#wish-block').style.display = c.wish ? '' : 'none';
+    if (c.wish) $('#wish-input').value = state.wish;
+
+    $('#next').textContent = state.i === CARDS.length - 1 ? 'Read my sky ✦' : 'Next card →';
+    renderPips();
+    refreshNext();
+    updateHud();
+  }
+
+  // The answer is required; the guess never is. Don't block a man on a guess.
+  function refreshNext() { $('#next').disabled = state.count[state.i] == null; }
+
+  function renderPips() {
+    const pips = $('#pips'); pips.innerHTML = '';
+    CARDS.forEach((c, i) => {
       const p = document.createElement('div');
-      p.className = 'pip' + (i < state.ring ? ' done' : i === state.ring ? ' on' : '');
+      p.className = 'pip ' + c.side + (i < state.i ? ' done' : i === state.i ? ' on' : '');
       pips.appendChild(p);
     });
   }
 
-  function renderRing(){
-    const cfg = RINGS[state.ring];
-    $('#ring-no').textContent = cfg.no + ' · ' + cfg.sub;
-    $('#ring-title').textContent = cfg.title;
-    $('#ring-instr').textContent = cfg.instr;
-    $('#ring-count').textContent = state.starsByRing[state.ring].length;
-    $('#goldname').classList.toggle('show', !!cfg.gold);
-    $('#next').textContent = cfg.gold ? 'Run the deep scan ✦' : 'Next ring →';
-    renderPips();
-    updateHud();
-  }
+  // ------------------------------------------------------------------- REVEAL
+  // Spec 01 §1.3 rules, carried over intact:
+  //   never a signed difference · never "fewer/less/only/missing/short"
+  //   charted > carried -> name it · equal -> name it · under -> say nothing
+  function buildReveal() {
+    const car = carried(), cha = charted();
+    $('#carry-num').textContent = car;
+    $('#chart-num').textContent = cha;
 
-  function bumpCount(){ $('#ring-count').textContent = state.starsByRing[state.ring].length; updateHud(); }
+    let best = 0, bestI = -1;
+    CARDS.forEach((c, i) => {
+      if (c.noGuess || state.guess[i] == null || state.count[i] == null) return;
+      const d = state.count[i] - state.guess[i];
+      if (d > best) { best = d; bestI = i; }
+    });
 
-  // ---------- tap to add a star ----------
-  let hintGone = false;
-  window.addEventListener('pointerdown', (e) => {
-    if(state.screen !== 's-play') return;
-    if(e.target.closest('.no-tap, button, input, a')) return;
-    const ri = state.ring;
-    const c = center();
-    let ang = Math.atan2(e.clientY - c.y, e.clientX - c.x);
-    ang += (Math.random() - 0.5) * 0.14;            // fan out repeated taps
-    placeStar(ri, true, ang);
-    bumpCount();
-    if(sky.ok) sky.ripple(e.clientX/innerWidth, 1 - e.clientY/innerHeight);
-    if(!hintGone){ $('#tap-hint').style.opacity = '0'; hintGone = true; }
-    save();
-  });
-
-  // mouse parallax + sky light
-  window.addEventListener('pointermove', (e) => {
-    const nx = e.clientX/innerWidth, ny = e.clientY/innerHeight;
-    if(sky.ok) sky.setMouse(nx, 1 - ny);
-    starfield.style.transform = `translate(${(nx-0.5)*-22}px, ${(ny-0.5)*-22}px)`;
-  });
-
-  // ---------- buttons ----------
-  $('#begin').onclick = () => {
-    state.ring = 0;
-    show('s-play');
-    renderRing();
-    const h = $('#tap-hint');
-    h.style.opacity = '1'; hintGone = false;
-    setTimeout(()=>{ if(!hintGone) h.style.opacity='0'; }, 4200);
-  };
-
-  $('#undo').onclick = () => { undoStar(state.ring); bumpCount(); save(); };
-
-  $('#next').onclick = () => {
-    const cfg = RINGS[state.ring];
-    if(cfg.gold){
-      state.goldLine = $('#gold-input').value || '';
-      runScan();
+    const surprise = $('#surprise');
+    if (bestI >= 0) {
+      surprise.style.display = '';
+      surprise.innerHTML =
+        '<span class="eyebrow">Biggest surprise</span>' +
+        '<p class="lede">' + CARDS[bestI].q + '<br><strong>' +
+        (state.mode === 'pairs' ? 'He said ' : 'You said ') + state.guess[bestI] +
+        '. You found ' + state.count[bestI] + '.</strong></p>';
     } else {
-      state.ring++;
-      renderRing();
-      if(state.ring === 3){ $('#gold-input').value = state.goldLine; }
+      surprise.style.display = 'none';
     }
-    save();
-  };
 
-  function runScan(){
-    show('s-scan');
-    if(sky.ok) sky.setEnergy(0.85);
-    const texts = ['Charting your sky…','Reading the gold ring…','Plotting the navigator…'];
-    let i=0; $('#scan-text').textContent = texts[0];
-    const iv = setInterval(()=>{ i++; if(texts[i]) $('#scan-text').textContent = texts[i]; }, 720);
-    setTimeout(()=>{ clearInterval(iv); openNavigator(); }, 2300);
+    const agg = $('#agg-line');
+    if (cha > car)        { agg.style.display = ''; agg.textContent = 'You were carrying a smaller sky than you have.'; }
+    else if (cha === car && car > 0) { agg.style.display = ''; agg.textContent = 'You know your own sky.'; }
+    else                  { agg.style.display = 'none'; }   // say nothing
+
+    const sa = skyArchetype(), fa = friendArchetype();
+    $('#sky-name').textContent    = sa[0];
+    $('#sky-epithet').textContent = '· ' + sa[1] + ' ·';
+    $('#sky-line').textContent    = sa[2];
+    $('#friend-name').textContent    = fa[0];
+    $('#friend-epithet').textContent = '· ' + fa[1] + ' ·';
+    $('#friend-line').textContent    = fa[2];
+    $('#balance-line').textContent   = balance();
   }
 
-  function cardData(){
-    const a = archetype();
+  function cardData() {
+    const sa = skyArchetype(), fa = friendArchetype();
+    const byBand = BANDS.map((b, bi) => ({
+      radius: b.cr, short: b.short, angles: [],
+      count: CARDS.reduce((s, c, i) => s + (c.band === bi ? n(i) : 0), 0),
+    }));
     return {
-      total: total(),
-      goldLine: state.goldLine,
-      archetype: { name:a[0], epithet:a[1], line:a[2] },
-      rings: RINGS.map((c, i) => ({
-        radius: c.cr, short: c.short, count: state.starsByRing[i].length,
-        angles: state.starsByRing[i].map(s => s.ang),
-      })),
+      total: total(), goldLine: state.wish,
+      carried: carried(), charted: charted(),
+      archetype: { name: sa[0], epithet: sa[1], line: sa[2] },
+      friend:    { name: fa[0], epithet: fa[1] },
+      rings: byBand,
     };
   }
 
-  function openNavigator(){
-    const d = cardData();
-    $('#arch-epithet').textContent = '· ' + d.archetype.epithet + ' ·';
-    $('#arch-name').textContent = d.archetype.name;
-    $('#arch-line').textContent = d.archetype.line;
-    card.render(d);
-    show('s-nav');
+  function openReveal() {
+    buildReveal();
+    card.render(cardData());
+    show('s-reveal');
     pushEnergy();
-    const n = $('#arch-name'); n.style.animation = 'none'; void n.offsetWidth; n.style.animation = '';
+    const el = $('#sky-name'); el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
   }
 
-  $('#share').onclick = () => card.share();
-  $('#download').onclick = () => card.download();
+  function runScan() {
+    show('s-scan');
+    if (sky.ok) sky.setEnergy(0.85);
+    const texts = state.mode === 'pairs'
+      ? ['Charting your sky…', 'Reading what he saw…', 'Weighing what you give…']
+      : ['Charting your sky…', 'Reading the gold…', 'Weighing what you give…'];
+    let i = 0; $('#scan-text').textContent = texts[0];
+    const iv = setInterval(() => { i++; if (texts[i]) $('#scan-text').textContent = texts[i]; }, 720);
+    setTimeout(() => { clearInterval(iv); openReveal(); }, 2300);
+  }
+
+  // ------------------------------------------------------------------ CONTROLS
+  function begin(mode) { state.mode = mode; state.i = 0; show('s-card'); renderCard(); }
+  $('#go-pairs').onclick = () => begin('pairs');
+  $('#go-solo').onclick  = () => begin('solo');
+
+  $('#back').onclick = () => {
+    if (state.i === 0) { show('s-intro'); return; }
+    state.i--; renderCard(); save();
+  };
+
+  $('#next').onclick = () => {
+    if (CARDS[state.i].wish) state.wish = $('#wish-input').value || '';
+    if (state.i === CARDS.length - 1) runScan();
+    else { state.i++; renderCard(); }
+    save();
+  };
+
+  $('#share').onclick       = () => card.share();
+  $('#download').onclick    = () => card.download();
   $('#to-transmit').onclick = () => show('s-transmit');
 
-  // transmit chips
   $('#chips').addEventListener('click', (e) => {
-    const b = e.target.closest('.chip'); if(!b) return;
-    const sel = b.classList.contains('sel');
-    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
-    if(!sel){ b.classList.add('sel'); state.lifeStage = b.dataset.v; }
+    const b = e.target.closest('.chip'); if (!b) return;
+    const was = b.classList.contains('sel');
+    $$('.chip').forEach(c => c.classList.remove('sel'));
+    if (!was) { b.classList.add('sel'); state.lifeStage = b.dataset.v; }
     else state.lifeStage = '';
   });
-  // ---------- transmit to the mothership (anonymous counts only) ----------
-  const SUPABASE_URL = 'https://bgjengudzfickgomjqmz.supabase.co';
+
+  // ------------------------------------------------- TRANSMIT (counts only)
+  const SUPABASE_URL  = 'https://bgjengudzfickgomjqmz.supabase.co';
   const SUPABASE_ANON = 'sb_publishable_cpUwnfcJuvnjrJjmLdZpXw_jJIOa8aB';
 
   $('#transmit').onclick = async () => {
-    const [r1,r2,r3,gold] = state.starsByRing.map(r=>r.length);
     const btn = $('#transmit'); const orig = btn.textContent;
     btn.disabled = true; btn.textContent = 'Transmitting…';
     $('#transmit-err').style.display = 'none';
+
+    const payload = {
+      life_stage: state.lifeStage || null,
+      region: ($('#region-input').value || '').trim().toUpperCase().split(/\s+/)[0].slice(0, 4) || null,
+      wish: (state.wish || '').trim() || null,
+      source: state.mode + '-' + (atPicnic ? 'picnic' : 'web'),
+    };
+    state.count.forEach((v, i) => { payload['r' + (i + 1)] = v == null ? null : v; });
+    // Partner guesses and self guesses are different measurements — never merged.
+    const key = state.mode === 'pairs' ? 'g' : 's';
+    CARDS.forEach((c, i) => {
+      if (c.noGuess) return;
+      payload[key + (i + 1)] = state.guess[i] == null ? null : state.guess[i];
+    });
+
     try {
-      const r = await fetch(SUPABASE_URL + '/rest/v1/constellations_cards', {
-        method:'POST',
-        headers:{ apikey:SUPABASE_ANON, Authorization:'Bearer '+SUPABASE_ANON,
-          'Content-Type':'application/json', Prefer:'return=minimal' },
-        body: JSON.stringify({
-          ring1:r1, ring2:r2, ring3:r3, ring_gold:gold,
-          life_stage: state.lifeStage || null,
-          region: ($('#region-input').value||'').trim().toUpperCase().split(/\s+/)[0].slice(0,4) || null,
-          wish: (state.goldLine||'').trim() || null,
-          source:'web-sky',
-        }),
+      const r = await fetch(SUPABASE_URL + '/rest/v1/constellations_roles', {
+        method: 'POST',
+        headers: { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + SUPABASE_ANON,
+                   'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(payload),
       });
-      if(!r.ok) throw new Error(r.status);
+      if (!r.ok) throw new Error(r.status);
       show('s-debrief');
-    } catch(e){
+    } catch (e) {
+      // The run survives a bad signal in the park — retry, never lose it.
       btn.disabled = false; btn.textContent = orig;
       $('#transmit-err').style.display = 'block';
     }
@@ -258,55 +442,60 @@
   $('#skip-transmit').onclick = () => show('s-debrief');
 
   $('#restart').onclick = () => {
-    state.starsByRing.forEach(r => r.forEach(s => s.el.remove()));
-    state.starsByRing = [[],[],[],[]];
-    state.ring = 0; state.goldLine=''; state.lifeStage='';
-    $('#gold-input').value=''; if($('#region-input')) $('#region-input').value='';
-    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+    starsByCard.forEach((l, i) => { l.forEach(s => s.el.remove()); starsByCard[i] = []; });
+    state.mode = null; state.i = 0;
+    state.guess = new Array(CARDS.length).fill(null);
+    state.count = new Array(CARDS.length).fill(null);
+    state.wish = ''; state.lifeStage = '';
+    if ($('#region-input')) $('#region-input').value = '';
+    $$('.chip').forEach(c => c.classList.remove('sel'));
     localStorage.removeItem(KEY);
-    if(sky.ok) sky.setEnergy(0.12);
+    if (sky.ok) sky.setEnergy(0.12);
     show('s-intro');
   };
 
-  // ---------- persistence ----------
-  function save(){
-    try{
+  window.addEventListener('pointermove', (e) => {
+    const nx = e.clientX / innerWidth, ny = e.clientY / innerHeight;
+    if (sky.ok) sky.setMouse(nx, 1 - ny);
+    starfield.style.transform = `translate(${(nx - 0.5) * -22}px, ${(ny - 0.5) * -22}px)`;
+  });
+
+  // --------------------------------------------------------------- PERSISTENCE
+  function save() {
+    try {
       localStorage.setItem(KEY, JSON.stringify({
-        screen: state.screen, ring: state.ring,
-        counts: state.starsByRing.map(r=>r.length),
-        goldLine: state.goldLine, lifeStage: state.lifeStage,
+        screen: state.screen, mode: state.mode, i: state.i,
+        guess: state.guess, count: state.count,
+        wish: state.wish, lifeStage: state.lifeStage,
       }));
-    }catch(e){}
+    } catch (e) {}
   }
 
-  function restore(){
-    let d; try{ d = JSON.parse(localStorage.getItem(KEY)); }catch(e){}
-    if(!d || !d.counts) { pushEnergy(); return; }
-    d.counts.forEach((n, ri) => { for(let i=0;i<n;i++) placeStar(ri, false); });
-    state.ring = d.ring || 0;
-    state.goldLine = d.goldLine || '';
+  function restore() {
+    let d; try { d = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+    // A fresh visitor has no saved state — still show a screen, or the page is blank.
+    if (!d || !d.count) { pushEnergy(); show('s-intro', true); return; }
+    state.mode  = d.mode || null;
+    state.i     = Math.min(d.i || 0, CARDS.length - 1);
+    state.guess = Array.isArray(d.guess) && d.guess.length === CARDS.length ? d.guess : state.guess;
+    state.count = Array.isArray(d.count) && d.count.length === CARDS.length ? d.count : state.count;
+    state.wish  = d.wish || '';
     state.lifeStage = d.lifeStage || '';
-    if(state.goldLine) $('#gold-input').value = state.goldLine;
-    if(state.lifeStage){
-      const c = [...document.querySelectorAll('.chip')].find(c=>c.dataset.v===state.lifeStage);
-      if(c) c.classList.add('sel');
+    state.count.forEach((v, i) => { if (v) renderStars(i, false); });
+    if (state.lifeStage) {
+      const c = $$('.chip').find(x => x.dataset.v === state.lifeStage);
+      if (c) c.classList.add('sel');
     }
     let screen = d.screen || 's-intro';
-    if(screen === 's-scan') screen = 's-nav';
-    if(screen === 's-play') renderRing();
-    if(screen === 's-nav'){
-      const dd = cardData();
-      $('#arch-epithet').textContent = '· ' + dd.archetype.epithet + ' ·';
-      $('#arch-name').textContent = dd.archetype.name;
-      $('#arch-line').textContent = dd.archetype.line;
-      card.render(dd);
-    }
+    if (screen === 's-scan') screen = 's-reveal';
+    if (!state.mode && screen !== 's-intro') screen = 's-intro';
+    if (screen === 's-card')   renderCard();
+    if (screen === 's-reveal') { buildReveal(); card.render(cardData()); }
     show(screen, true);
   }
 
-  // fonts ready → re-render card crisply if shown
-  if(document.fonts && document.fonts.ready){
-    document.fonts.ready.then(()=>{ if(state.screen==='s-nav') card.render(cardData()); });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => { if (state.screen === 's-reveal') card.render(cardData()); });
   }
 
   restore();

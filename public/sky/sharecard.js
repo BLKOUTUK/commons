@@ -2,9 +2,13 @@
 // BLKOUT-branded. No names, ever. Stars, counts, and the sky they keep.
 (function () {
   const W = 1080, H = 1350;
-  const GOLD = '#FFD700', GOLD_DEEP = '#D4AF37';
+  const GOLD = '#FFD700';
   const INK = '#F4ECD8';
-  const CX = W/2, CY = 500;
+  const CX = W/2, CY = 470;
+  const DISPLAY = '"Work Sans", system-ui, sans-serif';
+  const SERIF   = '"Fraunces", Georgia, serif';
+  // NOT /sky — that 301s to the asset directory and 403s. Verified 25 Jul 2026.
+  const SHARE_URL = 'https://commons.blkoutuk.com/sky.html';
   const GOLDEN = Math.PI * (3 - Math.sqrt(5));
 
   function rng(seed){
@@ -117,65 +121,62 @@
       cg.addColorStop(1, 'rgba(255,215,0,0)');
       ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(CX, CY, 54, 0, Math.PI*2); ctx.fill();
       ctx.fillStyle = GOLD;
-      ctx.font = '600 40px "Space Grotesk", sans-serif';
+      ctx.font = '600 40px ' + DISPLAY;
       ctx.textBaseline = 'middle';
       ctx.fillText('✦', CX, CY + 2);
       ctx.textBaseline = 'alphabetic';
 
       // ---- header ----
       ctx.fillStyle = GOLD;
-      ctx.font = '500 30px "Space Grotesk", sans-serif';
+      ctx.font = '600 30px ' + DISPLAY;
       ctx.fillText('B L K O U T', CX, 92);
       ctx.fillStyle = 'rgba(212,175,55,0.75)';
-      ctx.font = '400 14px "Inter", sans-serif';
+      ctx.font = '400 14px ' + DISPLAY;
       ctx.fillText('S T E L L A R   C A R T O G R A P H Y', CX, 120);
 
-      // ---- archetype (the reflection) ----
+      // ---- the two readings ----
       const a = data.archetype || { name:'The Navigator', epithet:'reader of the whole sky' };
-      ctx.fillStyle = 'rgba(212,175,55,0.7)';
-      ctx.font = '400 16px "Inter", sans-serif';
-      ctx.fillText('T H E   S K Y   Y O U   K E E P', CX, 902);
-      ctx.fillStyle = GOLD;
-      ctx.font = '600 70px "Space Grotesk", sans-serif';
-      ctx.fillText(a.name.toUpperCase(), CX, 968);
-      ctx.fillStyle = 'rgba(244,236,216,0.62)';
-      ctx.font = 'italic 400 24px "Space Grotesk", serif';
-      ctx.fillText('· ' + a.epithet + ' ·', CX, 1010);
+      const f = data.friend    || { name:'The Open Door', epithet:'whatever it is, whenever' };
+
+      const reading = (over, name, epithet, colour, y) => {
+        ctx.fillStyle = 'rgba(212,175,55,0.7)';
+        ctx.font = '400 15px ' + DISPLAY;
+        ctx.fillText(over, CX, y);
+        ctx.fillStyle = colour;
+        ctx.font = '700 58px ' + DISPLAY;
+        ctx.fillText(name.toUpperCase(), CX, y + 56);
+        ctx.fillStyle = 'rgba(244,236,216,0.62)';
+        ctx.font = 'italic 400 22px ' + SERIF;
+        ctx.fillText('· ' + epithet + ' ·', CX, y + 92);
+      };
+
+      reading('T H E   S K Y   Y O U   K E E P', a.name, a.epithet, GOLD, 862);
+      reading('T H E   F R I E N D   Y O U   A R E', f.name, f.epithet, '#BCD9F5', 1010);
 
       // gold-ring line
       if(data.goldLine && data.goldLine.trim()){
         ctx.fillStyle = INK;
-        ctx.font = 'italic 400 26px "Space Grotesk", serif';
+        ctx.font = 'italic 400 24px ' + SERIF;
         const line = '“' + data.goldLine.trim() + '”';
-        ctx.fillText(line.length > 50 ? line.slice(0,49)+'…”' : line, CX, 1066);
+        ctx.fillText(line.length > 48 ? line.slice(0,47)+'…”' : line, CX, 1168);
       }
 
-      // ---- counts strip ----
-      const segs = data.rings.map(r => r.short + '  ' + r.count);
-      ctx.font = '500 17px "Space Grotesk", sans-serif';
-      const gap = 34;
-      const widths = segs.map(s => ctx.measureText(s).width);
-      const totalW = widths.reduce((a,b)=>a+b,0) + gap*(segs.length-1);
-      let x = CX - totalW/2;
-      segs.forEach((s, i) => {
-        ctx.textAlign = 'left';
-        ctx.fillStyle = i === 3 ? GOLD : 'rgba(244,236,216,0.85)';
-        ctx.fillText(s, x, 1140);
-        x += widths[i] + gap;
-        if(i < segs.length-1){
-          ctx.fillStyle = 'rgba(212,175,55,0.4)';
-          ctx.fillText('·', x - gap/2 - 3, 1140);
-        }
-      });
-      ctx.textAlign = 'center';
+      // carried → charted. Only when it reads as gain; a shared object never
+      // carries a shortfall. (Spec 02 §4, from Spec 01 §1.3.)
+      if(typeof data.carried === 'number' && typeof data.charted === 'number'
+         && data.charted >= data.carried){
+        ctx.fillStyle = 'rgba(212,175,55,0.9)';
+        ctx.font = '500 19px ' + DISPLAY;
+        ctx.fillText('carried ' + data.carried + '   →   charted ' + data.charted, CX, 1216);
+      }
 
       // ---- footer ----
       ctx.fillStyle = 'rgba(244,236,216,0.45)';
-      ctx.font = '400 16px "Inter", sans-serif';
+      ctx.font = '400 16px ' + DISPLAY;
       ctx.fillText(data.total + (data.total===1?' star':' stars') + '  ·  no names, stars only', CX, H - 76);
       ctx.fillStyle = 'rgba(212,175,55,0.85)';
-      ctx.font = '500 16px "Space Grotesk", sans-serif';
-      ctx.fillText("What's in your sky?  ·  commons.blkoutuk.com", CX, H - 46);
+      ctx.font = '600 16px ' + DISPLAY;
+      ctx.fillText('What kind of friend are you?  ·  commons.blkoutuk.com/sky.html', CX, H - 46);
 
       // vignette
       const vg = ctx.createRadialGradient(CX, H/2, 320, CX, H/2, 840);
@@ -198,12 +199,18 @@
       return new Promise((res) => {
         this.canvas.toBlob(async (b) => {
           const file = new File([b], 'my-sky-blkout.png', { type: 'image/png' });
+          // The link travels in the TEXT. Baked into the image it is pixels,
+          // and a recipient has no way in — which is how the loop died before.
+          const text = 'My sky — who holds me, and who I hold. No names, stars only.\n'
+                     + 'Chart yours: ' + SHARE_URL;
           if(navigator.canShare && navigator.canShare({ files:[file] })){
             try {
-              await navigator.share({ files:[file], title: "What's in your sky?",
-                text: 'My constellation, charted with BLKOUT. No names — stars only.' });
+              await navigator.share({ files:[file], title: 'What kind of friend are you?', text });
               res('shared');
             } catch(e){ res('cancel'); }
+          } else if(navigator.share){
+            try { await navigator.share({ title: 'What kind of friend are you?', text, url: SHARE_URL });
+                  res('shared'); } catch(e){ res('cancel'); }
           } else { this.download(); res('download'); }
         }, 'image/png');
       });
