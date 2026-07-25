@@ -43,6 +43,9 @@
   const HELD    = idxOf('held');
   const GIVE    = idxOf('give');
   const atPicnic = new URLSearchParams(location.search).get('at') === 'picnic';
+  // Preview deploys write to the same table. Tag them so test runs never get
+  // counted as research data.
+  const isPreview = /sslip\.io$/.test(location.hostname) || location.hostname === 'localhost';
 
   // --------------------------------------------------------------- STATE
   const state = {
@@ -414,7 +417,7 @@
       life_stage: state.lifeStage || null,
       region: ($('#region-input').value || '').trim().toUpperCase().split(/\s+/)[0].slice(0, 4) || null,
       wish: (state.wish || '').trim() || null,
-      source: state.mode + '-' + (atPicnic ? 'picnic' : 'web'),
+      source: state.mode + '-' + (atPicnic ? 'picnic' : 'web') + (isPreview ? '-preview' : ''),
     };
     state.count.forEach((v, i) => { payload['r' + (i + 1)] = v == null ? null : v; });
     // Partner guesses and self guesses are different measurements — never merged.
