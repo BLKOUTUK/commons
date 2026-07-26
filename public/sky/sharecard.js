@@ -8,7 +8,13 @@
   const DISPLAY = '"Work Sans", system-ui, sans-serif';
   const SERIF   = '"Fraunces", Georgia, serif';
   // NOT /sky — that 301s to the asset directory and 403s. Verified 25 Jul 2026.
-  const SHARE_URL = 'https://commons.blkoutuk.com/sky.html';
+  // On a preview host, share the preview: otherwise a tester sends a friend to
+  // the old production build and the loop can't be tested at all.
+  const CANONICAL = 'https://commons.blkoutuk.com/sky.html';
+  const SHARE_URL = location.hostname === 'commons.blkoutuk.com'
+    ? CANONICAL
+    : location.origin + '/sky.html';
+  const SHARE_LABEL = SHARE_URL.replace(/^https?:\/\//, '');
   const GOLDEN = Math.PI * (3 - Math.sqrt(5));
 
   function rng(seed){
@@ -176,7 +182,7 @@
       ctx.fillText(data.total + (data.total===1?' star':' stars') + '  ·  no names, stars only', CX, H - 76);
       ctx.fillStyle = 'rgba(212,175,55,0.85)';
       ctx.font = '600 16px ' + DISPLAY;
-      ctx.fillText('What kind of friend are you?  ·  commons.blkoutuk.com/sky.html', CX, H - 46);
+      ctx.fillText('What kind of friend are you?  ·  ' + SHARE_LABEL, CX, H - 46);
 
       // vignette
       const vg = ctx.createRadialGradient(CX, H/2, 320, CX, H/2, 840);

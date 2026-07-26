@@ -44,8 +44,10 @@
   const GIVE    = idxOf('give');
   const atPicnic = new URLSearchParams(location.search).get('at') === 'picnic';
   // Preview deploys write to the same table. Tag them so test runs never get
-  // counted as research data.
-  const isPreview = /sslip\.io$/.test(location.hostname) || location.hostname === 'localhost';
+  // counted as research data. Allow-list the one real host rather than
+  // block-listing preview hosts — an unknown host must fail towards 'preview',
+  // never towards polluting the dataset.
+  const isPreview = location.hostname !== 'commons.blkoutuk.com';
 
   // --------------------------------------------------------------- STATE
   const state = {
