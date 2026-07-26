@@ -180,29 +180,23 @@
     border-top-color:var(--gold);animation:spin 1.1s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
-  /* ---------- reveal ---------- */
-  .carry{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;}
-  .carry .col{display:flex;flex-direction:column;align-items:center;gap:2px;}
-  .carry .n{font-family:var(--display);font-size:44px;font-weight:700;line-height:1;font-feature-settings:"tnum";}
-  .carry .hollow .n{color:var(--faint);}
-  .carry .solid  .n{color:var(--gold);text-shadow:0 0 34px rgba(255,215,0,.4);}
-  .carry .cap{font-family:var(--display);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);}
-  .carry .arrow{color:var(--faint);font-size:20px;}
-  #agg-line{font-family:var(--serif);font-style:italic;font-size:clamp(19px,3.4vw,25px);color:var(--gold);max-width:26ch;line-height:1.3;}
-
-  .reading{display:flex;flex-direction:column;align-items:center;gap:3px;
-    border:1px solid var(--line);border-radius:18px;padding:16px 18px;width:min(480px,94vw);
+  /* ---------- reveal — one payoff: the balance ---------- */
+  .scales{display:flex;align-items:stretch;gap:0;width:min(460px,92vw);
+    border:1px solid var(--line);border-radius:20px;overflow:hidden;
     background:rgba(8,4,20,.44);}
-  .reading .over{font-family:var(--display);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-deep);}
-  .reading .name{font-family:var(--display);font-weight:700;font-size:clamp(28px,6vw,42px);line-height:1.05;
-    color:var(--gold);text-shadow:0 0 40px rgba(255,215,0,.32);letter-spacing:-.01em;}
-  .reading.give .name{color:#bcd9f5;text-shadow:0 0 40px rgba(159,198,239,.3);}
-  .reading .ep{font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--muted);}
-  .reading .ln{font-size:14.5px;line-height:1.45;color:var(--muted);max-width:34ch;margin-top:5px;text-wrap:pretty;}
-  #balance-line{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2.8vw,20px);
-    color:var(--ink);max-width:34ch;line-height:1.4;}
+  .pan{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:22px 14px;}
+  .pan + .pan{border-left:1px solid var(--line);}
+  .pan .n{font-family:var(--display);font-size:clamp(44px,10vw,64px);font-weight:700;
+    line-height:1;font-feature-settings:"tnum";}
+  .pan .cap{font-family:var(--display);font-size:11.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--faint);}
+  .pan.held .n{color:var(--gold);text-shadow:0 0 36px rgba(255,215,0,.38);}
+  .pan.give .n{color:#BCD9F5;text-shadow:0 0 36px rgba(159,198,239,.34);}
+  #balance-line{font-family:var(--serif);font-style:italic;
+    font-size:clamp(19px,3.6vw,26px);color:var(--ink);
+    max-width:26ch;line-height:1.32;}
   @media (prefers-reduced-motion:no-preference){
-    .screen.active #sky-name{animation:namepop .8s cubic-bezier(.2,1.5,.4,1) both;}
+    .screen.active .pan .n{animation:namepop .8s cubic-bezier(.2,1.5,.4,1) both;}
   }
   @keyframes namepop{from{transform:scale(.7);opacity:0;}to{transform:scale(1);opacity:1;}}
 
@@ -315,29 +309,16 @@
 
     <!-- REVEAL -->
     <section class="screen scrim" id="s-reveal">
-      <div class="wrap" style="gap:18px">
-        <div class="eyebrow">The sky you carried · the sky you charted</div>
-        <div class="carry">
-          <div class="col hollow"><span class="n" id="carry-num">0</span><span class="cap">carried</span></div>
-          <span class="arrow">→</span>
-          <div class="col solid"><span class="n" id="chart-num">0</span><span class="cap">charted</span></div>
-        </div>
-        <p id="agg-line"></p>
-
-        <div id="surprise" style="display:none"></div>
-
-        <div class="reading">
-          <span class="over">The sky you keep</span>
-          <span class="name" id="sky-name">The Navigator</span>
-          <span class="ep" id="sky-epithet"></span>
-          <span class="ln" id="sky-line"></span>
-        </div>
-
-        <div class="reading give">
-          <span class="over">The friend you are</span>
-          <span class="name" id="friend-name">The Open Door</span>
-          <span class="ep" id="friend-epithet"></span>
-          <span class="ln" id="friend-line"></span>
+      <div class="wrap" style="gap:20px">
+        <div class="scales">
+          <div class="pan held">
+            <span class="n" id="held-num">0</span>
+            <span class="cap">hold you</span>
+          </div>
+          <div class="pan give">
+            <span class="n" id="give-num">0</span>
+            <span class="cap">you hold</span>
+          </div>
         </div>
 
         <p id="balance-line"></p>

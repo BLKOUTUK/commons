@@ -65,52 +65,7 @@
   const n  = (i) => state.count[i] || 0;
   const sum = (list) => list.reduce((a, i) => a + n(i), 0);
 
-  // ------------------------------------------------------------- THE READINGS
-  // Two archetypes, offered as readings rather than verdicts. Neither scores a
-  // man. The sparse paths read as beginning, never as deficit.
-
-  function skyArchetype() {                     // from what he receives
-    const close = n(0) + n(1), steady = n(2) + n(3), wide = n(4);
-    const t = close + steady + wide;
-    if (t <= 3)
-      return ['The Dawn', 'first light of a new system',
-        'A sky just lit. Every constellation that matters started exactly here.'];
-    if (wide >= 10 && wide >= 3 * Math.max(close, 1))
-      return ['The Mayor', 'voice of the wide field',
-        'The scene knows your face and the street knows your name. Your outer light carries furthest.'];
-    if (close >= 4 && close >= wide)
-      return ['The Hearth', 'keeper of the inner suns',
-        'Few stars, serious heat. People sleep easier knowing you would pick up.'];
-    if (steady >= close && steady >= wide)
-      return ['The Anchor', 'steady orbit of the home belt',
-        'You keep the rhythm — the calls, the showing up. Constancy is the whole craft.'];
-    return ['The Navigator', 'reader of the whole sky',
-      'Close heat, steady rhythm, far light. You read the whole sky.'];
-  }
-
-  function friendArchetype() {                  // from what he gives
-    const bed = n(5), vault = n(6), comes = n(7), checks = n(8);
-    const t = bed + vault + comes + checks;
-    const top = Math.max(bed, vault, comes, checks);
-    if (t <= 2)
-      return ['The New Moon', 'still gathering light',
-        'Not much asked of you yet. That changes the first time someone does.'];
-    if (bed === top && bed >= 2)
-      return ['The Emergency Contact', 'the number people know by heart',
-        'When it goes wrong, yours is the name they reach for. That is not a small thing to be.'];
-    if (vault === top && vault >= 2)
-      return ['The Vault', 'keeper of what is not said elsewhere',
-        'People hand you the things they hand nobody else. They have read you correctly.'];
-    if (comes === top && comes >= 2)
-      return ['The One Who Comes', 'turns up, every time',
-        'You are the reason other men do not walk into rooms alone. Showing up is the whole art.'];
-    if (checks === top && checks >= 2)
-      return ['The Regular', 'steady, and unprompted',
-        'You reach out when nothing is wrong. Almost nobody does this, and everybody remembers who did.'];
-    return ['The Open Door', 'whatever it is, whenever',
-      'You give across the board — the crisis, the confidence, the company. The door stays open.'];
-  }
-
+  // --------------------------------------------------------------- THE READING
   // The balance. Describes, never scores — a man who receives more than he gives
   // may be ill, grieving, new to a city, newly out. This is a season, not a verdict.
   function balance() {
@@ -308,56 +263,21 @@
   //   never a signed difference · never "fewer/less/only/missing/short"
   //   charted > carried -> name it · equal -> name it · under -> say nothing
   function buildReveal() {
-    const car = carried(), cha = charted();
-    $('#carry-num').textContent = car;
-    $('#chart-num').textContent = cha;
-
-    let best = 0, bestI = -1;
-    CARDS.forEach((c, i) => {
-      if (c.noGuess || state.guess[i] == null || state.count[i] == null) return;
-      const d = state.count[i] - state.guess[i];
-      if (d > best) { best = d; bestI = i; }
-    });
-
-    const surprise = $('#surprise');
-    if (bestI >= 0) {
-      surprise.style.display = '';
-      surprise.innerHTML =
-        '<span class="eyebrow">Biggest surprise</span>' +
-        '<p class="lede">' + CARDS[bestI].q + '<br><strong>' +
-        (state.mode === 'pairs' ? 'He said ' : 'You said ') + state.guess[bestI] +
-        '. You found ' + state.count[bestI] + '.</strong></p>';
-    } else {
-      surprise.style.display = 'none';
-    }
-
-    const agg = $('#agg-line');
-    if (cha > car)        { agg.style.display = ''; agg.textContent = 'You were carrying a smaller sky than you have.'; }
-    else if (cha === car && car > 0) { agg.style.display = ''; agg.textContent = 'You know your own sky.'; }
-    else                  { agg.style.display = 'none'; }   // say nothing
-
-    const sa = skyArchetype(), fa = friendArchetype();
-    $('#sky-name').textContent    = sa[0];
-    $('#sky-epithet').textContent = '· ' + sa[1] + ' ·';
-    $('#sky-line').textContent    = sa[2];
-    $('#friend-name').textContent    = fa[0];
-    $('#friend-epithet').textContent = '· ' + fa[1] + ' ·';
-    $('#friend-line').textContent    = fa[2];
-    $('#balance-line').textContent   = balance();
+    $('#held-num').textContent = sum(HELD);
+    $('#give-num').textContent = sum(GIVE);
+    $('#balance-line').textContent = balance();
   }
 
   function cardData() {
-    const sa = skyArchetype(), fa = friendArchetype();
-    const byBand = BANDS.map((b, bi) => ({
-      radius: b.cr, short: b.short, angles: [],
-      count: CARDS.reduce((s, c, i) => s + (c.band === bi ? n(i) : 0), 0),
-    }));
     return {
-      total: total(), goldLine: state.wish,
-      carried: carried(), charted: charted(),
-      archetype: { name: sa[0], epithet: sa[1], line: sa[2] },
-      friend:    { name: fa[0], epithet: fa[1] },
-      rings: byBand,
+      held: sum(HELD), give: sum(GIVE), total: total(),
+      balance: balance(), goldLine: state.wish,
+      rings: BANDS.map((b, bi) => ({
+        radius: b.cr,
+        held: CARDS.reduce((a, c, i) => a + (c.band === bi && c.side === 'held' ? n(i) : 0), 0),
+        give: CARDS.reduce((a, c, i) => a + (c.band === bi && c.side === 'give' ? n(i) : 0), 0),
+        gold: CARDS.reduce((a, c, i) => a + (c.band === bi && c.side === 'gold' ? n(i) : 0), 0),
+      })),
     };
   }
 
@@ -366,7 +286,6 @@
     card.render(cardData());
     show('s-reveal');
     pushEnergy();
-    const el = $('#sky-name'); el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
   }
 
   function runScan() {

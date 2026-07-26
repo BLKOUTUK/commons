@@ -15,7 +15,6 @@
     ? CANONICAL
     : location.origin + '/sky.html';
   const SHARE_LABEL = SHARE_URL.replace(/^https?:\/\//, '');
-  const GOLDEN = Math.PI * (3 - Math.sqrt(5));
 
   function rng(seed){
     let s = (seed * 2654435761) >>> 0;
@@ -52,7 +51,7 @@
       this.ctx = canvas.getContext('2d');
     }
 
-    // data: { total, goldLine, archetype:{name,epithet}, rings:[{radius,short,count,angles[]}] }
+    // data: { held, give, total, balance, rings:[{radius, held, give, gold}] }
     render(data){
       const ctx = this.ctx;
       ctx.clearRect(0,0,W,H);
@@ -82,43 +81,36 @@
 
       // ---- constellation ----
       ctx.textAlign = 'center';
-      data.rings.forEach((ring) => {
-        if(ring.count === 0) return;
+      // Gold on the left of the sky, cool blue on the right: the picture itself
+      // is the balance, so the image reads without the numbers.
+      const placed = [];
+      data.rings.forEach((ring, ri) => {
+        const total = (ring.held||0) + (ring.give||0) + (ring.gold||0);
+        if(total === 0) return;
         ctx.strokeStyle = 'rgba(212,175,55,0.10)';
         ctx.lineWidth = 1;
         ctx.beginPath(); ctx.arc(CX, CY, ring.radius, 0, Math.PI*2); ctx.stroke();
+
+        const r = rng(ri*131 + total*7 + 3);
+        const put = (kind, count, from, span) => {
+          for(let i=0;i<count;i++){
+            const ang = from + (count === 1 ? span/2 : span * (i/(count-1 || 1)));
+            const rad = ring.radius + (r()-0.5) * 22;
+            placed.push({ x: CX + Math.cos(ang)*rad, y: CY + Math.sin(ang)*rad, kind, ri });
+          }
+        };
+        put('held', ring.held||0, Math.PI/2,  Math.PI);       // left arc
+        put('give', ring.give||0, -Math.PI/2, Math.PI);       // right arc
+        put('gold', ring.gold||0, -Math.PI/2, Math.PI*2);     // all round
       });
 
-      const placed = [];
-      data.rings.forEach((ring, ri) => {
-        const r = rng(ri*131 + ring.count*7 + 3);
-        const pts = [];
-        for(let i=0;i<ring.count;i++){
-          const ang = (ring.angles && ring.angles[i] != null)
-            ? ring.angles[i] : (i * GOLDEN + ri * 1.3);
-          const rad = ring.radius + (r()-0.5) * 22;
-          pts.push([CX + Math.cos(ang)*rad, CY + Math.sin(ang)*rad]);
-        }
-        if(pts.length > 1){
-          // connect in angular order for a clean web
-          const order = pts.map((p,i)=>i).sort((a,b)=>
-            Math.atan2(pts[a][1]-CY,pts[a][0]-CX) - Math.atan2(pts[b][1]-CY,pts[b][0]-CX));
-          ctx.strokeStyle = ri === 3 ? 'rgba(255,215,0,0.28)' : 'rgba(212,175,55,0.16)';
-          ctx.lineWidth = ri === 3 ? 1.4 : 1;
-          ctx.beginPath();
-          order.forEach((idx,k)=>{ const p=pts[idx]; k?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]); });
-          ctx.closePath(); ctx.stroke();
-        }
-        pts.forEach(p => placed.push({x:p[0], y:p[1], ri}));
-      });
-
-      placed.forEach(s => {
-        const big = s.ri === 3;
-        const baseR = big ? 4.4 : (3.0 - s.ri*0.22);
-        const glow = big ? 'rgba(255,228,120,0.95)' : 'rgba(255,215,0,0.85)';
-        const core = big ? '#FFF3C4' : INK;
-        star(ctx, s.x, s.y, baseR, glow, core);
-        if(big) sparkle(ctx, s.x, s.y, 15, 1.3);
+      placed.forEach(p => {
+        const gold = p.kind === 'gold', give = p.kind === 'give';
+        const glow = gold ? 'rgba(255,228,120,0.95)'
+                   : give ? 'rgba(180,214,245,0.90)' : 'rgba(255,215,0,0.85)';
+        const core = gold ? '#FFF3C4' : give ? '#EAF4FF' : INK;
+        star(ctx, p.x, p.y, gold ? 4.4 : 3.0, glow, core);
+        if(gold) sparkle(ctx, p.x, p.y, 15, 1.3);
       });
 
       // central sigil — you
@@ -140,40 +132,31 @@
       ctx.font = '400 14px ' + DISPLAY;
       ctx.fillText('S T E L L A R   C A R T O G R A P H Y', CX, 120);
 
-      // ---- the two readings ----
-      const a = data.archetype || { name:'The Navigator', epithet:'reader of the whole sky' };
-      const f = data.friend    || { name:'The Open Door', epithet:'whatever it is, whenever' };
-
-      const reading = (over, name, epithet, colour, y) => {
+      // ---- the one payoff ----
+      const pan = (label, value, colour, x) => {
         ctx.fillStyle = 'rgba(212,175,55,0.7)';
         ctx.font = '400 15px ' + DISPLAY;
-        ctx.fillText(over, CX, y);
+        ctx.fillText(label, x, 906);
         ctx.fillStyle = colour;
-        ctx.font = '700 58px ' + DISPLAY;
-        ctx.fillText(name.toUpperCase(), CX, y + 56);
-        ctx.fillStyle = 'rgba(244,236,216,0.62)';
-        ctx.font = 'italic 400 22px ' + SERIF;
-        ctx.fillText('· ' + epithet + ' ·', CX, y + 92);
+        ctx.font = '700 96px ' + DISPLAY;
+        ctx.fillText(String(value), x, 1000);
       };
+      pan('H O L D   Y O U', data.held || 0, GOLD,      CX - 190);
+      pan('Y O U   H O L D', data.give || 0, '#BCD9F5', CX + 190);
 
-      reading('T H E   S K Y   Y O U   K E E P', a.name, a.epithet, GOLD, 862);
-      reading('T H E   F R I E N D   Y O U   A R E', f.name, f.epithet, '#BCD9F5', 1010);
+      ctx.strokeStyle = 'rgba(212,175,55,0.22)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(CX, 886); ctx.lineTo(CX, 1004); ctx.stroke();
 
-      // gold-ring line
-      if(data.goldLine && data.goldLine.trim()){
+      if(data.balance){
         ctx.fillStyle = INK;
-        ctx.font = 'italic 400 24px ' + SERIF;
-        const line = '“' + data.goldLine.trim() + '”';
-        ctx.fillText(line.length > 48 ? line.slice(0,47)+'…”' : line, CX, 1168);
-      }
-
-      // carried → charted. Only when it reads as gain; a shared object never
-      // carries a shortfall. (Spec 02 §4, from Spec 01 §1.3.)
-      if(typeof data.carried === 'number' && typeof data.charted === 'number'
-         && data.charted >= data.carried){
-        ctx.fillStyle = 'rgba(212,175,55,0.9)';
-        ctx.font = '500 19px ' + DISPLAY;
-        ctx.fillText('carried ' + data.carried + '   →   charted ' + data.charted, CX, 1216);
+        ctx.font = 'italic 400 31px ' + SERIF;
+        let line = '', y = 1082;
+        String(data.balance).split(' ').forEach(w => {
+          if(ctx.measureText(line + w).width > 830){ ctx.fillText(line.trim(), CX, y); line = ''; y += 42; }
+          line += w + ' ';
+        });
+        if(line.trim()) ctx.fillText(line.trim(), CX, y);
       }
 
       // ---- footer ----

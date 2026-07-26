@@ -91,12 +91,9 @@ async function run(mode, plan, label, query = '', origin = 'https://commons.blko
   ok($('#s-reveal').classList.contains('active'), 'reached the reveal');
 
   const res = {
-    sky: $('#sky-name').textContent,
-    friend: $('#friend-name').textContent,
+    held: $('#held-num').textContent,
+    give: $('#give-num').textContent,
     balance: $('#balance-line').textContent,
-    agg: $('#agg-line').style.display === 'none' ? null : $('#agg-line').textContent,
-    surprise: $('#surprise').style.display === 'none' ? null : $('#surprise').textContent,
-    carry: $('#carry-num').textContent, chart: $('#chart-num').textContent,
   };
 
   click($('#to-transmit'));
@@ -116,10 +113,11 @@ async function run(mode, plan, label, query = '', origin = 'https://commons.blko
     { guess: 2, count: 3 }, { guess: 1, count: 2 }, { guess: 2, count: 4 },
     { guess: 1, count: 3 }, { count: 2 },
   ];
-  const { res, sent } = await run('pairs', plan, 'PAIRS · charted above carried');
-  ok(res.agg === 'You were carrying a smaller sky than you have.', 'aggregate line names the gain');
-  ok(res.surprise !== null, 'surprise shown when there is a positive gap');
-  eq(res.carry, '17', 'carried total'); eq(res.chart, '35', 'charted total');
+  const { res, sent } = await run('pairs', plan, 'PAIRS · a full sky, both sides');
+  eq(res.held, '23', 'held total = cards 1-5');
+  eq(res.give, '12', 'give total = cards 6-9');
+  ok(res.balance.length > 0, 'balance line is the single payoff');
+  ok(!/\bcards?\b|archetype/i.test(res.balance), 'no archetype survives in the reveal');
   ok(sent && sent.url.endsWith('/constellations_roles'), 'posts to the new table');
   const b = sent.body;
   eq([b.r1, b.r5, b.r10], [4, 9, 2], 'r1..r10 populated incl. gold');
@@ -131,18 +129,18 @@ async function run(mode, plan, label, query = '', origin = 'https://commons.blko
 
 // ── 2. solo, counts BELOW guesses (the anti-deficit path) ───────────────────
 {
+  // Genuinely sparse — the man this design most has to not wound.
+  // held = 2, give = 1, so both sides fall in the sparse branch.
   const plan = [
     { guess: 6, count: 1 }, { guess: 5, count: 0 }, { guess: 4, count: 1 },
-    { guess: 5, count: 0 }, { guess: 9, count: 2 },
+    { guess: 5, count: 0 }, { guess: 9, count: 0 },
     { guess: 4, count: 0 }, { guess: 3, count: 1 }, { guess: 4, count: 0 },
-    { guess: 3, count: 1 }, { count: 1 },
+    { guess: 3, count: 0 }, { count: 0 },
   ];
-  const { res, sent } = await run('solo', plan, 'SOLO · charted below carried (anti-deficit)');
-  ok(res.agg === null, 'NO aggregate line when the count comes in under');
-  ok(res.surprise === null, 'NO surprise line when no gap is positive');
+  const { res, sent } = await run('solo', plan, 'SOLO · a sparse sky (anti-deficit)');
   const banned = /\b(fewer|less|only|missing|short)\b|−|-\d/i;
-  const all = [res.sky, res.friend, res.balance].join(' ');
-  ok(!banned.test(all), 'no banned words and no signed difference anywhere in the reveal');
+  ok(!banned.test(res.balance), 'no banned words and no signed difference in the reveal');
+  ok(/still filling|everyone starts/i.test(res.balance), 'sparse reads as beginning, not deficit');
   ok('s1' in sent.body && !('g1' in sent.body), 'solo mode writes s1..s9, never g*');
   eq(sent.body.source, 'solo-web', 'solo source');
 }
@@ -156,10 +154,9 @@ async function run(mode, plan, label, query = '', origin = 'https://commons.blko
     { guess: 2, count: 5 }, { count: 1 },
   ];
   const { res } = await run('solo', plan, 'RECIPROCITY · gives far more than he receives');
-  console.log(`     sky="${res.sky}"  friend="${res.friend}"`);
+  console.log(`     held=${res.held} give=${res.give}`);
   console.log(`     balance="${res.balance}"`);
   ok(/steer by you/.test(res.balance), 'balance names him as load-bearing, not isolated');
-  ok(res.friend !== 'The New Moon', 'a heavy giver is not read as empty');
 }
 
 // ── 4. the station QR carries ?at=picnic into the source ────────────────────
