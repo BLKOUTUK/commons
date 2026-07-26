@@ -13,7 +13,7 @@
   const CARDS = [
     { q: "Who'd pick up at 3am?",                              side: 'held', band: 0 },
     { q: "Who'd lend you £200 and not mention it again?",      side: 'held', band: 0 },
-    { q: "Who knew you before?",                               side: 'held', band: 1 },
+    { q: "Who knew you before you came out?",                  side: 'held', band: 1 },
     { q: "Who'd come with you so you don't walk in alone?",    side: 'held', band: 1 },
     { q: "Whose face do you know at the function?",            side: 'held', band: 2 },
 
