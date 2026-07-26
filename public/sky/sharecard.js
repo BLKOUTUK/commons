@@ -130,7 +130,7 @@
       ctx.fillText('B L K O U T', CX, 92);
       ctx.fillStyle = 'rgba(212,175,55,0.75)';
       ctx.font = '400 14px ' + DISPLAY;
-      ctx.fillText('S T E L L A R   C A R T O G R A P H Y', CX, 120);
+      ctx.fillText('W H O   H O L D S   Y O U   ·   W H O   Y O U   H O L D', CX, 120);
 
       // ---- the one payoff ----
       const pan = (label, value, colour, x) => {

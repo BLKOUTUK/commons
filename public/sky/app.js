@@ -150,7 +150,7 @@
       st.innerHTML = '<span class="n">' + (state.i + 1) + '</span> / ' + CARDS.length;
     else if (state.screen === 's-reveal' || state.screen === 's-debrief')
       st.innerHTML = '<span class="n">' + total() + '</span> STARS CHARTED';
-    else st.textContent = 'STELLAR CARTOGRAPHY';
+    else st.textContent = '';
   }
 
   // ------------------------------------------------------------ NUMBER PICKER
