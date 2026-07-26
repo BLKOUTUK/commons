@@ -22,7 +22,10 @@
     { q: "Who'd you go with, so they don't walk in alone?",    side: 'give', band: 1 },
     { q: "Who do you check in on for no reason?",              side: 'give', band: 1 },
 
-    { q: "Who do you want closer?",                            side: 'gold', band: 3,
+    // Two distinct asks, deliberately not a binary. Known people are countable;
+    // an unmet connection is a shape of absence, not a number. r10 = the cheap
+    // population (one introduction away), wish = the one needing building.
+    { q: "Who do you already know that you'd want closer?",    side: 'gold', band: 3,
       noGuess: true, wish: true },
   ];
 

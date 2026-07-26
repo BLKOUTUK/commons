@@ -134,6 +134,10 @@
     color:var(--ink);line-height:1.14;letter-spacing:-.01em;}
   .card-q em{font-style:normal;color:var(--gold);}
   .field-label{font-family:var(--display);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);}
+  /* card 10's second ask — a question in its own right, not a footnote */
+  .subq{font-family:var(--display);font-size:clamp(17px,3.4vw,20px);font-weight:600;
+    color:var(--ink);line-height:1.2;letter-spacing:-.01em;padding-top:6px;
+    border-top:1px solid var(--line);margin-top:2px;}
   .field-hint{font-size:13px;color:var(--muted);margin-top:2px;}
   .block{display:flex;flex-direction:column;gap:8px;}
   .block.answer .field-label{color:var(--ink);}
@@ -285,9 +289,10 @@
           </div>
 
           <div class="block" id="wish-block" style="display:none">
-            <div class="field-label">Name it, if you want</div>
+            <div class="subq">And what are you missing that you haven't found yet?</div>
+            <div class="field-hint">A kind of person, not a name. Leave it blank if nothing comes to mind.</div>
             <input id="wish-input" class="wishinput" type="text" maxlength="120"
-                   placeholder="the connection you're building" autocomplete="off" />
+                   placeholder="e.g. someone to actually go to things with" autocomplete="off" />
           </div>
 
           <div class="panel-actions">
