@@ -26,14 +26,14 @@ function stubCanvas(win) {
   win.HTMLCanvasElement.prototype.toBlob = function (cb) { cb(new win.Blob([''])); };
 }
 
-async function run(mode, plan, label, query = '') {
+async function run(mode, plan, label, query = '', origin = 'https://commons.blkoutuk.com') {
   console.log(`\n── ${label} ──`);
   const vc = new VirtualConsole();
   const errors = [];
   vc.on('jsdomError', e => errors.push(e.message));
   const dom = new JSDOM(html, {
     runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole: vc,
-    url: 'https://commons.blkoutuk.com/sky.html' + query,
+    url: origin + '/sky.html' + query,
   });
   const { window } = dom;
   stubCanvas(window);
@@ -167,6 +167,23 @@ async function run(mode, plan, label, query = '') {
   const plan = Array.from({ length: 10 }, (_, i) => ({ guess: 1, count: i === 9 ? 1 : 2 }));
   const { sent } = await run('pairs', plan, 'QR · ?at=picnic tags the source', '?at=picnic');
   eq(sent.body.source, 'pairs-picnic', 'picnic QR tags the row as picnic-day data');
+}
+
+// ── 5. preview hosts must never write untagged research data ────────────────
+// Regression guard: if this check is ever loosened, test runs silently enter
+// the dataset as real respondents and nothing surfaces the error.
+{
+  const plan = Array.from({ length: 10 }, () => ({ guess: 1, count: 2 }));
+  const hosts = [
+    ['https://sky.blkoutuk.cloud',                       'solo-web-preview', 'named preview host'],
+    ['http://u79azo6sk44zm4ogs6ak0f6s.72.61.201.5.sslip.io', 'solo-web-preview', 'sslip.io host'],
+    ['https://some-host-nobody-anticipated.example',     'solo-web-preview', 'unknown host fails safe'],
+    ['https://commons.blkoutuk.com',                     'solo-web',         'production stays untagged'],
+  ];
+  for (const [origin, expect, why] of hosts) {
+    const { sent } = await run('solo', plan, `HOST · ${why}`, '', origin);
+    eq(sent.body.source, expect, why);
+  }
 }
 
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES'} — ${pass} passed, ${fail} failed\n`);
