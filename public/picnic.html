@@ -29,6 +29,8 @@
   .field{width:100%;font-family:'Inter',sans-serif;font-size:16px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:17px 20px;outline:none;transition:border-color .25s,background-color 1s ease}
   .field:focus{border-color:#FFD700}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:38px 32px;display:flex;flex-direction:column;gap:14px;transition:background-color 1s ease,border-color 1s ease}
+  .ivorChip{font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:500;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:border-color .25s,color 1s ease,background-color 1s ease}
+  .ivorChip:hover{border-color:#FFD700}
   .hide{display:none}
 </style>
 </head>
@@ -66,8 +68,8 @@
     </div>
     <div class="card">
       <span class="eyebrow">Where</span>
-      <h3 class="grotesk" style="font-weight:700;font-size:30px;line-height:1.1;color:var(--ink);transition:color 1s ease">Regent's Park<br>— iykyk</h3>
-      <p style="font-size:16px;line-height:1.55;color:var(--inkSoft);transition:color 1s ease">We keep the exact corner close. Leave your email and we'll send you the precise spot (what3words) closer to the day.</p>
+      <h3 class="grotesk" style="font-weight:700;font-size:30px;line-height:1.1;color:var(--ink);transition:color 1s ease">Regent's Park<br>NW1</h3>
+      <p style="font-size:16px;line-height:1.55;color:var(--inkSoft);transition:color 1s ease">The exact corner lands right here on <strong>Friday 14 August</strong> — a what3words pin, nearest gates, step-free routes. Everything else is already in <a href="/picnic-faq.html" style="color:var(--eyebrow);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px">the briefing</a>.</p>
     </div>
     <div class="card">
       <span class="eyebrow">Who</span>
@@ -77,17 +79,40 @@
   </div>
 </section>
 
+<!-- AIVOR -->
+<section id="aivor" style="padding:0 24px clamp(80px,12vw,130px);display:flex;justify-content:center">
+  <div style="width:100%;max-width:740px;display:flex;flex-direction:column;gap:18px;text-align:center">
+    <span class="eyebrow">Questions? Meet AIvor</span>
+    <h2 class="grotesk" style="font-weight:700;font-size:clamp(28px,4.5vw,44px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);transition:color 1s ease">Ask AIvor anything about the day</h2>
+    <p style="font-size:16.5px;line-height:1.6;color:var(--inkSoft);max-width:600px;margin:0 auto;transition:color 1s ease">AIvor is BLKOUT's AI — named for Ivor Cummings, the openly gay Black civil servant who welcomed the Windrush generation ashore. Ask him what to bring, how it works, what happens if the sky misbehaves. Prefer to read? <a href="/picnic-faq.html" style="color:var(--eyebrow);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px">The full briefing →</a></p>
+    <div class="card" style="padding:0;text-align:left;overflow:hidden">
+      <div id="ivorLog" aria-live="polite" style="height:340px;overflow-y:auto;padding:22px 22px 8px;display:flex;flex-direction:column;gap:14px"></div>
+      <div id="ivorChips" style="display:flex;flex-wrap:wrap;gap:8px;padding:0 22px 14px">
+        <button class="ivorChip" onclick="ivorAsk(this.textContent)">What should I bring?</button>
+        <button class="ivorChip" onclick="ivorAsk(this.textContent)">Where exactly is it?</button>
+        <button class="ivorChip" onclick="ivorAsk(this.textContent)">Can I come on my own?</button>
+        <button class="ivorChip" onclick="ivorAsk(this.textContent)">What if it rains?</button>
+      </div>
+      <div style="display:flex;gap:10px;padding:14px 22px 22px;border-top:1px solid var(--line)">
+        <input id="ivorIn" class="field" type="text" maxlength="500" placeholder="Ask about Sunday…" style="flex:1" onkeydown="if(event.key==='Enter')ivorSend()">
+        <button id="ivorSendBtn" class="btn" style="padding:15px 26px;border-radius:14px;font-size:16px" onclick="ivorSend()">Ask</button>
+      </div>
+    </div>
+    <p style="font-size:13.5px;line-height:1.5;color:var(--inkFaint);transition:color 1s ease">AIvor is new and still learning. For anything he can't answer, a human will — <a href="mailto:rob@blkoutuk.com" style="color:var(--eyebrow);text-decoration:none">rob@blkoutuk.com</a>.</p>
+  </div>
+</section>
+
 <!-- REGISTER -->
 <section id="register" style="padding:clamp(60px,10vw,120px) 24px;display:flex;justify-content:center">
   <div style="width:100%;max-width:560px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px">
     <h2 class="grotesk" style="font-weight:700;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.02em;color:var(--ink);transition:color 1s ease">Save your spot</h2>
-    <p style="font-size:18px;line-height:1.55;color:var(--inkSoft);max-width:440px;transition:color 1s ease">Drop your email and we'll send the exact location, timings — and a weather word — your way before the day.</p>
+    <p style="font-size:18px;line-height:1.55;color:var(--inkSoft);max-width:440px;transition:color 1s ease">Everything about the day is out in the open — no gate, no list to be on. Saving a spot helps us plan the food, and puts the pin, the weather word and any last-minute changes straight in your inbox.</p>
 
     <div id="form" style="margin-top:24px;width:100%;display:flex;flex-direction:column;gap:14px">
       <input id="name" class="field" type="text" placeholder="First name (optional)">
       <input id="email" class="field" type="email" placeholder="you@email.com">
-      <button class="btn" style="width:100%;border-radius:14px;box-shadow:0 10px 36px rgba(214,150,20,.28)" onclick="save()">Send me the spot</button>
-      <p style="font-size:13.5px;line-height:1.5;color:var(--inkFaint);margin-top:2px;transition:color 1s ease">We'll send the location, timings and a weather word before the day. Nothing else.</p>
+      <button class="btn" style="width:100%;border-radius:14px;box-shadow:0 10px 36px rgba(214,150,20,.28)" onclick="save()">Save my spot</button>
+      <p style="font-size:13.5px;line-height:1.5;color:var(--inkFaint);margin-top:2px;transition:color 1s ease">The pin, the weather word, any last-minute changes. Nothing else.</p>
       <p id="err" class="hide" style="color:#c0392b;font-size:14px">Something glitched — try again in a moment.</p>
     </div>
 
@@ -126,7 +151,8 @@
 <footer style="border-top:1px solid var(--line);padding:28px 24px 96px;text-align:center;transition:border-color 1s ease">
   <p style="font-size:14px;line-height:1.6;color:var(--inkFaint);transition:color 1s ease"><span class="grotesk" style="font-weight:600;color:var(--eyebrow);letter-spacing:.04em">BLKOUT</span> — community-owned, member-governed · blkoutuk.com</p>
   <p class="grotesk" style="margin-top:8px;font-size:13px;color:var(--inkFaint)">Bring what we need. Come as you are.</p>
-  <p style="margin-top:14px;font-size:14px"><a href="/sky.html" style="color:var(--eyebrow);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px">While you wait — map who holds you ✦ What's in your sky?</a></p>
+  <p style="margin-top:14px;font-size:14px"><a href="/picnic-faq.html" style="color:var(--eyebrow);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px">The picnic briefing — the useful bits</a></p>
+  <p style="margin-top:10px;font-size:14px"><a href="/sky.html" style="color:var(--eyebrow);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px">While you wait — map who holds you ✦ What's in your sky?</a></p>
 </footer>
 
 <!-- DAY NAV -->
@@ -202,6 +228,74 @@ async function save(){
     t.classList.remove('hide');
   }catch(e){ err.textContent='Something glitched — try again in a moment.'; err.classList.remove('hide'); }
 }
+
+/* ——— AIvor chat ——— */
+const IVOR_API = 'https://ivor.blkoutuk.com/api/chat';
+let ivorSid; try{ ivorSid = sessionStorage.getItem('blkout-picnic-ivor'); }catch(e){}
+if(!ivorSid){ ivorSid = 'picnic-'+Math.random().toString(36).slice(2,10); try{ sessionStorage.setItem('blkout-picnic-ivor', ivorSid); }catch(e){} }
+const ivorHist = [];
+let ivorBusy = false;
+
+function ivorRender(text){
+  const d = document.createElement('div'); d.textContent = text;
+  return d.innerHTML.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+}
+function ivorAdd(role, text){
+  const log = document.getElementById('ivorLog');
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;gap:4px;max-width:85%;' + (role==='user' ? 'align-self:flex-end;align-items:flex-end' : 'align-self:flex-start');
+  if(role==='ivor'){
+    const tag = document.createElement('span');
+    tag.className = 'grotesk';
+    tag.style.cssText = 'font-size:10px;font-weight:600;letter-spacing:.18em;color:var(--eyebrow);transition:color 1s ease';
+    tag.textContent = 'AIVOR';
+    wrap.appendChild(tag);
+  }
+  const b = document.createElement('div');
+  b.style.cssText = role==='user'
+    ? 'background:#FFD700;color:#0A0A14;border-radius:16px 16px 4px 16px;padding:12px 16px;font-size:15.5px;line-height:1.55'
+    : 'background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:16px 16px 16px 4px;padding:12px 16px;font-size:15.5px;line-height:1.55;transition:background-color 1s ease,color 1s ease,border-color 1s ease';
+  b.innerHTML = ivorRender(text);
+  wrap.appendChild(b);
+  log.appendChild(wrap);
+  log.scrollTop = log.scrollHeight;
+  return b;
+}
+async function ivorAsk(q){
+  q = (q||'').trim();
+  if(ivorBusy || !q) return;
+  ivorBusy = true;
+  document.getElementById('ivorChips').style.display = 'none';
+  document.getElementById('ivorSendBtn').disabled = true;
+  ivorAdd('user', q);
+  const think = ivorAdd('ivor', '…'); think.style.opacity = '.45';
+  try{
+    const r = await fetch(IVOR_API, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ message:q, sessionId:ivorSid, userContext:{ page:'picnic-2026', location:'London', conversationHistory:ivorHist.slice(-12) } })
+    });
+    if(!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    const text = data.response || "I've come back with nothing — try me again.";
+    think.style.opacity = '1';
+    think.innerHTML = ivorRender(text);
+    ivorHist.push({role:'user',content:q},{role:'assistant',content:text});
+  }catch(e){
+    think.style.opacity = '1';
+    think.textContent = "I've stepped away for a second — try me again in a moment. If it's urgent, a human answers at rob@blkoutuk.com.";
+  }
+  ivorBusy = false;
+  document.getElementById('ivorSendBtn').disabled = false;
+  document.getElementById('ivorLog').scrollTop = document.getElementById('ivorLog').scrollHeight;
+}
+function ivorSend(){
+  const inp = document.getElementById('ivorIn');
+  const q = inp.value.trim();
+  if(!q) return;
+  inp.value = '';
+  ivorAsk(q);
+}
+ivorAdd('ivor', "Alright. I'm AIvor — BLKOUT's AI. Ask me anything about Sunday: what to bring, how to find us, what happens if the sky misbehaves.");
 </script>
 </body>
 </html>
