@@ -3,10 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-<title>What's in your sky? — BLKOUT</title>
+<title>What kind of friend are you? — BLKOUT</title>
+<meta name="description" content="Two sides of a sky: who holds you, and who you hold. Ten cards, no names, counts only. BLKOUT community research into connection." />
+<link rel="icon" type="image/png" href="/blkout-sigil-gold.png" />
+<meta property="og:title" content="What kind of friend are you?" />
+<meta property="og:description" content="Who'd pick up at 3am? Who'd you get out of bed for? Chart your sky — no names, stars only." />
+<meta property="og:image" content="/blkout-sigil-gold.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;900&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400&display=swap" rel="stylesheet" />
 <style>
   :root{
     --bg:#06030f; --bg2:#0d0620;
@@ -14,8 +19,9 @@
     --ink:#F4ECD8; --muted:rgba(244,236,216,.58); --faint:rgba(244,236,216,.34);
     --line:rgba(212,175,55,.20);
     --ease:cubic-bezier(.2,.8,.2,1);
-    --display:"Space Grotesk",system-ui,sans-serif;
-    --body:"Inter",system-ui,sans-serif;
+    --display:"Work Sans",system-ui,sans-serif;
+    --body:"Work Sans",system-ui,sans-serif;
+    --serif:"Fraunces",Georgia,serif;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   html,body{height:100%;}
@@ -41,7 +47,11 @@
     box-shadow:0 0 10px 2px rgba(255,215,0,.6);
     animation:pop .6s var(--ease) forwards, twinkle 3.5s ease-in-out infinite;
   }
-  .star.gold{width:9px;height:9px;background:radial-gradient(circle,#fff3c4 0%,#ffe486 42%,rgba(255,215,0,0) 74%);box-shadow:0 0 16px 4px rgba(255,222,120,.75);}
+  /* what you give reads cooler than what you receive */
+  .star.give{background:radial-gradient(circle,#eaf4ff 0%,#9fc6ef 40%,rgba(159,198,239,0) 74%);
+    box-shadow:0 0 10px 2px rgba(159,198,239,.5);}
+  .star.gold{width:9px;height:9px;background:radial-gradient(circle,#fff3c4 0%,#ffe486 42%,rgba(255,215,0,0) 74%);
+    box-shadow:0 0 16px 4px rgba(255,222,120,.75);}
   @keyframes pop{0%{transform:translate(-50%,-50%) scale(0);}60%{transform:translate(-50%,-50%) scale(1.5);}100%{transform:translate(-50%,-50%) scale(1);}}
   @keyframes twinkle{0%,100%{opacity:.85;}50%{opacity:.45;}}
 
@@ -61,35 +71,35 @@
   .screen{
     position:absolute;inset:0;display:flex;flex-direction:column;
     align-items:center;justify-content:flex-start;text-align:center;
-    padding:96px 28px 120px;gap:22px;overflow-y:auto;overflow-x:hidden;
+    padding:88px 24px 40px;gap:20px;overflow-y:auto;overflow-x:hidden;
     opacity:0;transform:translateY(20px);visibility:hidden;pointer-events:none;
     transition:opacity .7s var(--ease),transform .7s var(--ease);
   }
   .screen::-webkit-scrollbar{width:0;height:0;}
   .screen{scrollbar-width:none;}
   .screen.active{opacity:1;transform:none;visibility:visible;pointer-events:auto;}
-  .screen.active.pass{pointer-events:none;}
   .screen.scrim::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-    background:radial-gradient(72% 56% at 50% 47%, rgba(6,3,15,.64), rgba(6,3,15,0) 74%);}
-  .wrap{max-width:600px;display:flex;flex-direction:column;align-items:center;gap:22px;margin-block:auto;}
+    background:radial-gradient(72% 56% at 50% 47%, rgba(6,3,15,.72), rgba(6,3,15,0) 74%);}
+  .wrap{max-width:600px;width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;margin-block:auto;}
 
   .eyebrow{font-family:var(--display);font-size:12px;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:var(--gold-deep);}
-  h1{font-family:var(--display);font-weight:600;line-height:.98;letter-spacing:-.02em;
-     font-size:clamp(52px,11vw,104px);color:var(--ink);text-wrap:balance;}
+  h1{font-family:var(--display);font-weight:700;line-height:1.0;letter-spacing:-.02em;
+     font-size:clamp(40px,8.5vw,76px);color:var(--ink);text-wrap:balance;}
   h1 .glow{color:var(--gold);text-shadow:0 0 40px rgba(255,215,0,.35);}
-  .lede{font-size:clamp(17px,2.4vw,21px);line-height:1.5;color:var(--muted);max-width:38ch;text-wrap:pretty;}
-  .micro{font-family:var(--display);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);}
+  .lede{font-size:clamp(16px,2.4vw,20px);line-height:1.5;color:var(--muted);max-width:40ch;text-wrap:pretty;}
+  .micro{font-family:var(--display);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);}
+  .serif{font-family:var(--serif);font-style:italic;font-weight:400;}
 
   /* ---------- buttons ---------- */
   .btn{
     font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:.02em;
     padding:15px 30px;border-radius:100px;border:1px solid var(--gold);
     background:linear-gradient(180deg,#ffe480,var(--gold));color:#1a1003;cursor:pointer;
-    transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s;
-    box-shadow:0 0 0 0 rgba(255,215,0,.0);
+    transition:transform .25s var(--ease),box-shadow .25s var(--ease),opacity .2s;
   }
   .btn:hover{transform:translateY(-2px);box-shadow:0 10px 40px -6px rgba(255,215,0,.5);}
   .btn:active{transform:translateY(0);}
+  .btn:disabled{opacity:.32;cursor:default;transform:none;box-shadow:none;}
   .ghost{background:none;border:1px solid var(--line);color:var(--gold);box-shadow:none;}
   .ghost:hover{border-color:var(--gold);background:rgba(255,215,0,.06);box-shadow:none;}
   .link{font-family:var(--display);background:none;border:none;color:var(--muted);cursor:pointer;
@@ -98,90 +108,122 @@
   .link:hover{color:var(--gold);}
   a{color:var(--gold);text-decoration:none;}
 
-  /* ---------- play panel ---------- */
-  #s-play{justify-content:flex-end;padding-bottom:38px;}
+  /* two doors on the intro */
+  .doors{display:flex;flex-direction:column;gap:12px;width:min(420px,92vw);}
+  .door{
+    font-family:var(--display);text-align:left;cursor:pointer;
+    border:1px solid var(--line);border-radius:18px;padding:18px 22px;
+    background:rgba(8,4,20,.5);backdrop-filter:blur(14px);color:var(--ink);
+    transition:border-color .2s,background .2s,transform .2s var(--ease);
+  }
+  .door:hover{border-color:var(--gold);background:rgba(255,215,0,.06);transform:translateY(-2px);}
+  .door b{display:block;font-size:18px;font-weight:600;}
+  .door span{display:block;font-size:14px;color:var(--muted);margin-top:3px;font-weight:400;}
+
+  /* ---------- card screen ---------- */
   .panel{
-    width:min(560px,92vw);background:rgba(8,4,20,.5);backdrop-filter:blur(18px);
-    border:1px solid var(--line);border-radius:22px;padding:26px 30px 24px;
-    display:flex;flex-direction:column;gap:16px;
+    width:min(560px,94vw);background:rgba(8,4,20,.56);backdrop-filter:blur(18px);
+    border:1px solid var(--line);border-radius:22px;padding:22px 22px 20px;
+    display:flex;flex-direction:column;gap:14px;text-align:left;
     box-shadow:0 30px 80px -30px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,215,0,.07);
   }
-  .ring-no{font-family:var(--display);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-deep);}
-  .ring-title{font-family:var(--display);font-size:clamp(26px,5vw,34px);font-weight:600;color:var(--ink);line-height:1.05;letter-spacing:-.01em;}
-  .ring-instr{font-size:15px;color:var(--muted);line-height:1.45;text-wrap:pretty;}
-  .counter{display:flex;align-items:baseline;gap:10px;font-family:var(--display);}
-  .counter .big{font-size:40px;font-weight:600;color:var(--gold);font-feature-settings:"tnum";line-height:1;}
-  .counter .lbl{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);}
-  .panel-actions{display:flex;align-items:center;gap:12px;margin-top:4px;}
-  .panel-actions .grow{flex:1;}
-  .goldname{display:none;flex-direction:column;gap:8px;text-align:left;}
-  .goldname.show{display:flex;}
-  .goldname input{
-    width:100%;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:12px;
+  .card-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+  .card-side{font-family:var(--display);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);}
+  .card-no{font-family:var(--display);font-size:11.5px;letter-spacing:.2em;color:var(--faint);font-feature-settings:"tnum";}
+  .card-q{font-family:var(--display);font-size:clamp(23px,5.2vw,31px);font-weight:600;
+    color:var(--ink);line-height:1.14;letter-spacing:-.01em;}
+  .card-q em{font-style:normal;color:var(--gold);}
+  .field-label{font-family:var(--display);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);}
+  /* card 10's second ask — a question in its own right, not a footnote */
+  .subq{font-family:var(--display);font-size:clamp(17px,3.4vw,20px);font-weight:600;
+    color:var(--ink);line-height:1.2;letter-spacing:-.01em;padding-top:6px;
+    border-top:1px solid var(--line);margin-top:2px;}
+  .field-hint{font-size:13px;color:var(--muted);margin-top:2px;}
+  .block{display:flex;flex-direction:column;gap:8px;}
+  .block.answer .field-label{color:var(--ink);}
+
+  /* number picker — one thumb, no keyboard, legible in sun */
+  .numrow{display:flex;flex-wrap:wrap;gap:7px;}
+  .num{
+    font-family:var(--display);font-size:16px;font-weight:600;
+    min-width:42px;height:42px;padding:0 10px;border-radius:12px;
+    border:1px solid var(--line);background:rgba(0,0,0,.34);color:var(--ink);
+    cursor:pointer;transition:all .15s;font-feature-settings:"tnum";
+  }
+  .num:hover{border-color:var(--gold-deep);}
+  .num.sel{background:linear-gradient(180deg,#ffe480,var(--gold));color:#1a1003;border-color:var(--gold);}
+  .num.more{min-width:54px;font-size:14px;}
+  .stepper{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .stepval{font-family:var(--display);font-size:30px;font-weight:600;color:var(--gold);
+    min-width:56px;text-align:center;font-feature-settings:"tnum";}
+
+  .wishinput{
+    width:100%;background:rgba(0,0,0,.34);border:1px solid var(--line);border-radius:12px;
     padding:13px 15px;color:var(--ink);font-family:var(--body);font-size:15px;outline:none;
     transition:border-color .2s;
   }
-  .goldname input:focus{border-color:var(--gold);}
-  .goldname input::placeholder{color:var(--faint);}
+  .wishinput:focus{border-color:var(--gold);}
+  .wishinput::placeholder{color:var(--faint);}
 
-  .progress{display:flex;gap:7px;justify-content:center;margin-bottom:2px;}
-  .pip{width:34px;height:3px;border-radius:2px;background:var(--line);transition:background .4s var(--ease);}
+  .panel-actions{display:flex;align-items:center;gap:12px;margin-top:2px;}
+  .grow{flex:1;}
+
+  .progress{display:flex;gap:5px;justify-content:center;}
+  .pip{width:22px;height:3px;border-radius:2px;background:var(--line);transition:background .4s var(--ease);}
   .pip.on{background:var(--gold);}
   .pip.done{background:var(--gold-deep);}
-
-  .tap-hint{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:21;
-    font-family:var(--display);font-size:13px;letter-spacing:.22em;text-transform:uppercase;
-    color:var(--faint);pointer-events:none;text-align:center;
-    transition:opacity .6s var(--ease);}
+  .pip.give.done,.pip.give.on{background:#9fc6ef;}
+  .pip.gold.on{background:#fff3c4;}
 
   /* ---------- scan ---------- */
-  .scan-ring{width:120px;height:120px;border-radius:50%;border:1px solid var(--line);
+  .scan-ring{width:110px;height:110px;border-radius:50%;border:1px solid var(--line);
     border-top-color:var(--gold);animation:spin 1.1s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
-  /* ---------- navigator / card ---------- */
-  #s-nav{padding-top:74px;}
-  .arch{display:flex;flex-direction:column;align-items:center;gap:6px;}
-  .arch-over{font-family:var(--body);font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold-deep);}
-  .arch-name{font-family:var(--display);font-weight:600;font-size:clamp(40px,8vw,64px);line-height:1;
-    color:var(--gold);text-shadow:0 0 44px rgba(255,215,0,.35);letter-spacing:-.01em;}
-  .arch-epithet{font-family:var(--display);font-style:italic;font-size:15px;color:var(--muted);letter-spacing:.04em;}
-  .arch-line{font-size:15.5px;line-height:1.5;color:var(--muted);max-width:34ch;text-wrap:pretty;margin-top:2px;}
+  /* ---------- reveal — one payoff: the balance ---------- */
+  .scales{display:flex;align-items:stretch;gap:0;width:min(460px,92vw);
+    border:1px solid var(--line);border-radius:20px;overflow:hidden;
+    background:rgba(8,4,20,.44);}
+  .pan{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:22px 14px;}
+  .pan + .pan{border-left:1px solid var(--line);}
+  .pan .n{font-family:var(--display);font-size:clamp(44px,10vw,64px);font-weight:700;
+    line-height:1;font-feature-settings:"tnum";}
+  .pan .cap{font-family:var(--display);font-size:11.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--faint);}
+  .pan.held .n{color:var(--gold);text-shadow:0 0 36px rgba(255,215,0,.38);}
+  .pan.give .n{color:#BCD9F5;text-shadow:0 0 36px rgba(159,198,239,.34);}
+  #balance-line{font-family:var(--serif);font-style:italic;
+    font-size:clamp(19px,3.6vw,26px);color:var(--ink);
+    max-width:26ch;line-height:1.32;}
   @media (prefers-reduced-motion:no-preference){
-    .screen.active .arch-name{animation:namepop .8s cubic-bezier(.2,1.5,.4,1) both;}
+    .screen.active .pan .n{animation:namepop .8s cubic-bezier(.2,1.5,.4,1) both;}
   }
   @keyframes namepop{from{transform:scale(.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+
   .card-frame{
     border-radius:18px;overflow:hidden;line-height:0;
     box-shadow:0 40px 100px -30px rgba(0,0,0,.9),0 0 0 1px var(--line),0 0 60px -20px rgba(255,215,0,.3);
-    transform:perspective(1400px) rotateX(2deg);
   }
-  #card-preview{width:auto;height:min(62vh,520px);display:block;}
+  #card-preview{width:auto;height:min(46vh,400px);display:block;}
   .nav-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
 
   /* ---------- transmit ---------- */
-  .chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+  .chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;}
   .chip{font-family:var(--display);font-size:14px;padding:11px 20px;border-radius:100px;
     border:1px solid var(--line);background:rgba(255,215,0,.03);color:var(--muted);cursor:pointer;transition:all .2s;}
   .chip:hover{border-color:var(--gold-deep);color:var(--ink);}
   .chip.sel{background:linear-gradient(180deg,#ffe480,var(--gold));color:#1a1003;border-color:var(--gold);}
-  .region{width:min(360px,80vw);background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:12px;
+  .region{width:min(360px,84vw);background:rgba(0,0,0,.34);border:1px solid var(--line);border-radius:12px;
     padding:12px 15px;color:var(--ink);font-family:var(--body);font-size:15px;outline:none;text-align:center;
     text-transform:uppercase;letter-spacing:.08em;transition:border-color .2s;}
   .region:focus{border-color:var(--gold);}
   .region::placeholder{color:var(--faint);text-transform:none;letter-spacing:0;}
 
-  .stack{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .stack{display:flex;flex-direction:column;align-items:center;gap:13px;}
   .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center;}
 
-  @media (max-width:520px){
-    .screen{padding:84px 20px 110px;}
-    .panel{padding:22px 22px 20px;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .star{animation:pop .3s ease forwards;}
-    .screen{transition:opacity .3s;}
-  }
+  @media (max-width:520px){ .screen{padding:80px 16px 32px;} .panel{padding:18px 18px 16px;} }
+  @media (prefers-reduced-motion:reduce){ .star{animation:pop .3s ease forwards;} .screen{transition:opacity .3s;} }
 </style>
 </head>
 <body>
@@ -192,64 +234,95 @@
 
   <header id="hud">
     <div class="wordmark">BLKOUT</div>
-    <div id="status">STELLAR CARTOGRAPHY</div>
+    <div id="status"></div>
   </header>
-
-  <div class="tap-hint" id="tap-hint" style="opacity:0">tap the sky</div>
 
   <main>
     <!-- INTRO -->
-    <section class="screen active" id="s-intro" data-screen-label="Intro">
+    <section class="screen active" id="s-intro">
       <div class="wrap">
-        <div class="eyebrow">Incoming transmission</div>
-        <h1>What's in<br>your <span class="glow">sky?</span></h1>
-        <p class="lede">A map of who holds you. Tap them in, one star at a time.</p>
-        <p class="micro">No names — not theirs, not yours. Stars only.</p>
-        <button class="btn" id="begin">Begin the voyage ✦</button>
+        <div class="eyebrow">Ten cards · two minutes</div>
+        <h1>Who'd pick up<br>at <span class="glow">3am?</span></h1>
+        <p class="lede">And who'd you get out of bed for? Two sides of the same sky — the people who hold you, and the people you hold.</p>
+        <div class="doors">
+          <button class="door" id="go-pairs">
+            <b>I'm with someone ✦</b>
+            <span>The good version. He guesses your numbers out loud before you answer — then you argue about it.</span>
+          </button>
+          <button class="door" id="go-solo">
+            <b>On my own</b>
+            <span>Guess first, then count. You'll see both at the end.</span>
+          </button>
+        </div>
+        <p class="micro">No names — not theirs, not yours. Numbers only.</p>
       </div>
     </section>
 
-    <!-- PLAY (4 rings) -->
-    <section class="screen" id="s-play" data-screen-label="Rings">
-      <div class="panel no-tap">
+    <!-- CARD -->
+    <section class="screen" id="s-card">
+      <div class="wrap">
         <div class="progress" id="pips"></div>
-        <div>
-          <div class="ring-no" id="ring-no">Ring 01 / 04</div>
-          <div class="ring-title" id="ring-title">The 3am people</div>
-        </div>
-        <p class="ring-instr" id="ring-instr">Tap the sky once for everyone who'd pick up at 3am. No questions.</p>
-        <div class="goldname" id="goldname">
-          <label class="ring-instr" for="gold-input">Name what these gold stars stand for — one line, if you want.</label>
-          <input id="gold-input" type="text" maxlength="54" placeholder="the connection you're building toward" autocomplete="off" />
-        </div>
-        <div class="counter"><span class="big" id="ring-count">0</span><span class="lbl" id="ring-count-lbl">stars this ring</span></div>
-        <div class="panel-actions">
-          <button class="link" id="undo">undo ↩</button>
-          <span class="grow"></span>
-          <button class="btn" id="next">Next ring →</button>
+        <div class="panel">
+          <div class="card-head">
+            <span class="card-side" id="card-side">Part one — who holds you</span>
+            <span class="card-no" id="card-no">01 / 10</span>
+          </div>
+          <div class="card-q" id="card-q">Who'd pick up at 3am?</div>
+
+          <div class="block" id="guess-block">
+            <div>
+              <div class="field-label" id="guess-label">His guess</div>
+              <div class="field-hint" id="guess-hint">Ask him out loud, before you answer.</div>
+            </div>
+            <div id="guess-picker"></div>
+          </div>
+
+          <div class="block answer">
+            <div class="field-label">Your answer</div>
+            <div id="answer-picker"></div>
+          </div>
+
+          <div class="block" id="wish-block" style="display:none">
+            <div class="subq">And what are you missing that you haven't found yet?</div>
+            <div class="field-hint">A kind of person, not a name. Leave it blank if nothing comes to mind.</div>
+            <input id="wish-input" class="wishinput" type="text" maxlength="120"
+                   placeholder="e.g. someone to actually go to things with" autocomplete="off" />
+          </div>
+
+          <div class="panel-actions">
+            <button class="link" id="back">‹ back</button>
+            <span class="grow"></span>
+            <button class="btn" id="next" disabled>Next card →</button>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- SCAN -->
-    <section class="screen" id="s-scan" data-screen-label="Scan">
+    <section class="screen" id="s-scan">
       <div class="wrap">
         <div class="scan-ring"></div>
-        <div class="eyebrow" style="margin-top:8px">Deep scan</div>
+        <div class="eyebrow" style="margin-top:8px">Adding it up</div>
         <p class="lede" id="scan-text">Charting your sky…</p>
       </div>
     </section>
 
-    <!-- NAVIGATOR / SHARE -->
-    <section class="screen" id="s-nav" data-screen-label="Navigator">
-      <div class="wrap" style="gap:18px">
-        <div class="eyebrow">Transmission · for the navigator</div>
-        <div class="arch">
-          <div class="arch-over">The sky you keep</div>
-          <h1 class="arch-name" id="arch-name">The Navigator</h1>
-          <div class="arch-epithet" id="arch-epithet">· reader of the whole sky ·</div>
-          <p class="arch-line" id="arch-line"></p>
+    <!-- REVEAL -->
+    <section class="screen scrim" id="s-reveal">
+      <div class="wrap" style="gap:20px">
+        <div class="scales">
+          <div class="pan held">
+            <span class="n" id="held-num">0</span>
+            <span class="cap">hold you</span>
+          </div>
+          <div class="pan give">
+            <span class="n" id="give-num">0</span>
+            <span class="cap">you hold</span>
+          </div>
         </div>
+
+        <p id="balance-line"></p>
+
         <div class="card-frame"><canvas id="card-preview"></canvas></div>
         <div class="nav-actions">
           <button class="btn" id="share">Share your sky ✦</button>
@@ -261,46 +334,46 @@
     </section>
 
     <!-- TRANSMIT -->
-    <section class="screen scrim" id="s-transmit" data-screen-label="Transmit">
-      <div class="wrap" style="gap:24px">
-        <div class="eyebrow">Final mission · optional</div>
-        <h1 style="font-size:clamp(34px,6.5vw,56px)">Beam it home?</h1>
-        <p class="lede">Just your star counts — numbers, nothing else — sent to help BLKOUT learn what connection looks like for Black queer men in the UK. Anonymous by design: it can't be traced to you.</p>
+    <section class="screen scrim" id="s-transmit">
+      <div class="wrap" style="gap:22px">
+        <div class="eyebrow">One last thing · optional</div>
+        <h1 style="font-size:clamp(32px,6.5vw,54px)">Add yours to<br>the picture?</h1>
+        <p class="lede">Just your numbers — nothing else — to help BLKOUT learn what connection looks like for Black queer men in the UK. Anonymous by design: it can't be traced to you.</p>
         <div class="stack">
-          <p class="micro">Life stage — optional, first half only</p>
+          <p class="micro">Life stage — optional</p>
           <div class="chips" id="chips">
-            <button class="chip" data-v="under 25">under 25</button>
-            <button class="chip" data-v="25–34">25–34</button>
-            <button class="chip" data-v="35–49">35–49</button>
-            <button class="chip" data-v="50+">50+</button>
+            <button class="chip" data-v="under25">under 25</button>
+            <button class="chip" data-v="25-34">25–34</button>
+            <button class="chip" data-v="35-49">35–49</button>
+            <button class="chip" data-v="50plus">50+</button>
           </div>
           <input id="region-input" class="region" type="text" maxlength="4" autocomplete="off"
                  placeholder="postcode — first half only (SE15, B12, LS6)" />
         </div>
         <div class="row">
-          <button class="btn" id="transmit">Transmit ✦</button>
-          <button class="link" id="skip-transmit">hold my data — fly on</button>
+          <button class="btn" id="transmit">Add mine ✦</button>
+          <button class="link" id="skip-transmit">keep mine — skip this</button>
         </div>
-        <p class="micro err" id="transmit-err" style="display:none;color:#e8746a">transmission lost in the shade cluster — try again in a moment</p>
+        <p class="micro" id="transmit-err" style="display:none;color:#e8746a">that didn’t send. Your numbers stayed with you — try again in a moment.</p>
       </div>
     </section>
 
     <!-- DEBRIEF -->
-    <section class="screen scrim" id="s-debrief" data-screen-label="Debrief">
-      <div class="wrap" style="gap:22px">
-        <div class="eyebrow">✦ Mission complete ✦</div>
-        <h1 style="font-size:clamp(38px,7vw,68px)">Readings<br>received.</h1>
-        <p class="lede">Every star in your sky is someone who'd be glad to know they're there. Tell one of them this week. That's the mission.</p>
-        <p class="lede" style="color:var(--faint);font-size:16px;max-width:42ch">A quieter sky tonight is still a sky worth charting. Naming the stars you have is how the next ones find their way in — and we're in it with you.</p>
-        <div class="row" style="margin-top:6px">
+    <section class="screen scrim" id="s-debrief">
+      <div class="wrap" style="gap:20px">
+        <div class="eyebrow">Done</div>
+        <h1 style="font-size:clamp(34px,7vw,62px)">Thank<br>you.</h1>
+        <p class="lede">Every star in your sky is someone who'd be glad to know they're there. Tell one of them this week.</p>
+        <p class="lede" style="color:var(--faint);font-size:15px;max-width:42ch">A quieter sky tonight is still a sky worth charting. Naming the stars you have is how the next ones find their way in — and we're in it with you.</p>
+        <div class="row" style="margin-top:4px">
           <a class="btn" href="/picnic.html">Come to the picnic →</a>
           <a class="ghost btn" href="https://blkoutuk.com/intro">Meet AIVOR — keep me posted ✦</a>
         </div>
-        <div class="row" style="margin-top:2px">
+        <div class="row">
           <a class="link" href="https://compass.blkoutuk.com">Ivor's Compass ✦</a>
           <button class="link" id="restart">chart another sky ✦</button>
         </div>
-        <p class="micro" style="margin-top:18px">after Sun Ra, who told us space is the place.</p>
+        
       </div>
     </section>
   </main>
