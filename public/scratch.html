@@ -72,6 +72,16 @@ footer .wrap{display:flex;gap:24px;align-items:center;justify-content:space-betw
 footer a{color:#4A1942}
 footer .logos{display:flex;gap:22px;align-items:center}
 footer .logos img{height:56px;width:auto}
+.aivor{max-width:760px;margin:0 auto;text-align:center}
+.chatbox{background:#120f1b;border:1px solid var(--line);border-radius:18px;overflow:hidden;text-align:left;margin-top:18px}
+#ivorLog{height:340px;overflow-y:auto;padding:22px 22px 8px;display:flex;flex-direction:column;gap:14px}
+#ivorChips{display:flex;flex-wrap:wrap;gap:8px;padding:0 22px 14px}
+.ivorChip{font-family:Archivo,sans-serif;font-stretch:125%;font-size:13px;font-weight:600;color:var(--txt);background:transparent;border:1px solid var(--gold2);border-radius:999px;padding:9px 16px;cursor:pointer}
+.ivorChip:hover{background:var(--gold);color:var(--space)}
+.chatrow{display:flex;gap:10px;padding:14px 22px 22px;border-top:1px solid var(--line)}
+.chatrow input{flex:1;font:17px/1.4 Newsreader,Georgia,serif;padding:12px 14px;border:1.5px solid #3a3346;background:#0b0912;color:#fff;border-radius:12px}
+.askline{margin:12px 0 0;font-size:16px}
+.askline a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold2)}
 @media (max-width:860px){
   .hero .wrap,.two{grid-template-columns:1fr}
   .film{margin:0 auto}
@@ -92,6 +102,7 @@ footer .logos img{height:56px;width:auto}
       <p class="facts-line"><b>8 men</b> · <b>2 months</b> · Croydon · Dinner's on us</p>
       <a class="btn" href="#apply">Apply today</a>
       <p class="closes">Places close Friday 16 October.</p>
+      <p class="askline">Questions? <a href="#aivor">Ask AIvor</a>, BLKOUT's AI.</p>
     </div>
     <div class="film">
       <video src="/scratch-assets/quest/assembling-the-crew.mp4" poster="/scratch-assets/quest/poster.jpg" controls playsinline muted loop preload="metadata" aria-label="Assembling the crew: a 54-second film. Four illustrated Black queer men, an explorer, an astronaut, a scientist and a diver, are each found and stamped crew members; a fifth space is saved for you. Choose joy. Apply today."></video>
@@ -146,6 +157,28 @@ footer .logos img{height:56px;width:auto}
       <h3 style="margin-top:22px;color:var(--gold)">A few reflections</h3>
       <p>After each session we'll ask a couple of short questions about how it went. It helps us learn, and it's how our funder hears what the programme meant to you.</p>
     </div>
+  </div>
+</section>
+
+<section id="aivor">
+  <div class="wrap aivor">
+    <p class="eyebrow">Questions? Meet AIvor</p>
+    <h2>Ask AIvor about the quest</h2>
+    <p>AIvor is BLKOUT's AI, named for Ivor Cummings, the openly gay Black civil servant who welcomed the Windrush generation ashore. Ask him what happens at the sessions, who can apply, or what Joseph Beam Day is.</p>
+    <div class="chatbox">
+      <div id="ivorLog" aria-live="polite"></div>
+      <div id="ivorChips">
+        <button class="ivorChip" type="button" onclick="ivorAsk(this.textContent)">What happens at the sessions?</button>
+        <button class="ivorChip" type="button" onclick="ivorAsk(this.textContent)">Can I apply on my own?</button>
+        <button class="ivorChip" type="button" onclick="ivorAsk(this.textContent)">Do I need any experience?</button>
+        <button class="ivorChip" type="button" onclick="ivorAsk(this.textContent)">What is Joseph Beam Day?</button>
+      </div>
+      <div class="chatrow">
+        <input id="ivorIn" type="text" maxlength="500" placeholder="Ask about the quest…" aria-label="Your question for AIvor" onkeydown="if(event.key==='Enter')ivorSend()">
+        <button id="ivorSendBtn" class="btn" type="button" style="padding:14px 24px;font-size:15px" onclick="ivorSend()">Ask</button>
+      </div>
+    </div>
+    <p class="small" style="margin-top:12px">AIvor is still learning. For anything he can't answer, a human will: rob@blkoutuk.com.</p>
   </div>
 </section>
 
@@ -276,6 +309,37 @@ document.getElementById('form').addEventListener('submit', async (ev) => {
     if (btn) { btn.disabled = false; btn.textContent = 'Send my application'; }
   }
 });
+</script>
+<script>
+/* AIvor chat (same API and shape as the picnic page; page tag 'scratch-2026' switches on the quest facts) */
+const IVOR_API = 'https://ivor.blkoutuk.com/api/chat';
+let ivorSid; try{ ivorSid = sessionStorage.getItem('blkout-scratch-ivor'); }catch(e){}
+if(!ivorSid){ ivorSid = 'scratch-'+Math.random().toString(36).slice(2,10); try{ sessionStorage.setItem('blkout-scratch-ivor', ivorSid); }catch(e){} }
+const ivorHist = []; let ivorBusy = false;
+function ivorRender(t){ const d=document.createElement('div'); d.textContent=t; return d.innerHTML.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>'); }
+function ivorAdd(role, text){
+  const log=document.getElementById('ivorLog'); const w=document.createElement('div');
+  w.style.cssText='display:flex;flex-direction:column;gap:4px;max-width:85%;'+(role==='user'?'align-self:flex-end;align-items:flex-end':'align-self:flex-start');
+  if(role==='ivor'){ const tag=document.createElement('span'); tag.style.cssText='font-family:Archivo,sans-serif;font-size:10px;font-weight:600;letter-spacing:.18em;color:#D4AF37'; tag.textContent='AIVOR'; w.appendChild(tag); }
+  const b=document.createElement('div');
+  b.style.cssText = role==='user' ? 'background:#FFD700;color:#05050A;border-radius:16px 16px 4px 16px;padding:12px 16px;font-size:16px;line-height:1.55' : 'background:#05050A;color:#fff;border:1px solid #2A2433;border-radius:16px 16px 16px 4px;padding:12px 16px;font-size:16px;line-height:1.55';
+  b.innerHTML=ivorRender(text); w.appendChild(b); log.appendChild(w); log.scrollTop=log.scrollHeight; return b;
+}
+async function ivorAsk(q){
+  q=(q||'').trim(); if(ivorBusy||!q) return; ivorBusy=true;
+  document.getElementById('ivorChips').style.display='none'; document.getElementById('ivorSendBtn').disabled=true;
+  ivorAdd('user', q); const think=ivorAdd('ivor','…'); think.style.opacity='.45';
+  try{
+    const r=await fetch(IVOR_API,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:q,sessionId:ivorSid,userContext:{page:'scratch-2026',location:'Croydon',conversationHistory:ivorHist.slice(-12)}})});
+    if(!r.ok) throw new Error(r.status);
+    const data=await r.json(); const text=data.response||"I've come back with nothing — try me again.";
+    think.style.opacity='1'; think.innerHTML=ivorRender(text); ivorHist.push({role:'user',content:q},{role:'assistant',content:text});
+  }catch(e){ think.style.opacity='1'; think.textContent="I've stepped away for a second — try me again in a moment. If it's urgent, a human answers at rob@blkoutuk.com."; }
+  ivorBusy=false; document.getElementById('ivorSendBtn').disabled=false;
+}
+function ivorSend(){ const i=document.getElementById('ivorIn'); const q=i.value.trim(); if(!q) return; i.value=''; ivorAsk(q); }
+ivorAdd('ivor', "Hello, I'm AIvor. Thinking about joining the crew? Ask me anything about the quest.");
 </script>
 </body>
 </html>
