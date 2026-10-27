@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BLKOUT's first AGM · Wed 25 November · come and shape membership</title>
+<meta name="description" content="BLKOUT's first Annual General Meeting, Wednesday 25 November 2026, 7pm, online. Members vote; everyone is welcome to join the conversation about what membership should mean before it opens on Joseph Beam Day.">
+<meta property="og:title" content="BLKOUT's first AGM · Wed 25 November, 7pm, online">
+<meta property="og:description" content="Twenty minutes of formal business, then an open conversation: what should joining BLKOUT mean? Membership opens on Joseph Beam Day, 28 December.">
+<meta property="og:url" content="https://commons.blkoutuk.com/agm">
+<link rel="canonical" href="https://commons.blkoutuk.com/agm">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0A;--ink:#F5F1E8;--soft:rgba(245,241,232,.78);--faint:rgba(245,241,232,.55);--gold:#FFD700;--gold2:#D4AF37;--line:rgba(245,241,232,.16);--surface:rgba(245,241,232,.06)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;font-size:17px;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding:0 22px}
+header{padding:56px 0 8px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+h1{font-weight:800;font-size:clamp(38px,8vw,64px);line-height:1.02;margin:14px 0 0;letter-spacing:-.01em}
+h1 em,h2 em{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;color:var(--gold)}
+h2{font-weight:800;font-size:26px;margin:44px 0 10px}
+.when{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+.pill{border:1px solid var(--gold2);border-radius:999px;padding:8px 16px;font-weight:600;font-size:15px}
+p{color:var(--soft);margin:12px 0}
+ol{color:var(--soft);padding-left:1.2em}
+ol li{margin:8px 0}
+strong{color:var(--ink)}
+a{color:var(--gold)}
+.card{margin-top:34px;background:var(--surface);border:1px solid rgba(255,215,0,.45);border-radius:18px;padding:28px 24px}
+label{display:block;font-weight:600;font-size:15px;margin:16px 0 6px}
+input[type=text],input[type=email],select,textarea{width:100%;background:#141414;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:12px 14px;font:inherit;font-size:16px}
+textarea{min-height:76px}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:15px;color:var(--soft)}
+.check input{margin-top:5px}
+button{margin-top:22px;background:var(--gold);color:#0A0A0A;border:none;border-radius:999px;padding:14px 28px;font:inherit;font-weight:800;font-size:16px;cursor:pointer}
+.small{font-size:14px;color:var(--faint)}
+.hide{display:none}
+#err{color:#FF8A80;font-size:15px}
+footer{margin:64px 0 0;border-top:1px solid var(--line);padding:26px 0 60px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">BLKOUT · Annual General Meeting</div>
+  <h1>Come and shape <em>membership</em></h1>
+  <div class="when"><span class="pill">Wednesday 25 November</span><span class="pill">7pm–8.30pm</span><span class="pill">Online</span></div>
+</header>
+
+<p>This is the first annual general meeting of BLKOUT as a co-operative, owned by its members. Membership opens to everyone on Joseph Beam Day, 28 December. Before it does, we want to hear from you: what should joining BLKOUT mean, and what do you want from it?</p>
+<p>You don't need to be a member to come. Members vote on the formal business; everyone is welcome to take part in the conversation and to speak.</p>
+
+<h2>The <em>evening</em></h2>
+<ol>
+  <li><strong>The year in numbers.</strong> Members receive the accounts for our first year.</li>
+  <li><strong>The audit.</strong> A resolution for members.</li>
+  <li><strong>Electing the board.</strong> Every seat is open at a first AGM.</li>
+  <li><strong>The shape of membership.</strong> An open conversation, not a vote, and the main part of the evening.</li>
+</ol>
+<p>The formal business takes about 20 minutes. Read the report first if you like: <a href="https://blkoutuk.com/year-one">BLKOUT's Year One</a>.</p>
+
+<div class="card" id="form">
+  <h2 style="margin-top:0">Save your <em>place</em></h2>
+  <p class="small" style="margin-top:0">We'll email you the joining link a few days before.</p>
+  <label for="name">Your name</label>
+  <input type="text" id="name" autocomplete="name">
+  <label for="email">Email</label>
+  <input type="email" id="email" autocomplete="email" required>
+  <label for="who">Which fits best?</label>
+  <select id="who">
+    <option value="thinking-of-joining">I'm thinking about joining</option>
+    <option value="member">I'm already a member</option>
+    <option value="partner">I'm with a partner organisation</option>
+    <option value="curious">Just curious</option>
+  </select>
+  <label for="access">Anything that would help you take part? <span class="small">(optional: captions, a call beforehand, anything)</span></label>
+  <textarea id="access"></textarea>
+  <div class="check"><input type="checkbox" id="joinnote"><label for="joinnote" style="margin:0;font-weight:400">Tell me when membership opens on 28 December</label></div>
+  <p id="err" class="hide"></p>
+  <button type="button" onclick="save()">Save my place</button>
+  <p class="small" style="margin-top:18px">Want BLKOUT's monthly letter too? That's a separate choice: <a href="https://sendfox.com/form/3zpwee/1wj276" target="_blank" rel="noopener">sign up here</a>.</p>
+</div>
+
+<div class="card hide" id="thanks">
+  <h2 style="margin-top:0" id="thanksName">You're in.</h2>
+  <p>We'll send the joining link a few days before Wednesday 25 November. If you'd like to talk anything through first, email <strong>rob@blkoutuk.com</strong>.</p>
+</div>
+
+<footer>
+  <p class="small"><strong style="color:var(--gold)">BLKOUT</strong> · BLKOUT Creative Ltd, a community benefit society owned by its members · FCA RS009639 · <a href="https://blkoutuk.com">blkoutuk.com</a></p>
+</footer>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://bgjengudzfickgomjqmz.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_cpUwnfcJuvnjrJjmLdZpXw_jJIOa8aB';
+const q = new URLSearchParams(location.search);
+
+async function save(){
+  const email = document.getElementById('email').value.trim();
+  const name = document.getElementById('name').value.trim();
+  const who = document.getElementById('who').value;
+  const access = document.getElementById('access').value.trim();
+  const join = document.getElementById('joinnote').checked;
+  const err = document.getElementById('err');
+  err.classList.add('hide');
+  if(!email || !email.includes('@')){ err.textContent='Please add a valid email.'; err.classList.remove('hide'); return; }
+  const notes = ['who: ' + who, join ? 'wants membership news' : '', access ? 'access: ' + access : ''].filter(Boolean).join(' | ');
+  try{
+    const r = await fetch(SUPABASE_URL + '/rest/v1/event_interest', {
+      method:'POST',
+      headers:{ 'apikey':SUPABASE_ANON, 'Authorization':'Bearer '+SUPABASE_ANON, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+      body: JSON.stringify({ event_slug:'agm-2026', email:email, name:name||'', interest_level:'definitely', could_help_organise:false, notes:notes,
+        utm_source:q.get('utm_source'), utm_medium:q.get('utm_medium'), utm_campaign:q.get('utm_campaign') })
+    });
+    if(!r.ok && r.status !== 409) throw new Error(r.status); // 409 = already signed up with this email
+    document.getElementById('form').classList.add('hide');
+    document.getElementById('thanksName').textContent = name ? ("You're in, " + name + ".") : "You're in.";
+    document.getElementById('thanks').classList.remove('hide');
+  }catch(e){ err.textContent='Something went wrong. Please try again in a moment, or email rob@blkoutuk.com.'; err.classList.remove('hide'); }
+}
+</script>
+</body>
+</html>
