@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Thank you: your place is set | BLKOUT</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Thank you for setting a place at Joseph Beam Day.">
+<meta name="theme-color" content="#0a0a14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700;900&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ob:#0a0a14;--ob2:#12121e;--cream:#f5f1e8;--mute:#a8a195;--gold:#d4af37;--gold-hi:#ffd700;--line:#2a2a3a;
+  --ws:'Work Sans',system-ui,-apple-system,'Segoe UI',sans-serif;--fr:Fraunces,Georgia,'Times New Roman',serif;--pm:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ob);color:var(--cream);font:18px/1.6 var(--ws);font-weight:400}
+i{font-family:var(--fr);font-style:italic;font-weight:400}
+p,li{text-wrap:pretty}
+h1,h2,h3{font-family:var(--ws);font-weight:900;text-transform:uppercase;letter-spacing:-.035em;line-height:.88;margin:0;text-wrap:balance}
+::selection{background:var(--gold);color:var(--ob)}
+a{color:inherit}
+p{margin:0 0 1em}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:max(20px,env(safe-area-inset-left,0px))}
+.eyebrow{font:500 11px/1.4 var(--pm);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:0 0 14px}
+.tender{font-family:var(--fr);font-style:italic;font-weight:400;text-transform:none;letter-spacing:0;line-height:1.2}
+.dot{color:var(--gold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 30px;background:var(--gold);color:var(--ob);font:900 17px/1 var(--ws);text-transform:uppercase;letter-spacing:.02em;text-decoration:none;border:3px solid var(--gold);cursor:pointer}
+.btn:hover{background:var(--gold-hi);border-color:var(--gold-hi)}
+.btn.ghost{background:transparent;color:var(--cream);border-color:var(--cream)}
+.btn.ghost:hover{background:var(--cream);color:var(--ob)}
+:focus-visible{outline:3px solid var(--gold-hi);outline-offset:3px}
+
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:calc(18px + env(safe-area-inset-top,0px)) 18px}
+.wordmark{font:900 26px/1 var(--ws);letter-spacing:-.04em;text-decoration:none;color:var(--cream);min-height:44px;display:inline-flex;align-items:center}
+.top a.small{font:500 12px/1 var(--pm);letter-spacing:.18em;text-transform:uppercase;color:var(--mute);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.top a.small:hover{color:var(--gold)}
+
+.hero{border-bottom:4px solid var(--gold);padding-bottom:72px}
+.hero h1{font-size:clamp(64px,11vw,148px);margin-top:28px}
+.hero .lede{font-size:clamp(23px,2.8vw,32px);margin:24px 0 0;max-width:30ch}
+
+.nextsec{border-bottom:4px solid var(--gold)}
+.next{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.next > div{padding:44px 32px 48px;border-right:1px solid var(--line)}
+.next > div:first-child{padding-left:0}
+.next > div:last-child{border-right:0}
+.next h2{font-size:24px;letter-spacing:-.01em;line-height:1;margin-bottom:14px}
+.next p{color:rgba(245,241,232,.86);font-size:17px;margin:0}
+.next .n{font:500 11px/1 var(--pm);letter-spacing:.3em;color:var(--gold);margin-bottom:18px;display:block}
+
+.share{padding-block:80px;border-bottom:4px solid var(--gold)}
+.share h2{font-size:clamp(40px,7vw,76px)}
+.share-msg{font-family:var(--fr);font-style:italic;font-size:21px;line-height:1.4;color:rgba(245,241,232,.86);margin:22px 0 26px;max-width:620px}
+.share-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.share-row a,.share-row button{min-height:48px;padding:0 18px;display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--cream);border:2px solid #5a5a6e;font:700 14px/1 var(--ws);text-transform:uppercase;letter-spacing:.04em;text-decoration:none;cursor:pointer}
+.share-row a:hover,.share-row button:hover{border-color:var(--gold);color:var(--gold)}
+.share-row .primary{background:var(--gold);border-color:var(--gold);color:var(--ob)}
+.share-row .primary:hover{background:var(--gold-hi);color:var(--ob)}
+.copied{font:400 13px/1 var(--pm);color:var(--gold);margin-left:6px}
+.share-row [hidden],.copied[hidden]{display:none!important}
+
+.come{padding-block:80px;display:flex;flex-wrap:wrap;gap:28px 48px;align-items:center;justify-content:space-between}
+.come p{max-width:52ch;margin:0;color:rgba(245,241,232,.86)}
+.come p.eyebrow{color:var(--gold);margin:0 0 22px}
+.share .eyebrow{margin-bottom:22px}
+.come h2{font-size:28px;letter-spacing:-.01em;line-height:1;margin-bottom:12px}
+.foot{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--mute);font-size:14px}
+.foot p{margin:0 0 6px}
+
+@media (max-width:800px){
+  .hero .eyebrow{letter-spacing:.14em}
+  .next{grid-template-columns:1fr}
+  .next > div{border-right:0;border-bottom:1px solid var(--line);padding:36px 0}
+  .next > div:last-child{border-bottom:0}
+  .share-row{display:grid;grid-template-columns:1fr 1fr}
+  .share-row .primary{grid-column:1/-1;justify-content:center}
+  .share-row a,.share-row button{justify-content:center}
+  .copied{grid-column:1/-1;margin:0}
+  .come .btn{width:100%}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top">
+      <a class="wordmark" href="https://blkoutuk.com" aria-label="BLKOUT home">BLKOUT<span class="dot">.</span></a>
+      <a class="small" href="/set-a-place">Back to Set a place →</a>
+    </div>
+    <p class="eyebrow" style="margin-top:36px">Joseph Beam Day · 28 Dec · Croydon</p>
+    <h1>Your place<br>is set<span class="dot">.</span></h1>
+    <p class="tender lede">Thank you. Because of you, a Black queer man gets a seat, a meal, a gift and a safe way home this Christmas.</p>
+  </div>
+</header>
+
+<main>
+<section class="nextsec" aria-label="What happens next"><div class="wrap next">
+  <div>
+    <span class="n">01</span>
+    <h2>Your receipt</h2>
+    <p>Zeffy is emailing your receipt now, with a thank-you from us. If it hasn't arrived in a few minutes, check your spam or promotions folder. Still nothing? Email rob@blkoutuk.com.</p>
+  </div>
+  <div>
+    <span class="n">02</span>
+    <h2>Your thank-you</h2>
+    <p>Gave at a level with a thank-you? The postcard, artwork and digital journal come by email in January. T-shirts are posted in January, or wait for you on the day if you chose to collect.</p>
+  </div>
+  <div>
+    <span class="n">03</span>
+    <h2>Where it goes</h2>
+    <p>Free and pay-what-you-can places for guests, help getting home, safeguarding and care on the day. In January we'll publish exactly how the money was spent on the Set a place page.</p>
+  </div>
+</div></section>
+
+<section class="share" aria-labelledby="share-h">
+  <div class="wrap">
+    <p class="eyebrow">One more thing</p>
+    <h2 id="share-h">Pass the plate<span class="dot">.</span></h2>
+    <p class="share-msg" id="shareMsg">I've set a place at Joseph Beam Day, a holiday table for Black queer men in Croydon on 28 December. £25 sets a place for someone. Will you set one too?</p>
+    <div class="share-row">
+      <button class="primary" type="button" id="nativeShare" hidden>Share</button>
+      <a id="shWa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="shFb" href="#" target="_blank" rel="noopener">Facebook</a>
+      <a id="shX" href="#" target="_blank" rel="noopener">X</a>
+      <a id="shBs" href="#" target="_blank" rel="noopener">Bluesky</a>
+      <a id="shEm" href="#">Email</a>
+      <button type="button" id="copyLink">Copy link</button><span class="copied" id="copied" hidden>Copied</span>
+    </div>
+  </div>
+</section>
+
+<section class="wrap come" aria-labelledby="come-h">
+  <div>
+    <p class="eyebrow">Coming yourself?</p>
+    <h2 id="come-h">Book your own place</h2>
+    <p>Lunch at Ivor's Table, the afternoon in The Play Parlour and the night at Club Frolic. There are lower prices and pay-what-you-can places for every part of the day. Money never closes the door.</p>
+  </div>
+  <a class="btn" href="/beam-day">See the day and book</a>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Questions about your gift? Email rob@blkoutuk.com.</p>
+    <p>BLKOUT Creative Ltd · Community Benefit Society RS009639 · not a registered charity</p>
+  </div>
+</footer>
+
+<script>
+const PAGE = "https://commons.blkoutuk.com/set-a-place";
+const $ = id => document.getElementById(id);
+const msg = $("shareMsg").textContent.trim();
+const enc = encodeURIComponent;
+$("shWa").href = "https://wa.me/?text=" + enc(msg + " " + PAGE);
+$("shFb").href = "https://www.facebook.com/sharer/sharer.php?u=" + enc(PAGE);
+$("shX").href = "https://x.com/intent/post?text=" + enc(msg) + "&url=" + enc(PAGE);
+$("shBs").href = "https://bsky.app/intent/compose?text=" + enc(msg + " " + PAGE);
+$("shEm").href = "mailto:?subject=" + enc("Will you set a place?") + "&body=" + enc(msg + "\n\n" + PAGE);
+if (navigator.share) {
+  const b = $("nativeShare"); b.hidden = false;
+  b.addEventListener("click", () => navigator.share({ title: "Set a place: Joseph Beam Day", text: msg, url: PAGE }).catch(() => {}));
+}
+$("copyLink").addEventListener("click", () => {
+  const done = () => { $("copied").hidden = false; setTimeout(() => $("copied").hidden = true, 2200); };
+  if (navigator.clipboard) navigator.clipboard.writeText(PAGE).then(done).catch(() => {});
+});
+</script>
+</body>
+</html>
